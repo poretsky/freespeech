@@ -1,0 +1,62 @@
+Here are the installation notes for the full system. Note that this
+current version does not include any diphones. You should use the MBROLA
+english diphones. They are available from http://tcts.fpms.ac.be
+
+8/4/95	FreeSpeech Installation
+
+Installation has been made as simple as possible, but may nevertheless
+present some problems.
+
+First of all, the system has only been tested on three different Unix
+type systems. So for anything else, you're on your own. Having said
+that the system takes a fairly simplistic approach to interfacing,
+so as long as you have the basic ingredients, installation should
+not be too difficult.
+
+How much space? You'll need a minimum of 1 megabyte storage for
+diphones and program. How much space it needs to run is determined
+by the longest sentence you synthesize. With the default parameters
+sentences of up to 100 words should be possible, (but a bit slow
+:-) If you get the dictionary too, bear in mind the raw form is
+about 8 megabytes, and the database form that is used by the program
+is about 4 megabytes.
+
+What is needed: 
+
+* An ANSI-C compiler
+* A pronunciation dictionary. We tested with one called the Compuer
+  Usable Version of the Oxford Advanced Learner's Dictionary
+  (CUVOALD). Because of the copyright restrictions it is not
+  contained in this package.  It is available for ftp from
+  ftp.ox.ac.uk, in the directory /pub/ota/public/dicts/710 (or
+  similar). The same directory gives details of the copyright
+  restrictions. The program will still work without the dictionary,
+  but not as well. See the doc sub-directory for more information
+  about dictionaries.
+
+If you ftp the dictionary put it in the sub-directory data with the
+name text710.dat (the same as it is called in the Oxford archive).
+
+And specify the name of your compiler in the makefile.
+
+Then type make.
+
+NOTE that you will get lots of compiler errors for certain files.  This is
+not serious. I didn't write them and I didn't want to correct them.
+
+Note that building the dictionary database will take a while.
+If you don't have the dictionary, or your system is not capable of 
+building a dbm database you will get a warning.
+
+If the make process goes OK, you can type freespeech -o <output> to start
+the program, and then enter text to be synthesized.
+
+For use with MBROLA, use the -m option to produce the required format.
+
+Or you could type:
+
+freespeech -'?'
+
+./freespeech -m -h ../dictionaries/lexicon| \
+/home/stepheni/mbrola/mbrola /home/stepheni/mbrola/en1/en1 - - | \
+sox -t raw -sw -r 16000 - -t raw -Ub -r 8000 - > /dev/audio

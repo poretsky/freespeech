@@ -1,0 +1,42 @@
+This is an example of the intermediate file format used in the
+program.  The format is usually called the ``.spn'' file format
+after the file extention used. I don't know what it stands for.
+This data would be sent from the perl part of the program to the
+synth sub-program. A typical ``.spn'' file might look like the
+following. Note there are no blank lines. You wont actually get
+to see an spn file unless you hack the program a bit, but if you
+want to use, for example, the synth program separately from the high
+level, then you need to know what the format is.
+
+----------start of data------------------------
+#	50	(0,120)
+aa	120	(0,100)	(30,130)
+b	73
+a	46
+d	48	(0,100)
+ee	92	(30,130)	(80,90)
+n	59	(99,80)
+#	1200	(99,80)
+----------end  of  data------------------------
+
+
+The input format is a sequence of lines of the form <phoneme symbol>
+<duration> (<pitch target>...).
+
+The set of phoneme symbols is specified in the file ``t2s''.
+Durations are given in milliseconds.
+
+A pitch target pair has the format  (percentage,frequency) where
+frequency is in hertz, and percentage is an integer in the range 0-99
+inclusive. The percentage specifies the proportion of the phoneme
+duration that has elapsed at the time when the target is achieved.
+
+Note that the format of the file needs to be carefully adhered to.
+There are, for example, no spaces allowed within the bracketed pairs
+that specify the pitch targets.
+
+The initial and final silences (#'s) are obligatory, and they must be
+accompanied by targets with percentage values of 0 and 99
+respectively.  (That is, there must be targets specifying the pitch at
+the beginning and end of the utterance.)  The initial and final
+durations are allowed to vary (but at the moment are not respected).

@@ -1,0 +1,262 @@
+#!/usr/local/bin/perl
+
+# Copyright (c) 1995 Alistair Conkie. All rights reserved.
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl itself.
+#
+#
+# Purpose: To convert from CUVOALD format to Edinburgh format
+#
+# Specifics:
+#
+# All words have been converted to use [A-Za-z'-], any foreign
+# characters are deleted.
+#
+# The final-r is left in in all cases.
+#
+# Capital letters are maintained.
+#
+# A small internal dictionary to avoid rare transcriptions
+# of common words.
+#
+# For perhaps 200-300 words there are alternate transcriptions
+# that depend on Part-of-Speech information. This information is
+# not currently available, so the transcription selected may
+# be wrong.
+#####################################################################
+
+# For some words we don't want the CUVOALD definition (or more likely
+# we don't want one of them) so to be sure we have our own minature
+# dictionary
+
+%mini_dico = (
+        'am', '* aa m',
+        'an', '* a n',
+        'do', 'd * uu',
+        'does', 'd * u z',
+        'ins', '* i n z',
+        'lame', 'l * ai m',
+        'mate', 'm * ai t',
+        'no', 'n * oa',
+        'nos', 'n * oa z',
+        'put', 'p * oo t',
+        'puts', 'p * oo t s',
+        're', 'r * ee',
+        'ret', 'r * e t',
+        'sake', 's * ai k',
+);
+ 
+$stress = "'";
+$i = 0;
+while(<>) {
+        @line = split(//,$_);
+ 
+        # neglect everything except words and transcriptions
+ 
+        $hw = join('',@line[0..22]);
+        $tr = join('',@line[23..45]);
+	$syl = $line[69];
+ 
+ 
+        # still need to get rid of blanks and drop double words
+ 
+        @words = split(' ',$hw);
+        if($#words ne 0) {
+                next;
+        } else {
+                $word = $words[0];
+                $tr =~ /(\S+)\s*/;
+                $tr = $1;
+		if($syl eq 1) {
+			$tr = alv2edin("$stress$tr");
+		} else {
+			$tr = alv2edin($tr);
+		}
+		$tr = adj_stress($tr);
+
+		# list of banned characters...
+		$word =~ s/"//g;
+		$word =~ s/<//g;
+		$word =~ s/^//g;
+		$word =~ s/_//g;
+		$word =~ s/\`//g;
+		$word =~ s/\~//g;
+
+		if(defined($mini_dico{$word})) {
+			print "$word $mini_dico{$word}\n";
+		} else {
+        		print "$word $tr\n";
+		}
+        }
+ 
+        $i++;
+        print STDERR "$i\r";
+}
+ 
+# dbmclose(%OXFORD);
+
+sub alv2edin {
+        local($inp) = $_[0]; 
+
+        # try everything, prefer longest
+ 
+        $out = '';
+	
+	@inp = split(//,$inp);
+
+	while($#inp != -1) {
+		$c = shift(@inp);
+
+		if($c eq 'p') {
+			$out .= "p ";
+		} elsif ($c eq 't') {
+			if($inp[0] eq 'S'){
+				shift(@inp);
+				$out .= "ch ";
+			} else {
+				$out .= "t ";
+			}
+		} elsif ($c eq 'd') {
+			if($inp[0] eq 'Z'){
+				shift(@inp);
+				$out .= "j ";
+			} else {
+				$out .= "d ";
+			}
+		} elsif($c eq 'b') {
+			$out .= "b ";
+		} elsif($c eq 'k') {
+			$out .= "k ";
+		} elsif($c eq 'm') {
+			$out .= "m ";
+		} elsif($c eq 'n') {
+			$out .= "n ";
+		} elsif($c eq 'l') {
+			$out .= "l ";
+		} elsif($c eq 'r') {
+			$out .= "r ";
+		} elsif($c eq 'R') {
+			$out .= "r ";
+		} elsif($c eq 'f') {
+			$out .= "f ";
+		} elsif($c eq 'v') {
+			$out .= "v ";
+		} elsif($c eq 's') {
+			$out .= "s ";
+		} elsif($c eq 'z') {
+			$out .= "z ";
+		} elsif($c eq 'h') {
+			$out .= "h ";
+		} elsif($c eq 'w') {
+			$out .= "w ";
+		} elsif($c eq 'g') {
+			$out .= "g ";
+		} elsif($c eq 'N') {
+			$out .= "ng ";
+		} elsif($c eq 'T') {
+			$out .= "th ";
+		} elsif($c eq 'D') {
+			$out .= "dh ";
+		} elsif($c eq 'S') {
+			$out .= "sh ";
+		} elsif($c eq 'Z') {
+			$out .= "zh ";
+		} elsif($c eq 'j') {
+			$out .= "y ";
+
+		} elsif($c eq 'a') {
+			if($inp[0] eq 'I'){
+				shift(@inp);
+				$out .= "ie ";
+			} elsif($inp[0] eq 'U'){
+				shift(@inp);
+				$out .= "ou ";
+			} else {
+				$out .= "BUG ";
+			}
+		} elsif($c eq 'e') {
+			if($inp[0] eq 'I'){
+				shift(@inp);
+				$out .= "ai ";
+			} elsif($inp[0] eq '@'){
+				shift(@inp);
+				$out .= "air ";
+			} else {
+				$out .= "e ";
+			}
+		} elsif($c eq 'U') {
+			if($inp[0] eq '@'){
+				shift(@inp);
+				$out .= "oor ";
+			} else {
+				$out .= "oo ";
+			}
+		} elsif($c eq 'I') {
+			if($inp[0] eq '@'){
+				shift(@inp);
+				$out .= "eer ";
+			} else {
+				$out .= "i ";
+			}
+		} elsif($c eq '@') {
+			if($inp[0] eq 'U'){
+				shift(@inp);
+				$out .= "oa ";
+			} else {
+				$out .= "a ";
+			}
+		} elsif($c eq 'o') {
+			if($inp[0] eq 'I'){
+				shift(@inp);
+				$out .= "oi ";
+			} else {
+				$out .= "BUG ";
+			}
+		} elsif($c eq 'i') {
+			$out .= "ee ";
+		} elsif($c eq 'A') {
+			$out .= "ar ";
+		} elsif($c eq 'O') {
+			$out .= "aw ";
+		} elsif($c eq 'u') {
+			$out .= "uu ";
+		} elsif($c eq '3') {
+			$out .= "er ";
+		} elsif($c eq '&') {
+			$out .= "aa ";
+		} elsif($c eq 'V') {
+			$out .= "u ";
+		} elsif($c eq '0') {
+			$out .= "o ";
+
+		} elsif($c eq "'") {
+			$out .= "* ";
+		} elsif($c eq ',') {
+			$out .= "~ ";
+		} elsif($c eq '+') {
+			$out .= "+ ";
+		} elsif($c eq '-') {
+			$out .= "- ";
+		} else {
+			$out .= "BUG ";
+		}
+	}
+	chop($out);
+
+        return($out);
+} 
+
+sub adj_stress {
+	my $t = $_[0];
+
+	$t =~ s/\* ([ bcdfghjklmnpqrstvwxyz]*) ([aeiou])/\. $1 \* $2/g;
+	$t =~ s/\~ ([ bcdfghjklmnpqrstvwxyz]*) ([aeiou])/\. $1 \~ $2/g;
+	$t =~ s/^\. //g;
+	$t =~ s/\- \. /\- /g;
+	$t =~ s/\| \. /\- /g;
+	$t =~ s/\+ \. /\- /g;
+
+
+	$t;
+	
+}

@@ -1,0 +1,8 @@
+There are actually a couple of possible dictionaries available,subject
+to some copyright restrictions. The one that this program was set
+up to use is ther CUVOALD dictionary. A description of how to get
+hold of it in the file INSTALLATION.
+
+It would be possible, with only a little programming, to use another
+British English dictionary instead, such as the BEEP dictionary.
+You can find ftp sites for this in the Comp.speech newsgroup FAQ.

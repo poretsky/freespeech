@@ -1,0 +1,17 @@
+21/09/86
+
+This is in the process of construction.
+
+The aim is to have a coherent FreeSpeech system.
+I have gone over the Donovan diphones and they seem OK.
+The other things to check carefully are the carlos,
+Rafa and Montse diphones, and the code that uses them.
+
+4/10/96
+Did extensive tidying of the lexicon code, making it almost fit for
+distribution. I would definitely like to test it well.
+
+6/10/96
+realised that what the lexicon code needs is a complete rewrite, for two
+reasons. First because the dictionary is excessively large. Secondly,
+it would then be suitable for all systems.

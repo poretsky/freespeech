@@ -1,0 +1,29 @@
+MINI DESCRIPTION OF SYSTEM 22/1/95
+
+sentence finding
+--> triggered by (.|?|!)  and \n\n (paragraph) triggering.
+
+tagging
+--> from a list of function words
+
+grammar
+--> rudimentary (1) punctuation or (2) Content Word (CW) followed
+by Function Word (FW) giving minor and major boundaries respectively.
+
+transcriptions
+--> Oxford dictionary, or NRL rules if that fails
+additional syllabification based on sonority
+missing stress assignment for NRL transcriptions.
+
+stress assignment 
+--> just stress everything that has primary lexical stress
+
+pauses
+--> based on punctuation mark only
+
+durations
+--> fixed, from a list
+
+f0
+--> from a simple set of patterns specified in terms of target
+points

@@ -11,9 +11,11 @@
 
 #include <sys/types.h>
 #include <limits.h>
-/* FreeBSD, and Linux?  */
-#ifdef FBSD_DATABASE
+
+#if defined(FBSD_DATABASE)
 #include <db.h>
+#elif defined(BERKELEYDB)
+#include <db_185.h>
 #else
 #include <ndbm.h>
 #endif
@@ -50,7 +52,7 @@ export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sen
   /* set up database if present  */
 
   if(strcmp("-",config->hash_file)) {
-#ifdef FBSD_DATABASE
+#if defined(FBSD_DATABASE) || defined(BERKELEYDB)
     config->db = (void *)dbopen(config->hash_file,O_RDONLY, 0000644, DB_HASH, NULL);
 #else
     config->db = (void *)dbm_open(config->hash_file,O_RDONLY, 0000644);
@@ -112,13 +114,7 @@ export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sen
 
   /*	what follows is an example for use as a template  */
   load_context_rules("context_rules");
-  /* this goes with the rule engine code...
-     for(i=0;i<nrules;i++) {
-     rule[i].lc = regcomp(rule[i].left_context);
-     rule[i].rc = regcomp(rule[i].right_context);
-     }
-     */
- 
+
   phon_rules_init();
 
 
@@ -131,10 +127,10 @@ void terminate(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent,
 {
 
   if(config->db != NULL)
-#ifdef FBSD_DATABASE
-    (void)(config->db->close)(config->db);
+#if defined(FBSD_DATABASE) || defined(BERKELEYDB)
+    (void)(((DB *)(config->db))->close)((DB *)(config->db));
 #else
-  dbm_close(config->db);
+  dbm_close((DBM *)(config->db));
 #endif
 
 

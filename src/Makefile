@@ -24,8 +24,8 @@
 ############################################################################
 # Linux users
 CC = gcc
-CFLAGS = -O2 -DBERKELEYDB -pedantic -s
-LIBS = -lm -ldb-3
+CFLAGS = -O2 -DBERKELEYDB -pedantic -Wall -s
+LIBS = -lm -ldb
 ############################################################################
 
 

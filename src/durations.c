@@ -7,14 +7,11 @@
 
 #include "t2s.h"
 
+float fmaxf(float, float);
+
 static int min(int a, int b)
 {
   return((a<b)?a:b);
-}
-
-static float fmax(float a, float b)
-{
-  return((a>b)?a:b);
 }
 
 export void durations(CONFIG *config, SPN *ps, ACOUSTIC *as)
@@ -43,7 +40,7 @@ export void durations(CONFIG *config, SPN *ps, ACOUSTIC *as)
       durdist = min(i-ps->pb[j-1],ps->pb[j]-i);
       interdist = ps->pb[j] - ps->pb[j-1];
       proportion = (float)durdist/(float)interdist;
-      multiplier_i = fmax(0.01,4.0*proportion*(ps->scale[j-1]-1.0)+1.0);
+      multiplier_i = fmaxf(0.01,4.0*proportion*(ps->scale[j-1]-1.0)+1.0);
       as->duration[i] = config->fr_sz*multiplier_i;
       ps->duration[j-1] += as->duration[i];
     }

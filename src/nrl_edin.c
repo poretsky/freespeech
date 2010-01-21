@@ -74,7 +74,7 @@ export void nrl_edin_conv(char *str, char *str2)
   
   while(*str) {
     i = 0;
-    while(nrl_edin[i].keyword != "") {
+    while(nrl_edin[i].keyword[0]) {
       if(!strncmp(str,nrl_edin[i].keyword,strlen(nrl_edin[i].keyword)))
 	break;
       i++;

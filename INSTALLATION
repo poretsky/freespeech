@@ -24,7 +24,7 @@ is about 4 megabytes.
 What is needed: 
 
 * An ANSI-C compiler
-* A pronunciation dictionary. We tested with one called the Compuer
+* A pronunciation dictionary. We tested with one called the Computer
   Usable Version of the Oxford Advanced Learner's Dictionary
   (CUVOALD). Because of the copyright restrictions it is not
   contained in this package.  It is available for ftp from

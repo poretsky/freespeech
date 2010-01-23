@@ -10,13 +10,12 @@
 #include <sys/types.h>
 #include <limits.h>
 
-#if defined(FBSD_DATABASE)
+#ifdef FBSD_DATABASE
 #include <db.h>
-#elif defined(BERKELEYDB)
-#include <db_185.h>
 #else
-#include <ndbm.h>
+#include <db_185.h>
 #endif
+
 #include <fcntl.h>
 
 static char *lookup_db(char *word, CONFIG *config);
@@ -56,8 +55,6 @@ export void transcribe(CONFIG *config, LING_LIST *ling_list)
   }
 }
 
-#if defined(FBSD_DATABASE) || defined(BERKELEYDB)
-
 static char *lookup_db(char *word, CONFIG *config)
 {
   DBT inKey, inVal;
@@ -75,23 +72,6 @@ static char *lookup_db(char *word, CONFIG *config)
   } else 
     return(NULL);
 }
-
-#else
-
-static char *lookup_db(char *word, CONFIG *config)
-{
-  datum Key;
-
-  Key.dptr = word;
-  Key.dsize = strlen(word);
-
-  if(config->db != NULL)
-    return(dbm_fetch((DBM *)config->db,Key).dptr);
-  else
-    return(NULL);
-}
-
-#endif
 
 static void ToLower(char *word)
 {

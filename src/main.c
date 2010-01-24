@@ -82,7 +82,7 @@ int main(int argc, char **argv)
   if((optind!=argc) || errflg /* || (argc==1) */) {
     (void)fprintf(stderr, "usage: %s\n",argv[0]);
     (void)fprintf(stderr,"\t-i  input text file or - for standard input (default)\n");
-    (void)fprintf(stderr,"\t-o  output (probably audio) file or - for standard output (default)\n");
+    (void)fprintf(stderr,"\t-o  output file or - for standard output (default)\n");
     /* (void)fprintf(stderr,"\t-d   diphone files (default)\n");
        (void)fprintf(stderr,"\t-f output format (sun8k - default, sun10k, soundblaster8, .spn)\n");  */
     (void)fprintf(stderr,"\t-h  dictionary in hash format (no default)\n");

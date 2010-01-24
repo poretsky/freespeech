@@ -1,0 +1,66 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH LEXHOLDER\-EN 1 "January 23, 2010"
+.SH NAME
+lexholder\-en \- lexical database holding utility
+.SH SYNOPSIS
+.B lexholder\-ru
+.RI [ options ] <db_path>
+.SH DESCRIPTION
+\fBlexholder\-en\fP is a small utility intended for use from the
+command line or shell-scripts. It allows to construct, test, manage
+and query lexical database as well as extract it's content
+in textual form.
+.PP
+This database is primarily intended for use along with the
+\fBfreephone\fP phonetizer for \fBmbrola\fP to provide pronunciation
+information for English words.
+.PP
+When filling and updating the database,
+new records are read from the standard input.
+When extracting data from the database,
+The result is printed to the standard output.
+This behaviour can be changed by the \fB\-f\fP switch.
+.SH OPTIONS
+When no options are specified, the program reads it's standard input
+and stores it's content in the database.
+.PP
+All options recognized in the command line are described below.
+.TP
+.B \-h
+.br
+Print summary of options and exit. This option discards all other
+command line specifications. It is the only case when the database
+path is not required.
+.TP
+.B \-l
+.br
+List database content in textual form.
+.TP
+.B \-s <word>
+.br
+Search specified word in the lexical database. If the word is found
+program exits successfully and outputs it's pronunciation string,
+ otherwise prints nothing and exits with non-zero exit code.
+.TP
+.B \-d <word>
+.br
+Delete record for specified word.
+.TP
+.B \-f <file>
+.br
+Use specified file instead of standard input or output.
+.TP
+.B \-r
+.br
+Replace mode. This mode causes that the new records replace existing
+ones with the same key. By default such records are ignored.
+.TP
+.B \-q
+.br
+Be more quiet than usual: don't print warnings about ignoring
+duplicate records when filling the database.
+.SH SEE ALSO
+.BR freephone (1),
+.BR mbrola (1).
+.SH AUTHOR
+Igor B. Poretsky <poretsky@mlbox.ru>

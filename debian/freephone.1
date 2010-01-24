@@ -1,0 +1,36 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH FREEPHONE 1 "January 23, 2010"
+.SH NAME
+freephone \- English Text-To-Phoneme converter
+.SH SYNOPSIS
+.B freephone
+.RI [-i file] [-o file] [-h dictionnary]
+.SH DESCRIPTION
+\fBfreephone\fP converts English text to phonemes for \fBmbrola\fP
+speech synthesizer. Usually this program acts like a filter eating
+English text on the standard input and producing phonemes on the
+standard output. In conjunction with \fBmbrola\fP it provides complete
+English TTS.
+.SH OPTIONS
+\fBfreephone\fP understands the following command line options.
+.TP
+.B \-i <file>
+.br
+Input text file or \fB\-\fP for standard input (default).
+.TP
+.B \-o <file>
+.br
+Output file or \fB\-\fP for standard output (default).
+.TP
+.B \-h <dictionary>
+.br
+Use pronunciation dictionary in hash format (no default), such as the
+one provided by enlex(1).
+.SH SEE ALSO
+.BR lexholder\-en (1),
+.BR mbrola (1).
+.SH AUTHOR
+Alistair Conkie <adc@cstr.ed.ac.uk>
+.PP
+This manual page was written by Igor B. Poretsky <poretsky@mlbox.ru>
+especially for the Debian package.

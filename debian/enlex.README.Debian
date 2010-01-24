@@ -1,0 +1,12 @@
+enlex for Debian
+---------------------
+
+This package contains English pronunciation dictionary along with the
+simple lexical database holding utility lexholder-en. It is primarily
+intended for use along with the Freephone phonetizer for Mbrola speech
+synthesizer. For freephone to make use of the pronunciation dictionary
+call it with "-h /usr/share/freespeech/enlex.db" switch in the command line.
+
+See freephone and lexholder-ru man pages for more details.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Sat, 23 Jan 2010 11:05:07 +0300

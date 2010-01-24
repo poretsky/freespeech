@@ -50,8 +50,8 @@ static const char *usage =
 
   "When filling and updating the database, new records are read\n"
   "from the standard input. When extracting data from the database\n"
-  "or testing operation, The result is printed to the standard\n"
-  "output. This behaviour can be changed by the \"-f\" switch.\n\n"
+  "the result is printed to the standardoutput.\n"
+  "This behaviour can be changed by the \"-f\" switch.\n\n"
 
   "If no options are specified, the program reads it's standard input\n"
   "and stores it's content in the database.\n\n"
@@ -69,7 +69,7 @@ static const char *usage =
 
 int main(int argc, char *argv[])
 {
-  FILE *fp;
+  FILE *fp = NULL;
   DB *db;
   DBT key, value;
   char line[256];
@@ -156,7 +156,7 @@ int main(int argc, char *argv[])
       for (n = 0; !db->seq(db, &key, &value, R_NEXT); n++)
         {
           (void)strncpy(line, key.data, key.size);
-          (void)fprintf(fp, "%s %s\n", line, value.data);
+          (void)fprintf(fp, "%s %s\n", line, (char *)value.data);
         }
       (void)fprintf(stderr, "%i records extracted.\n", n);
     }
@@ -166,7 +166,7 @@ int main(int argc, char *argv[])
       key.size = strlen(s);
       if (db->get(db, &key, &value, 0))
         ret = EXIT_FAILURE;
-      else (void)fprintf(fp, "%s\n", value.data);
+      else (void)fprintf(fp, "%s\n", (char *)value.data);
     }
   else if (d) /* Delete record for specified word */
     {

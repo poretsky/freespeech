@@ -56,7 +56,7 @@ lexholder: lexholder.c
 install: lexholder lexicon
 	install -d ${bindir} ${datadir} ${docdir}
 	install -g ${GROUP} -o root -m 0755 -p lexholder ${bindir}/${UTILITY}
-	install -g ${GROUP} -o root -m 0644 -p data/lexicon ${datadir}/${DBF}
+	install -g ${GROUP} -o root -m 0644 -p lexicon ${datadir}/${DBF}
 	install -g ${GROUP} -o root -m 0644 -p text710.doc ${docdir}
 
 .PHONY: clean

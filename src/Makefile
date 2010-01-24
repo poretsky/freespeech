@@ -54,7 +54,7 @@ freephone: $(OBJS) $(NRL_OBJS) $(RULE_OBJS) $(MAIN)
 .PHONY: install
 install: freephone
 	install -d ${bindir}
-	install -g ${GROUP} -o root -m 0755 -p $^
+	install -g ${GROUP} -o root -m 0755 -p $^ ${bindir}
 
 .PHONY: clean
 clean:

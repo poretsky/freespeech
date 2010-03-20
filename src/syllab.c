@@ -161,7 +161,7 @@ export char *syllabify(char *string, CONFIG *config)
   /* we start looking once we find a vowel  */
   /* we stop looking if we find an existing syllable boundary  */
 
-  if(b_cat(carrier[c_sz-1],config) == VOWEL) {
+  if((c_sz>0) && b_cat(carrier[c_sz-1],config) == VOWEL) {
     look = 1;
     /* don't need a marker  */
   }

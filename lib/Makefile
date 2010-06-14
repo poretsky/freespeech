@@ -36,7 +36,7 @@ UTILITY = lexholder-en
 CC = gcc
 CFLAGS = -O2
 LFLAGS = -s
-LIBS = -lm -ldb
+LIBS = -ldb
 GROUP = root
 ############################################################################
 

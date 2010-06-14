@@ -1,3 +1,13 @@
+freespeech (1.0m-2) unstable; urgency=low
+
+  * Fixed segmentation fault condition in freephone.
+  * A few words added to the dictionary.
+  * Additional dictionary corrections are kept in a separate patch file
+    and text710.edin is treated as intermediate file, so it is removed
+    from the sources.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Mon, 14 Jun 2010 18:09:57 +0400
+
 freespeech (1.0m-1) unstable; urgency=low
 
   * Initial release.

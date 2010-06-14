@@ -44,10 +44,11 @@ GROUP = root
 all: lexicon
 
 lexicon: text710.edin lexholder
-	./lexholder -qf text710.edin $@
+	./lexholder -qf $< $@
 
-#text710.edin: text710.dat read_ox_dict
-#	read_ox_dict text710.dat > text710.edin
+text710.edin: text710.dat text710.edin.patch read_ox_dict
+	./read_ox_dict $< > $@ 2>/dev/null
+	patch -Esup0 < text710.edin.patch
 
 lexholder: lexholder.c
 	$(CC) $(CFLAGS) $(LFLAGS) -o $@ $< $(LIBS)
@@ -61,4 +62,4 @@ install: lexholder lexicon
 
 .PHONY: clean
 clean:
-	rm -f lexholder *.o lexicon
+	rm -f lexholder *.o text710.edin lexicon

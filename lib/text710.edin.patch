@@ -1,6 +1,6 @@
 diff -u text710.edin.orig text710.edin
---- text710.edin.orig	2011-01-09 14:11:35.000000000 +0300
-+++ text710.edin	2011-01-09 14:11:55.000000000 +0300
+--- text710.edin.orig	2011-01-09 14:42:11.000000000 +0300
++++ text710.edin	2011-01-09 14:43:07.000000000 +0300
 @@ -1009,7 +1009,6 @@
  Dingle d * i ng g l
  Dinnington d * i n i ng t a n
@@ -223,13 +223,14 @@ diff -u text710.edin.orig text710.edin
  tercentenaries t ~ er s e n . t * ee n a r i z
  tercentenary t ~ er s e n . t * ee n a r i
  tercentennial t ~ er s e n . t * e n eer l
-@@ -66296,6 +66320,9 @@
+@@ -66296,6 +66320,10 @@
  uninspired ~ u n i n . s p * ie a d
  uninspiring ~ u n i n . s p * ie a r i ng
  uninsured ~ u n i n . sh * oor d
 +uninstall ~ u n i n . s t * aw l
 +uninstalled ~ u n i n . s t * aw l d
 +uninstalling ~ u n i n . s t * aw l i ng
++uninstalls ~ u n i n . s t * aw l z
  unintelligent ~ u n i n . t * e l i j a n t
  unintelligently ~ u n i n . t * e l i j a n t l i
  unintelligible ~ u n i n . t * e l i j a b l

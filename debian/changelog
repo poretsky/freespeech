@@ -1,3 +1,9 @@
+freespeech (1.0m-6) unstable; urgency=low
+
+  * Yet more words in lexicon.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Mon, 30 May 2011 04:12:48 +0400
+
 freespeech (1.0m-5) unstable; urgency=low
 
   * Lexicon improvements.

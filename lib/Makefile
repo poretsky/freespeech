@@ -34,7 +34,7 @@ UTILITY = lexholder-en
 ############################################################################
 # Linux users
 CC = gcc
-CFLAGS = -O2
+CFLAGS = -Wall -O2
 LFLAGS = -s
 LIBS = -ldb
 GROUP = root

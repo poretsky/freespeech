@@ -1,8 +1,10 @@
 freespeech (1.0m-9) unstable; urgency=low
 
   * Lexicon additions.
+  * Freephone: Fixed potential issue. Some unused stuff excluded from
+    the compiled executable.
 
- -- Igor B. Poretsky <poretsky@mlbox.ru>  Sat, 25 Feb 2012 13:59:12 +0400
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Sun, 26 Feb 2012 19:02:17 +0400
 
 freespeech (1.0m-8) unstable; urgency=low
 

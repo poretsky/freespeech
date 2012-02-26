@@ -28,7 +28,7 @@ bindir = ${prefix}/bin
 CC = gcc
 CFLAGS = -Wall -O2
 LFLAGS = -s
-LIBS = -lm -ldb
+LIBS = -ldb
 GROUP = root
 ############################################################################
 

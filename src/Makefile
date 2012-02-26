@@ -36,9 +36,10 @@ GROUP = root
 OBJS = go.o t2s.o space.o tags.o grammar.o \
 	transcribe.o conv1.o conv2.o durpros.o prosody.o \
 	syllab.o utils.o buffer.o \
-	fw.o broad_cats.o durs.o load_diphs.o spnio.o \
-	durations.o pitch.o audio.o \
-	phon_rules.o edin2sampa.o
+	fw.o broad_cats.o durs.o spnio.o \
+	audio.o phon_rules.o edin2sampa.o
+
+OBSOLETE_OBJS = load_diphs.o durations.o pitch.o
 
 RULE_OBJS = rule_engine.o read_rules.o
 

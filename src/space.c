@@ -20,6 +20,7 @@
 
 #include <fcntl.h>
 
+#ifdef FREEPHONE_OBSOLETE
 int ft_endian_loc = 1; /* for deciding if we need to byte-swap  */
 
 ENTRY indx[NDIPHS];
@@ -27,6 +28,9 @@ FRAME dico[NFRAMES];
 int nindex;
 
 export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps, ACOUSTIC *as) 
+#else
+export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps)
+#endif
 {
 
   /* check the various files are accessible  */
@@ -42,9 +46,11 @@ export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sen
 
 
 
+#ifdef FREEPHONE_OBSOLETE
   /* load the diphones including index  */
 
   load_speech(config);
+#endif
 
 
 
@@ -85,7 +91,9 @@ export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sen
   /* now the synthesis stuff  */
 
   ps_malloc(DEF_PHONS,DEF_TARGS,ps);
+#ifdef FREEPHONE_OBSOLETE
   as_malloc(DEF_FRAMES,DEF_PM,as);       /* should perhaps use ps??  */
+#endif
 
 
 
@@ -118,7 +126,11 @@ export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sen
 
 }
 
+#ifdef FREEPHONE_OBSOLETE
 void terminate(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps, ACOUSTIC *as)
+#else
+void terminate(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps)
+#endif
 {
 
   if(config->db != NULL)
@@ -132,9 +144,11 @@ void terminate(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent,
   spl_free(spl);
 
   ps_free(ps);
+#ifdef FREEPHONE_OBSOLETE
   as_free(as);
 
   unload_diphs(config);
+#endif
   phon_rules_free();
   /* also need to free the various other structures  */
 }
@@ -285,6 +299,7 @@ export void ps_free(SPN *ps)
   free(ps->diphs);
 }
 
+#ifdef FREEPHONE_OBSOLETE
 export void as_malloc(int nframes, int npp, ACOUSTIC *as)
 {
 
@@ -317,6 +332,7 @@ export void as_free(ACOUSTIC *as)
   free(as->duration);
   free(as->pitch);
 }
+#endif
 
 /*
  * 'SENT' operations.

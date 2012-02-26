@@ -7,6 +7,7 @@
 
 #include "t2s.h"
 
+#ifdef FREEPHONE_OBSOLETE
 export void process_sentence(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps, ACOUSTIC *as)
 {
   high_level(config,buffer,ling_list,sent,spl,ps);
@@ -15,20 +16,26 @@ export void process_sentence(CONFIG *config, BUFFER *buffer, LING_LIST *ling_lis
 
   fflush(config->ofd);
 }
+#endif
 
 export void produce_spn_file(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps)
 {
   high_level(config,buffer,ling_list,sent,spl,ps);
   
+#ifdef FREEPHONE_OBSOLETE
   if(config->type == _SPN_) {
     put_spn_data(config,ps);
   } else if(config->type == _MBROLA_) {
+#endif
     put_mbrola_data(config,ps);
+#ifdef FREEPHONE_OBSOLETE
   }
+#endif
   
   fflush(config->ofd);
 }
 
+#ifdef FREEPHONE_OBSOLETE
 export void process_spn_file(CONFIG *config, SPN *ps, ACOUSTIC *as)
 {
   get_spn_data(config,ps);
@@ -37,6 +44,7 @@ export void process_spn_file(CONFIG *config, SPN *ps, ACOUSTIC *as)
 
   fflush(config->ofd);
 }
+#endif
 
 export void high_level(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps)
 {
@@ -55,6 +63,7 @@ export void high_level(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SEN
   prosody(spl,ps);
 }
 
+#ifdef FREEPHONE_OBSOLETE
 export void low_level(CONFIG *config, SPN *ps, ACOUSTIC *as)
 {
   phonstoframes(ps,as);
@@ -63,3 +72,4 @@ export void low_level(CONFIG *config, SPN *ps, ACOUSTIC *as)
 
   calc_pitch(config,ps,as);      
 }
+#endif

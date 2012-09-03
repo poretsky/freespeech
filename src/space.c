@@ -242,8 +242,8 @@ export void ps_malloc(int nphons, int ntargs, SPN *ps)
   ps->duration = (int *) malloc(sizeof(int)*(nphons+1));
   ps->pb = (int *) malloc(sizeof(int)*(nphons+1));
   ps->scale = (float *) malloc(sizeof(float)*(nphons+1));
-  ps->phons = (char **) malloc(sizeof(int)*(nphons+1));
-  ps->diphs = (char **) malloc(sizeof(int)*(nphons+1));
+  ps->phons = (char **) malloc(sizeof(char *)*(nphons+1));
+  ps->diphs = (char **) malloc(sizeof(char *)*(nphons+1));
 
   for(i=0;i<nphons;i++) {
     ps->phons[i] = (char *)malloc(sizeof(PHON_SZ));
@@ -268,8 +268,8 @@ export void ps_realloc(int nphons, int ntargs, SPN *ps)
   ps->duration = (int *) realloc(ps->duration,sizeof(int)*(nphons+1));
   ps->pb = (int *) realloc(ps->pb,sizeof(int)*(nphons+1));
   ps->scale = (float *) realloc(ps->scale,sizeof(float)*(nphons+1));
-  ps->phons = (char **) realloc(ps->phons,sizeof(int)*(nphons+1));
-  ps->diphs = (char **) realloc(ps->diphs,sizeof(int)*(nphons+1));
+  ps->phons = (char **) realloc(ps->phons,sizeof(char *)*(nphons+1));
+  ps->diphs = (char **) realloc(ps->diphs,sizeof(char *)*(nphons+1));
 
   for(i=rem_p;i<nphons;i++) {
     ps->phons[i] = (char *)malloc(sizeof(PHON_SZ));

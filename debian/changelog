@@ -1,3 +1,12 @@
+freespeech (1.0m-10) unstable; urgency=low
+
+  * Fixed memory allocation issue in freephone when compiled in x86-64
+    environment.
+  * Spelling fix in man page.
+  * Updated packaging standards compliance.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Sun, 23 Sep 2012 16:55:17 +0400
+
 freespeech (1.0m-9) unstable; urgency=low
 
   * Lexicon additions.

@@ -1,3 +1,9 @@
+freespeech (1.0m-11precise1) precise; urgency=low
+
+  * Per distribution build.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Thu, 04 Oct 2012 23:42:54 +0400
+
 freespeech (1.0m-11) unstable; urgency=low
 
   * More words in pronunciation dictionary.

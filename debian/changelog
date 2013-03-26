@@ -1,3 +1,9 @@
+freespeech (1.0m-13squeeze1) squeeze; urgency=low
+
+  * A bit more words in dictionary.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Wed, 27 Mar 2013 00:02:54 +0400
+
 freespeech (1.0m-12squeeze1) squeeze; urgency=low
 
   * A bit more words in pronunciation dictionary.

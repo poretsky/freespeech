@@ -1,3 +1,9 @@
+freespeech (1.0m-13lucid1) lucid; urgency=low
+
+  * A bit more words in dictionary.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Wed, 27 Mar 2013 00:01:28 +0400
+
 freespeech (1.0m-12lucid1) lucid; urgency=low
 
   * A bit more words in pronunciation dictionary.

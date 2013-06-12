@@ -1,3 +1,27 @@
+freespeech (1.0m-13wheezy1) wheezy; urgency=low
+
+  * Per distribution build.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Wed, 12 Jun 2013 20:35:20 +0400
+
+freespeech (1.0m-13precise1) precise; urgency=low
+
+  * A bit more words in dictionary.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Tue, 26 Mar 2013 23:59:29 +0400
+
+freespeech (1.0m-12precise1) precise; urgency=low
+
+  * A bit more words in pronunciation dictionary.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Fri, 22 Mar 2013 20:33:28 +0400
+
+freespeech (1.0m-11precise1) precise; urgency=low
+
+  * Per distribution build.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Thu, 04 Oct 2012 23:42:54 +0400
+
 freespeech (1.0m-11) unstable; urgency=low
 
   * More words in pronunciation dictionary.

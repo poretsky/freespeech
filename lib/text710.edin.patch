@@ -1,6 +1,6 @@
 diff -u text710.edin.orig text710.edin
---- text710.edin.orig	2013-03-26 23:46:23.426163307 +0400
-+++ text710.edin	2013-03-26 23:45:24.000000000 +0400
+--- text710.edin.orig	2013-11-27 05:55:37.307994450 +0400
++++ text710.edin	2013-11-27 06:26:17.191936845 +0400
 @@ -1009,7 +1009,6 @@
  Dingle d * i ng g l
  Dinnington d * i n i ng t a n
@@ -957,7 +957,19 @@ diff -u text710.edin.orig text710.edin
  rendering r * e n d a r i ng
  renderings r * e n d a r i ng z
  renders r * e n d a z
-@@ -51995,6 +52203,8 @@
+@@ -51684,6 +51892,11 @@
+ reopened r ee * oa p a n d
+ reopening r ee * oa p a n i ng
+ reopens r ee * oa p a n z
++reorder r ee * aw d a r
++reordered r ee * * aw d a d
++reordering r ee * * aw d a r i ng
++reorderings r ee * * aw d a r i ng z
++reorders r ee * * aw d a z
+ reorganization r ee ~ aw g a n ie . z * ai sh n
+ reorganizations r ee ~ aw g a n ie . z * ai sh n z
+ reorganize r ee * aw g a n ie z
+@@ -51995,6 +52208,8 @@
  reseeding r ee . s * ee d i ng
  reseeds r ee . s * ee d z
  resell r ee . s * e l
@@ -966,7 +978,7 @@ diff -u text710.edin.orig text710.edin
  reselling r ee . s * e l i ng
  resells r ee . s * e l z
  resemblance r i . z * e m b l a n s
-@@ -52429,6 +52639,10 @@
+@@ -52429,6 +52644,10 @@
  returned r i . t * er n d
  returning r i . t * er n i ng
  returns r i . t * er n z
@@ -977,7 +989,7 @@ diff -u text710.edin.orig text710.edin
  reunification r ee . y ~ uu n i f i . k * ai sh n
  reunion r ~ ee . y * uu n eer n
  reunions r ~ ee . y * uu n eer n z
-@@ -53571,6 +53785,7 @@
+@@ -53571,6 +53790,7 @@
  runny r * u n i
  runs r * u n z
  runt r * u n t
@@ -985,7 +997,7 @@ diff -u text710.edin.orig text710.edin
  runts r * u n t s
  runway r * u n w ai
  runways r * u n w ai z
-@@ -54381,6 +54596,8 @@
+@@ -54381,6 +54601,8 @@
  schedule sh * e d y uu l
  scheduled sh * e d y uu l d
  schedules sh * e d y uu l z
@@ -994,7 +1006,7 @@ diff -u text710.edin.orig text710.edin
  scheduling sh * e d y uu l i ng
  schema s k * ee m a
  schemas s k * ee m a z
-@@ -54658,6 +54875,9 @@
+@@ -54658,6 +54880,9 @@
  screen s k r * ee n
  screened s k r * ee n d
  screening s k r * ee n i ng
@@ -1004,7 +1016,7 @@ diff -u text710.edin.orig text710.edin
  screens s k r * ee n z
  screes s k r * ee z
  screw s k r * uu
-@@ -54902,6 +55122,7 @@
+@@ -54902,6 +55127,7 @@
  seamiest s * ee m i i s t
  seaming s * ee m i ng
  seamless s * ee m l a s
@@ -1012,7 +1024,7 @@ diff -u text710.edin.orig text710.edin
  seams s * ee m z
  seamstress s * ee m s t r i s
  seamstresses s * ee m s t r i s i z
-@@ -55385,6 +55606,8 @@
+@@ -55385,6 +55611,8 @@
  sensitized s * e n s i t ie z d
  sensitizes s * e n s i t ie z i z
  sensitizing s * e n s i t ie z i ng
@@ -1021,7 +1033,7 @@ diff -u text710.edin.orig text710.edin
  sensory s * e n s a r i
  sensual s * e n sh oor l
  sensualism s * e n sh oor l i z a m
-@@ -57055,6 +57278,7 @@
+@@ -57055,6 +57283,7 @@
  skylights s k * ie l ie t s
  skyline s k * ie l ie n
  skylines s k * ie l ie n z
@@ -1029,7 +1041,7 @@ diff -u text710.edin.orig text710.edin
  skyrocket s k * ie r o k i t
  skyrocketed s k * ie r o k i t i d
  skyrocketing s k * ie r o k i t i ng
-@@ -58595,6 +58819,8 @@
+@@ -58595,6 +58824,8 @@
  specificity s p ~ e s i . f * i s i t i
  specifics s p a . s * i f i k s
  specified s p * e s i f ie d
@@ -1038,7 +1050,7 @@ diff -u text710.edin.orig text710.edin
  specifies s p * e s i f ie z
  specify s p * e s i f ie
  specifying s p * e s i f ie i ng
-@@ -58959,6 +59185,8 @@
+@@ -58959,6 +59190,8 @@
  spooks s p * uu k s
  spooky s p * uu k i
  spool s p * uu l
@@ -1047,7 +1059,7 @@ diff -u text710.edin.orig text710.edin
  spools s p * uu l z
  spoon s p * uu n
  spooned s p * uu n d
-@@ -60422,6 +60650,7 @@
+@@ -60422,6 +60655,7 @@
  structure s t r * u k ch a r
  structured s t r * u k ch a d
  structures s t r * u k ch a z
@@ -1055,7 +1067,7 @@ diff -u text710.edin.orig text710.edin
  strudel s t r * uu d l
  strudels s t r * uu d l z
  struggle s t r * u g l
-@@ -60628,6 +60857,9 @@
+@@ -60628,6 +60862,9 @@
  subeditor s u b * e d i t a r
  subeditors s u b * e d i t a z
  subedits s u b * e d i t s
@@ -1065,7 +1077,7 @@ diff -u text710.edin.orig text710.edin
  subfusc s * u b f u s k
  subgroup s * u b g r uu p
  subgroups s * u b g r uu p s
-@@ -60716,6 +60948,7 @@
+@@ -60716,6 +60953,7 @@
  subpoenaed s a . p * ee n a d
  subpoenaing s a . p * ee n a r i ng
  subpoenas s a . p * ee n a z
@@ -1073,7 +1085,7 @@ diff -u text710.edin.orig text710.edin
  subs s * u b z
  subscribe s a b . s k r * ie b
  subscribed s a b . s k r * ie b d
-@@ -60729,6 +60962,8 @@
+@@ -60729,6 +60967,8 @@
  subscripts s * u b s k r i p t s
  subsection s * u b s e k sh n
  subsections s * u b s e k sh n z
@@ -1082,7 +1094,7 @@ diff -u text710.edin.orig text710.edin
  subsequent s * u b s i k w a n t
  subsequently s * u b s i k w a n t l i
  subserve s a b . s * er v
-@@ -61850,6 +62085,8 @@
+@@ -61850,6 +62090,8 @@
  synthesis s * i n th a s i s
  synthesize s * i n th a s ie z
  synthesized s * i n th a s ie z d
@@ -1091,7 +1103,7 @@ diff -u text710.edin.orig text710.edin
  synthesizes s * i n th a s ie z i z
  synthesizing s * i n th a s ie z i ng
  synthetic s i n . th * e t i k
-@@ -62749,6 +62986,8 @@
+@@ -62749,6 +62991,8 @@
  tepidity t e . p * i d i t i
  tepidly t * e p i d l i
  tepidness t * e p i d n a s
@@ -1100,7 +1112,7 @@ diff -u text710.edin.orig text710.edin
  tercentenaries t ~ er s e n . t * ee n a r i z
  tercentenary t ~ er s e n . t * ee n a r i
  tercentennial t ~ er s e n . t * e n eer l
-@@ -62772,6 +63011,8 @@
+@@ -62772,6 +63016,8 @@
  terminating t * er m i n ai t i ng
  termination t ~ er m i . n * ai sh n
  terminations t ~ er m i . n * ai sh n z
@@ -1109,7 +1121,7 @@ diff -u text710.edin.orig text710.edin
  terming t * er m i ng
  terminological t ~ er m i n a . l * o j i k l
  terminologies t ~ er m i . n * o l a j i z
-@@ -63493,8 +63734,12 @@
+@@ -63493,10 +63739,16 @@
  timeless t * ie m l a s
  timelier t * ie m l eer r
  timeliest t * ie m l i i s t
@@ -1121,8 +1133,12 @@ diff -u text710.edin.orig text710.edin
 +timeouts t * ie m ou t s
  timepiece t * ie m p ee s
  timepieces t * ie m p ee s i z
++timer t * ie m a r
++timers t * ie m a z
  times t * ie m z
-@@ -64055,6 +64300,8 @@
+ timesaving t * ie m s ai v i ng
+ timeserver t * ie m s er v a r
+@@ -64055,6 +64307,8 @@
  touchingly t * u ch i ng l i
  touchline t * u ch l ie n
  touchlines t * u ch l ie n z
@@ -1131,7 +1147,7 @@ diff -u text710.edin.orig text710.edin
  touchstone t * u ch + s t oa n
  touchstones t * u ch + s t oa n z
  touchy t * u ch i
-@@ -64345,6 +64592,8 @@
+@@ -64345,6 +64599,8 @@
  transcontinental t r ~ aa n z k o n t i . n * e n t l
  transcribe t r aa n . s k r * ie b
  transcribed t r aa n . s k r * ie b d
@@ -1140,7 +1156,7 @@ diff -u text710.edin.orig text710.edin
  transcribes t r aa n . s k r * ie b z
  transcribing t r aa n . s k r * ie b i ng
  transcript t r * aa n s k r i p t
-@@ -65374,11 +65623,17 @@
+@@ -65374,11 +65630,17 @@
  typed t * ie p t
  typeface t * ie p f ai s
  typefaces t * ie p f ai s i z
@@ -1158,7 +1174,7 @@ diff -u text710.edin.orig text710.edin
  typewriter t * ie p r ie t a r
  typewriters t * ie p r ie t a z
  typewritten t * ie p r i t n
-@@ -65514,6 +65769,8 @@
+@@ -65514,6 +65776,8 @@
  unalterable u n * o l t a r a b l
  unalterably u n * aw l t a r a b l i
  unaltered u n * aw l t a d
@@ -1167,7 +1183,16 @@ diff -u text710.edin.orig text710.edin
  unambiguous ~ u n aa m . b * i g y oor s
  unambiguously ~ u n aa m . b * i g y oor s l i
  unamended ~ u n a . m * e n d i d
-@@ -65680,6 +65937,7 @@
+@@ -65649,6 +65913,8 @@
+ unchains u n . ch * ai n z
+ unchallengeable u n . ch * aa l a n j a b l
+ unchallenged u n . ch * aa l a n j d
++unchangeable u n . ch * ai n j a b a l
++unchangeableness u n . ch * ai n j a b a l n a s
+ unchanged u n . ch * ai n j d
+ unchanging u n . ch * ai n j i ng
+ uncharacteristic ~ u n k aa r a k t a . r * i s t i k
+@@ -65680,6 +65946,7 @@
  uncommonly u n . k * o m a n l i
  uncommunicative ~ u n k a . m y * uu n i k a t i v
  uncompetitive ~ u n k a m . p * e t a t i v
@@ -1175,7 +1200,19 @@ diff -u text710.edin.orig text710.edin
  uncomplaining ~ u n k a m . p l * ai n i ng
  uncomplainingly ~ u n k a m . p l * ai n i ng l i
  uncompleted ~ u n k a m . p l * ee t i d
-@@ -66255,6 +66513,7 @@
+@@ -65770,8 +66037,11 @@
+ undefeated ~ u n d i . f * ee t i d
+ undefended ~ u n d i . f * e n d i d
+ undeferential ~ u n d e f a . r * e n sh l
++undefine ~ u n d i . f * ie n
+ undefinable ~ u n d i . f * ie n a b l
+ undefined ~ u n d i . f * ie n d
++undefining ~ u n d i . f * ie n i ng
++undefines ~ u n d i . f * ie n z
+ undemanding ~ u n d i . m * ar n d i ng
+ undemocratic ~ u n d e m a . k r * aa t i k
+ undemocratically ~ u n d e m a . k r * aa t i k l i
+@@ -66255,6 +66525,7 @@
  unhurt u n . h * er t
  unhygienic ~ u n h ie . j * ee n i k
  unhygienically ~ u n h ie . j * ee n i k l i
@@ -1183,7 +1220,7 @@ diff -u text710.edin.orig text710.edin
  unicorn y * uu n i k aw n
  unicorns y * uu n i k aw n z
  unidentifiable ~ u n ie . d ~ e n t i . f * ie a b l
-@@ -66296,6 +66555,14 @@
+@@ -66296,6 +66567,14 @@
  uninspired ~ u n i n . s p * ie a d
  uninspiring ~ u n i n . s p * ie a r i ng
  uninsured ~ u n i n . sh * oor d
@@ -1198,7 +1235,7 @@ diff -u text710.edin.orig text710.edin
  unintelligent ~ u n i n . t * e l i j a n t
  unintelligently ~ u n i n . t * e l i j a n t l i
  unintelligible ~ u n i n . t * e l i j a b l
-@@ -66716,6 +66983,8 @@
+@@ -66716,6 +66995,8 @@
  unsportsmanlike u n . s p * aw t s m a n l ie k
  unspotted u n . s p * o t i d
  unstable u n . s t * ai b l
@@ -1207,7 +1244,18 @@ diff -u text710.edin.orig text710.edin
  unstartling u n . s t * ar t l i ng
  unstated u n . s t * ai t i d
  unstatesmanlike u n . s t * ai t s m a n l ie k
-@@ -66969,6 +67238,7 @@
+@@ -66728,6 +67009,10 @@
+ unstrung ~ u n . s t r * u ng
+ unstuck ~ u n . s t * u k
+ unstudied ~ u n . s t * u d i d
++unsubscribe u n . s a b . s k r * ie b
++unsubscribed u n . s a b . s k r * ie b d
++unsubscribes u n . s a b . s k r * ie b z
++unsubscribing u n . s a b . s k r * ie b i ng
+ unsubtle u n . s * u t l
+ unsuccessful ~ u n s a k . s * e s f a l
+ unsuccessfully ~ u n s a k . s * e s f a l i
+@@ -66969,6 +67254,7 @@
  uptake * u p t ai k
  uptakes * u p t ai k s
  uptight ~ u p . t * ie t
@@ -1215,7 +1263,7 @@ diff -u text710.edin.orig text710.edin
  uptown ~ u p . t * ou n
  upturn * u p t er n
  upturned * u p t er n d
-@@ -69117,6 +69387,8 @@
+@@ -69117,6 +69403,8 @@
  whitens w * ie t n z
  whiter w * ie t a r
  whites w * ie t s
@@ -1224,7 +1272,7 @@ diff -u text710.edin.orig text710.edin
  whitest w * ie t i s t
  whitethorn w * ie t th aw n
  whitethorns w * ie t th aw n z
-@@ -69229,6 +69501,7 @@
+@@ -69229,6 +69517,7 @@
  wielding w * ee l d i ng
  wields w * ee l d z
  wife w * ie f

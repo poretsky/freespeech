@@ -1,3 +1,9 @@
+freespeech (1.0m-14) unstable; urgency=low
+
+  * A bit more words in dictionary.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Wed, 27 Nov 2013 06:40:26 +0400
+
 freespeech (1.0m-11) unstable; urgency=low
 
   * More words in pronunciation dictionary.

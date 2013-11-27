@@ -1,3 +1,9 @@
+freespeech (1.0m-14wheezy1) wheezy; urgency=low
+
+  * A bit more words in dictionary.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Wed, 27 Nov 2013 06:58:45 +0400
+
 freespeech (1.0m-13wheezy1) wheezy; urgency=low
 
   * Per distribution build.

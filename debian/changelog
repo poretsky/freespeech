@@ -1,3 +1,9 @@
+freespeech (1.0m-16wheezy1) wheezy; urgency=low
+
+  * Numeric values pronunciation fix.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Fri, 06 Mar 2015 01:46:32 +0300
+
 freespeech (1.0m-15wheezy1) wheezy; urgency=low
 
   * Corrected pronunciation of numeric values.

@@ -1,6 +1,6 @@
 diff -u text710.edin.orig text710.edin
---- text710.edin.orig	2013-11-27 05:55:37.307994450 +0400
-+++ text710.edin	2013-11-27 06:26:17.191936845 +0400
+--- text710.edin.orig	2015-03-06 01:02:12.876808110 +0300
++++ text710.edin	2015-03-06 01:03:33.672809165 +0300
 @@ -1009,7 +1009,6 @@
  Dingle d * i ng g l
  Dinnington d * i n i ng t a n
@@ -89,6 +89,17 @@ diff -u text710.edin.orig text710.edin
  behead b i . h * e d
  beheaded b i . h * e d i d
  beheading b i . h * e d i ng
+@@ -9057,8 +9065,8 @@
+ billies b * i l i z
+ billing b * i l i ng
+ billingsgate b * i l i ng z g ai t
+-billion b * i l eer ng
+-billions b * i l eer ng z
++billion b * i l eer n
++billions b * i l eer n z
+ billionth b * i l eer n th
+ billionths b * i l eer n th s
+ billow b * i l oa
 @@ -9083,6 +9091,7 @@
  binders b * ie n d a z
  bindery b * ie n d a r i
@@ -1280,3 +1291,11 @@ diff -u text710.edin.orig text710.edin
  wifelier w * ie f l eer r
  wifeliest w * ie f l i i s t
  wifelike w * ie f l ie k
+@@ -70165,6 +70454,7 @@
+ zeroed z * eer r oa d
+ zeroing z * eer r oa i ng
+ zeros z * eer r oa z
++zeroth z * eer r oa th
+ zest z * e s t
+ zestful z * e s t f a l
+ zestfully z * e s t f a l i

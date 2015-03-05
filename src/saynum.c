@@ -14,7 +14,7 @@
 
 static char *Cardinals[] = 
 {
-  "z*IHrOW ",	"w*AHn ",	"t*UW ",		"THr*IY ",
+  "z*IArOW ",	"w*AHn ",	"t*UW ",		"THr*IY ",
   "f*AOr ",	"f*AYv ",	"s*IHks ",	"s*EHvn ",
   "*EYt ",		"n*AYn ",		
   "t*EHn ",	"IY.l*EHvAXn ",	"tw*EHlv ",	"TH~ER.t*IYn ",
@@ -30,7 +30,7 @@ static char *Twenties[] =
 
 static char *Ordinals[] = 
 {
-  "z*IHrOWTH ",	"f*ERst ",	"s*EHkAHnd ",	"TH*ERd ",
+  "z*IArOWTH ",	"f*ERst ",	"s*EHkAHnd ",	"TH*ERd ",
   "f*AOTH ",	"f*IHfTH ",	"s*IHksTH ",	"s*EHvnTH ",
   "*EYtTH ",	"n*AYnTH ",		
   "t*EHnTH ",	"IY.l*EHvnTH ",	"tw*EHlvTH ",	"TH~ER.t*IYnTH ",
@@ -53,11 +53,11 @@ export void say_cardinal(long int value)
 {
   if (value < 0)
     {
-      outstring("mAYnAHs ");
+      outstring("m*AYnAXs ");
       value = (-value);
       if (value < 0)	/* Overflow!  -32768 */
 	{
-	  outstring("IHnfIHnIHtIY ");
+	  outstring("IHn.f*IHnIHtIH ");
 	  return;
 	}
     }
@@ -65,7 +65,7 @@ export void say_cardinal(long int value)
   if (value >= 1000000000L)	/* Billions */
     {
       say_cardinal(value/1000000000L);
-      outstring("bIHlIYAXn ");
+      outstring("b*IHlIAn ");
       value = value % 1000000000;
       if (value == 0)
 	return;		/* Even billion */
@@ -76,7 +76,7 @@ export void say_cardinal(long int value)
   if (value >= 1000000L)	/* Millions */
     {
       say_cardinal(value/1000000L);
-      outstring("mIHlIYAXn ");
+      outstring("m*IHlIAn ");
       value = value % 1000000L;
       if (value == 0)
 	return;		/* Even million */
@@ -132,7 +132,7 @@ export void say_ordinal(long int value)
       value = (-value);
       if (value < 0)	/* Overflow!  -32768 */
 	{
-	  outstring("IHnfIHnIHtIY ");
+	  outstring("IHn.f*IHnIHtIH ");
 	  return;
 	}
     }
@@ -143,10 +143,10 @@ export void say_ordinal(long int value)
       value = value % 1000000000;
       if (value == 0)
 	{
-	  outstring("bIHlIYAXnTH ");
+	  outstring("b*IHlIAnTH ");
 	  return;		/* Even billion */
 	}
-      outstring("bIHlIYAXn ");
+      outstring("b*IHlIAn ");
       if (value < 100)	/* as in THREE BILLION AND FIVE */
 	outstring("AEnd ");
     }
@@ -157,10 +157,10 @@ export void say_ordinal(long int value)
       value = value % 1000000L;
       if (value == 0)
 	{
-	  outstring("mIHlIYAXnTH ");
+	  outstring("m*IHlIAnTH ");
 	  return;		/* Even million */
 	}
-      outstring("mIHlIYAXn ");
+      outstring("m*IHlIAn ");
       if (value < 100)	/* as in THREE MILLION AND FIVE */
 	outstring("AEnd ");
     }

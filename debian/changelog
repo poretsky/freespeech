@@ -1,3 +1,9 @@
+freespeech (1.0m-15lucid1) lucid; urgency=low
+
+  * Corrected pronunciation of numeric values.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Thu, 05 Mar 2015 22:09:40 +0300
+
 freespeech (1.0m-14lucid1) lucid; urgency=low
 
   * A bit more words in dictionary.

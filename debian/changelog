@@ -1,3 +1,9 @@
+freespeech (1.0m-15) unstable; urgency=low
+
+  * Corrected pronunciation of numeric values.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Thu, 05 Mar 2015 22:01:24 +0300
+
 freespeech (1.0m-14) unstable; urgency=low
 
   * A bit more words in dictionary.

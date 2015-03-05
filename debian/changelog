@@ -1,3 +1,9 @@
+freespeech (1.0m-16precise1) precise; urgency=low
+
+  * Numeric values pronunciation fix.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Fri, 06 Mar 2015 01:50:16 +0300
+
 freespeech (1.0m-15precise1) precise; urgency=low
 
   * Corrected pronunciation of numeric values.

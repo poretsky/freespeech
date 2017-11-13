@@ -1,8 +1,9 @@
 freespeech (1.0m-16jessie1) jessie; urgency=low
 
   * Distribution specific build.
+  * Bump standards version.
 
- -- Igor B. Poretsky <poretsky@mlbox.ru>  Mon, 13 Nov 2017 07:14:25 +0300
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Mon, 13 Nov 2017 21:30:09 +0300
 
 freespeech (1.0m-16) unstable; urgency=low
 

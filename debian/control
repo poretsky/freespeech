@@ -3,7 +3,7 @@ Section: sound
 Priority: optional
 Maintainer: Igor B. Poretsky <poretsky@mlbox.ru>
 Build-Depends: cdbs, debhelper (>= 5), libdb-dev
-Standards-Version: 3.9.3
+Standards-Version: 3.9.6
 
 Package: freephone
 Architecture: any

@@ -2,8 +2,9 @@ freespeech (1.0m-16stretch1) stretch; urgency=low
 
   * Distribution specific build.
   * Bump standards version.
+  * Debhelper compatibility level fix.
 
- -- Igor B. Poretsky <poretsky@mlbox.ru>  Mon, 13 Nov 2017 21:47:38 +0300
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Mon, 13 Nov 2017 22:18:38 +0300
 
 freespeech (1.0m-16) unstable; urgency=low
 

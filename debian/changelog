@@ -1,8 +1,9 @@
 freespeech (1.0m-16trusty1) trusty; urgency=low
 
   * Distribution specific build.
+  * Bump standards version.
 
- -- Igor B. Poretsky <poretsky@mlbox.ru>  Mon, 13 Nov 2017 05:24:58 +0300
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Mon, 13 Nov 2017 05:56:24 +0300
 
 freespeech (1.0m-16) unstable; urgency=low
 

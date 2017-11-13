@@ -1,3 +1,9 @@
+freespeech (1.0m-16trusty1) trusty; urgency=low
+
+  * Distribution specific build.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Mon, 13 Nov 2017 05:24:58 +0300
+
 freespeech (1.0m-16) unstable; urgency=low
 
   * Numeric values pronunciation fix.

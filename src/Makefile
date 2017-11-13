@@ -26,8 +26,8 @@ bindir = ${prefix}/bin
 ############################################################################
 # Linux users
 CC = gcc
-CFLAGS = -Wall -O2
-LFLAGS = -s
+CFLAGS += -Wall -O2
+LFLAGS = $(LDFLAGS) -s
 LIBS = -ldb
 GROUP = root
 ############################################################################

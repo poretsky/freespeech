@@ -1,3 +1,9 @@
+freespeech (1.0m-16buster1) buster; urgency=low
+
+  * Distribution specific build.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Fri, 13 Dec 2019 08:57:44 +0300
+
 freespeech (1.0m-16) unstable; urgency=low
 
   * Numeric values pronunciation fix.

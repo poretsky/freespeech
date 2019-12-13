@@ -2,8 +2,8 @@ Source: freespeech
 Section: sound
 Priority: optional
 Maintainer: Igor B. Poretsky <poretsky@mlbox.ru>
-Build-Depends: cdbs, debhelper (>= 5), libdb-dev
-Standards-Version: 3.9.3
+Build-Depends: cdbs, debhelper (>= 9), libdb-dev
+Standards-Version: 4.3.0
 
 Package: freephone
 Architecture: any

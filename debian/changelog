@@ -1,3 +1,9 @@
+freespeech (1.0m-16bionic1) bionic; urgency=low
+
+  * Distribution specific build.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Fri, 13 Dec 2019 08:54:00 +0300
+
 freespeech (1.0m-16) unstable; urgency=low
 
   * Numeric values pronunciation fix.

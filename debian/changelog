@@ -1,3 +1,9 @@
+freespeech (1.0m-16focal1) focal; urgency=low
+
+  * Distribution specific build.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Sun, 18 Oct 2020 22:03:20 +0300
+
 freespeech (1.0m-16) unstable; urgency=low
 
   * Numeric values pronunciation fix.

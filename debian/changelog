@@ -1,3 +1,9 @@
+freespeech (1.0m-17focal1) focal; urgency=medium
+
+  * Separate package for architecture independent data.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Mon, 07 Mar 2022 04:57:49 +0300
+
 freespeech (1.0m-16focal1) focal; urgency=low
 
   * Distribution specific build.

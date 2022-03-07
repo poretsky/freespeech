@@ -8,18 +8,22 @@ Standards-Version: 3.9.5
 Package: freephone
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Recommends: enlex
+Recommends: enlex-data
 Suggests: mbrola, mbrola-voice-en
+Conflicts: enlex
+Replaces: enlex
 Description: English Text-To-Phoneme converter
  freephone converts English text to phonemes for MBROLA.
  .
  It can make use of an external dictionary in hash format,
- such as the one provided by enlex package.
+ such as the one provided by enlex-data package.
 
-Package: enlex
-Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Package: enlex-data
+Architecture: all
+Depends: ${misc:Depends}
 Recommends: freephone
+Conflicts: enlex
+Replaces: enlex
 Description: English pronunciation dictionary
  This package is aimed primarily for use together with the Freephone
  phonetizer for Mbrola. When it is installed you can instruct Freephone

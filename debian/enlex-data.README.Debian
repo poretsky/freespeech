@@ -1,0 +1,10 @@
+enlex-data for Debian
+---------------------
+
+This package contains English pronunciation dictionary.
+It is primarily intended for use along with the Freephone phonetizer
+for Mbrola speech synthesizer. For freephone to make use of the
+pronunciation dictionary call it with "-h /usr/share/freespeech/enlex.db"
+switch in the command line.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Mon, 07 Mar 2022 04:12:07 +0300

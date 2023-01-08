@@ -1,3 +1,9 @@
+freespeech (1.0m-17jammy1) jammy; urgency=medium
+
+  * Release for Ubuntu Jammy.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Sun, 08 Jan 2023 06:21:56 +0300
+
 freespeech (1.0m-17) unstable; urgency=medium
 
   * Separate package for architecture independent data.

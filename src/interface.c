@@ -120,6 +120,8 @@ export void have_number()
 
   for (new_char() ; isdigit(Char) ; new_char())
     {
+      if (!value)
+        say_cardinal(value);
       value = 10 * value + (Char-'0');
       lastdigit = Char;
     }

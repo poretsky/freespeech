@@ -30,7 +30,7 @@ static char *Twenties[] =
 
 static char *Ordinals[] = 
 {
-  "z*IArOWTH ",	"f*ERst ",	"s*EHkAHnd ",	"TH*ERd ",
+  "z*IArOWTH ",	"f*ERst ",	"s*EHkAXnd ",	"TH*ERd ",
   "f*AOTH ",	"f*IHfTH ",	"s*IHksTH ",	"s*EHvnTH ",
   "*EYtTH ",	"n*AYnTH ",		
   "t*EHnTH ",	"IY.l*EHvnTH ",	"tw*EHlvTH ",	"TH~ER.t*IYnTH ",

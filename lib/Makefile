@@ -10,56 +10,45 @@
 #
 #
 ############################################################################
-
-# Installation paths
-prefix = /usr/local
-bindir = ${prefix}/bin
-datadir = ${prefix}/share/freespeech
-docdir = ${prefix}/share/doc/enlex
-
-# Installed database filename
-DBF = enlex.db
-
-# Installed utility name
-UTILITY = lexholder-en
-
 # Select the appropriate Makefile options for your system. then type make.
+############################################################################
+# Sun users
+# CC = gcc
+# CFLAGS = -g -Wall -pedantic
+# LIBS = -lm
 ############################################################################
 # FreeBSD users
 # CC = gcc
-# CFLAGS = -O2 -DFBSD_DATABASE
-# LFLAGS = -s
+# CFLAGS = -O2 -Wall -pedantic -DFBSD_DATABASE
 # LIBS = -lm
-# GROUP = wheel
 ############################################################################
 # Linux users
 CC = gcc
-CFLAGS = -Wall -O2
-LFLAGS = -s
-LIBS = -ldb
-GROUP = root
+CFLAGS = -g -Wall -pedantic
+LIBS = -lm -lgdbm
 ############################################################################
 
+OBJ = dbm_prog.c
 
-all: lexicon
 
-lexicon: text710.edin lexholder
-	./lexholder -qf $< $@
+all: lexicon 
 
-text710.edin: text710.dat text710.edin.patch read_ox_dict
-	./read_ox_dict $< > $@ 2>/dev/null
-	patch -Esup0 < text710.edin.patch
+lexicon: text710.edin dbm_prog
+	/bin/rm -i lexicon*
+	./dbm_prog -o lexicon -i text710.edin
+	touch lexicon
 
-lexholder: lexholder.c
-	$(CC) $(CFLAGS) $(LFLAGS) -o $@ $< $(LIBS)
+text710.edin: text710.dat read_ox_dict
+	read_ox_dict text710.dat > text710.edin
 
-.PHONY: install
-install: lexholder lexicon
-	install -d ${bindir} ${datadir} ${docdir}
-	install -g ${GROUP} -o root -m 0755 -p lexholder ${bindir}/${UTILITY}
-	install -g ${GROUP} -o root -m 0644 -p lexicon ${datadir}/${DBF}
-	install -g ${GROUP} -o root -m 0644 -p text710.doc ${docdir}
+dbm_prog: $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $(OBJ) $(LIBS)
 
-.PHONY: clean
 clean:
-	rm -f lexholder *.o text710.edin lexicon
+	rm -f dbm_prog *.o core gmon.out lexicon 
+
+distribution:
+	echo "This needs written."
+
+# dependencies
+

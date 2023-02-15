@@ -1,0 +1,414 @@
+From: "Igor B. Poretsky" <poretsky@mlbox.ru>
+Date: Wed, 15 Feb 2023 14:03:25 +0300
+Subject: Berkeley DB instead of GDBM
+
+---
+ lib/Makefile     | 20 ++++++---------
+ lib/dbm_prog.c   | 78 ++++++++++++++++++++++++++++++++++++--------------------
+ src/Makefile     |  8 +++---
+ src/conv1.c      | 12 ++++-----
+ src/nrl_edin.c   | 12 ++++-----
+ src/space.c      | 16 +++---------
+ src/transcribe.c | 28 ++++----------------
+ 7 files changed, 83 insertions(+), 91 deletions(-)
+
+diff --git a/lib/Makefile b/lib/Makefile
+index 123b5ff..f8bdd75 100644
+--- a/lib/Makefile
++++ b/lib/Makefile
+@@ -14,35 +14,31 @@
+ ############################################################################
+ # Sun users
+ # CC = gcc
+-# CFLAGS = -g -Wall -pedantic
++# CFLAGS = -O2 -s
+ # LIBS = -lm
+ ############################################################################
+ # FreeBSD users
+ # CC = gcc
+-# CFLAGS = -O2 -Wall -pedantic -DFBSD_DATABASE
++# CFLAGS = -O2 -DFBSD_DATABASE -s
+ # LIBS = -lm
+ ############################################################################
+ # Linux users
+ CC = gcc
+-CFLAGS = -g -Wall -pedantic
+-LIBS = -lm -lgdbm
++CFLAGS = -O2 -DBERKELEYDB -s
++LIBS = -lm -ldb-3
+ ############################################################################
+ 
+-OBJ = dbm_prog.c
+-
+ 
+ all: lexicon 
+ 
+ lexicon: text710.edin dbm_prog
+-	/bin/rm -i lexicon*
+ 	./dbm_prog -o lexicon -i text710.edin
+-	touch lexicon
+ 
+-text710.edin: text710.dat read_ox_dict
+-	read_ox_dict text710.dat > text710.edin
++#text710.edin: text710.dat read_ox_dict
++#	read_ox_dict text710.dat > text710.edin
+ 
+-dbm_prog: $(OBJ)
+-	$(CC) $(CFLAGS) -o $@ $(OBJ) $(LIBS)
++dbm_prog: dbm_prog.c
++	$(CC) $(CFLAGS) -o $@ $< $(LIBS)
+ 
+ clean:
+ 	rm -f dbm_prog *.o core gmon.out lexicon 
+diff --git a/lib/dbm_prog.c b/lib/dbm_prog.c
+index 03dbaf7..3d94158 100644
+--- a/lib/dbm_prog.c
++++ b/lib/dbm_prog.c
+@@ -1,20 +1,26 @@
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <unistd.h>
+ #include <sys/types.h>
+ #include <limits.h>
+ #include <string.h>
+ #include <fcntl.h>
+-#ifdef FBSD_DATABASE
++
++#if defined(FBSD_DATABASE)
+ #include <db.h>
++#elif defined(BERKELEYDB)
++#include <db_185.h>
+ #else
+ #include <ndbm.h>
++#define RET_SUCCESS 0
++#define RET_SPECIAL 1
+ #endif
+ 
+ #ifdef FBSD_DATABASE	/* this needs to be explicit  */
+ HASHINFO openinfo = {
+         128,           /* bsize */
+         8,             /* ffactor */
+-        75000,         /* nelem */
++        155000,         /* nelem */
+         2048 * 1024,   /* cachesize */
+         NULL,          /* hash */
+         0              /* lorder */
+@@ -23,13 +29,12 @@ HASHINFO openinfo = {
+ 
+ int main(int argc, char *argv[])
+ {
+-#ifdef FBSD_DATABASE
++#if defined(FBSD_DATABASE) || defined(BERKELEYDB)
+ 	DBT inKey, inVal;
+ 	DB * db;
+ #else
+ 	DBM * db;
+-	datum Key;
+-	datum Val;
++	datum inKey, inVal;
+ #endif
+ 
+ 	FILE *ifd;
+@@ -40,7 +45,7 @@ int main(int argc, char *argv[])
+         extern int optind;
+ 
+ 	char c;
+-	int  i;
++	int  ret, n = 0, i = 0;
+ 
+ 	/* read in file name  */
+ 	if(argc==1) {
+@@ -70,38 +75,55 @@ int main(int argc, char *argv[])
+                 exit(1);
+         }
+ 
+-
+-#ifdef FBSD_DATABASE
++#if defined(BERKELEYDB)
++        db = dbopen(optr,O_RDWR|O_CREAT, 0000644, DB_HASH, NULL);
++#elif defined(FBSD_DATABASE)
+         db = dbopen(optr,O_RDWR|O_CREAT, 0000644, DB_HASH, &openinfo);
++#else
++	db = dbm_open(optr,O_RDWR|O_CREAT, 0000644);
++#endif
+ 
+ 	while(fgets(line,256,ifd)) {
++#if defined(FBSD_DATABASE) || defined(BERKELEYDB)
+ 		inKey.data = strtok(line," ");
+-		inKey.size = strlen(inKey.data)+1;
++		inKey.size = strlen(inKey.data);
+ 		inVal.data = strtok(NULL,"\n");
+ 		inVal.size = strlen(inVal.data)+1;
+-                (db->put)(db,&inKey,&inVal,R_NOOVERWRITE);
+-
+-		i++;
+-		fprintf(stderr,"%d\r",i);
+-	}
+-
+-        (void)(db->close)(db);
++		ret = (db->put)(db,&inKey,&inVal,R_NOOVERWRITE);
+ #else
+-        db = dbm_open(optr,O_RDWR|O_CREAT, 0000644);
+-
+-	while(fgets(line,256,ifd)) {
+-		Key.dptr = strtok(line," ");
+-		Key.dsize = strlen(Key.dptr)+1;
+-		Val.dptr = strtok(NULL,"\n");
+-		Val.dsize = strlen(Val.dptr)+1;
+-		dbm_store(db,Key,Val,DBM_INSERT);
+-
+-		i++;
+-		fprintf(stderr,"%d\r",i);
++		inKey.dptr = strtok(line," ");
++		inKey.dsize = strlen(Key.dptr);
++		inVal.dptr = strtok(NULL,"\n");
++		inVal.dsize = strlen(Val.dptr)+1;
++		ret = dbm_store(db,Key,Val,DBM_INSERT);
++#endif
++		n++;
++		switch(ret) {
++			case RET_SUCCESS:
++				i++;
++				break;
++			case RET_SPECIAL:
++				fprintf(stderr,"%s:%i: warning: Duplicate entry. Ignored.\n",iptr,n);
++				break;
++			default:
++#if defined(FBSD_DATABASE) || defined(BERKELEYDB)
++				(void)(db->close)(db);
++#else
++				dbm_close(db);
++#endif
++				fprintf(stderr,"%s:%i: error: storing error\n",iptr,n);
++				fprintf(stderr,"%d words processed.\n",i);
++				exit(1);
++		}
+ 	}
+ 
+-        dbm_close(db);
++#if defined(FBSD_DATABASE) || defined(BERKELEYDB)
++	(void)(db->close)(db);
++#else
++	dbm_close(db);
+ #endif
+ 
++	fprintf(stderr,"%d words processed.\n",i);
++
+ 	return(0);
+ }
+diff --git a/src/Makefile b/src/Makefile
+index 393de2e..56188f6 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -14,18 +14,18 @@
+ ############################################################################
+ # Sun users
+ # CC = gcc
+-# CFLAGS = -g -Wall -pedantic
++# CFLAGS = -O2 -s
+ # LIBS = -lm
+ ############################################################################
+ # FreeBSD users
+ # CC = gcc
+-# CFLAGS = -O2 -Wall -pedantic
++# CFLAGS = -O2 -DFBSD_DATABASE -s
+ # LIBS = -lm
+ ############################################################################
+ # Linux users
+ CC = gcc
+-CFLAGS = -g -Wall -pedantic
+-LIBS = -lm -lgdbm
++CFLAGS = -O2 -DBERKELEYDB -pedantic -Wall -s
++LIBS = -lm -ldb
+ ############################################################################
+ 
+ 
+diff --git a/src/conv1.c b/src/conv1.c
+index 5dad88e..5e7f572 100644
+--- a/src/conv1.c
++++ b/src/conv1.c
+@@ -40,19 +40,19 @@ export void conv1(CONFIG *config, LING_LIST *ling_list, SENT *sent)
+ 	sil_fill(j++,"L-H]",0.7,50,sent);
+ 	buffer_add_str(slist," ##");
+       } else if(ling_list->text[i]->word[0] == ':') {
+-	sil_fill(j++,"L-H]",0.7,750,sent);
++	sil_fill(j++,"L-H]",0.7,50,sent);
+ 	buffer_add_str(slist," ##");
+       } else if(ling_list->text[i]->word[0] == ';') {
+-	sil_fill(j++,"L-L]",0.7,750,sent);
++	sil_fill(j++,"L-L]",0.7,50,sent);
+ 	buffer_add_str(slist," ##");
+       } else if(ling_list->text[i]->word[0] == '.') {
+-	sil_fill(j++,"L-L]",1.0,1200,sent);
++	sil_fill(j++,"L-L]",1.0,50,sent);
+ 	buffer_add_str(slist," ##");
+       } else if(ling_list->text[i]->word[0] == '!') {
+-	sil_fill(j++,"L-L]",1.0,1200,sent);
++	sil_fill(j++,"L-L]",1.0,50,sent);
+ 	buffer_add_str(slist," ##");
+       } else if(ling_list->text[i]->word[0] == '?') {
+-	sil_fill(j++,"L-H]",1.0,1200,sent);
++	sil_fill(j++,"L-H]",1.0,50,sent);
+ 	buffer_add_str(slist," ##");
+       } else {
+ 	sil_fill(j++,"L-H]",0.7,200,sent);
+@@ -88,7 +88,7 @@ export void conv1(CONFIG *config, LING_LIST *ling_list, SENT *sent)
+     }
+   }
+   if(buffer_last_char(slist) != '#') {
+-    sil_fill(j++,"",0.0,1200,sent);
++    sil_fill(j++,"",0.0,50,sent);
+     buffer_add_str(slist," ##");
+   }
+   sent->sil_sz = j;
+diff --git a/src/nrl_edin.c b/src/nrl_edin.c
+index 778e658..cb2b000 100644
+--- a/src/nrl_edin.c
++++ b/src/nrl_edin.c
+@@ -15,7 +15,7 @@
+ */
+ #include "t2s.h"
+ 
+-static char *nrl_edin[][2] = {
++static PKEY nrl_edin[] = {
+   {	" ", "| ",},
+   {	"IY", "ee ",},
+   {	"EY", "ai ",},
+@@ -62,7 +62,7 @@ static char *nrl_edin[][2] = {
+   {	"w", "w ",},
+   {	"r", "r ",},
+   {	"JH", "j ",},			/* problem  */
+-  {	"","",},
++  {	"",""}
+ };
+ 
+ 
+@@ -74,12 +74,12 @@ export void nrl_edin_conv(char *str, char *str2)
+   
+   while(*str) {
+     i = 0;
+-    while(nrl_edin[i][0] != '\0') {
+-      if(!strncmp(str,nrl_edin[i][0],strlen(nrl_edin[i][0])))
++    while(nrl_edin[i].keyword != "") {
++      if(!strncmp(str,nrl_edin[i].keyword,strlen(nrl_edin[i].keyword)))
+ 	break;
+       i++;
+     }
+-    strcat(str2,nrl_edin[i][1]);
+-    str += strlen(nrl_edin[i][0]);
++    strcat(str2,nrl_edin[i].keyvalue);
++    str += strlen(nrl_edin[i].keyword);
+   }
+ }
+diff --git a/src/space.c b/src/space.c
+index 848d0a8..43a2cd6 100644
+--- a/src/space.c
++++ b/src/space.c
+@@ -11,12 +11,13 @@
+ 
+ #include <sys/types.h>
+ #include <limits.h>
+-/* FreeBSD, and Linux?  */
++
+ #ifdef FBSD_DATABASE
+ #include <db.h>
+ #else
+-#include <ndbm.h>
++#include <db_185.h>
+ #endif
++
+ #include <fcntl.h>
+ 
+ int ft_endian_loc = 1; /* for deciding if we need to byte-swap  */
+@@ -50,11 +51,7 @@ export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sen
+   /* set up database if present  */
+ 
+   if(strcmp("-",config->hash_file)) {
+-#ifdef FBSD_DATABASE
+     config->db = (void *)dbopen(config->hash_file,O_RDONLY, 0000644, DB_HASH, NULL);
+-#else
+-    config->db = (void *)dbm_open(config->hash_file,O_RDONLY, 0000644);
+-#endif
+     /* the (void *) is so config can remain ignorant about the database  */
+     if(config->db==NULL) {
+       (void)fprintf(stderr,"\nDictionary file \"%s\" not found.\n",config->hash_file);
+@@ -125,12 +122,7 @@ void terminate(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent,
+ {
+ 
+   if(config->db != NULL)
+-#ifdef FBSD_DATABASE
+-    (void)(config->db->close)(config->db);
+-#else
+-  dbm_close(config->db);
+-#endif
+-
++    (void)(((DB *)(config->db))->close)((DB *)(config->db));
+ 
+   output_close(config);
+ 
+diff --git a/src/transcribe.c b/src/transcribe.c
+index 6f5989b..f1e985b 100644
+--- a/src/transcribe.c
++++ b/src/transcribe.c
+@@ -9,12 +9,13 @@
+ 
+ #include <sys/types.h>
+ #include <limits.h>
+-/* FreeBSD, and Linux?  */
++
+ #ifdef FBSD_DATABASE
+ #include <db.h>
+ #else
+-#include <ndbm.h>
++#include <db_185.h>
+ #endif
++
+ #include <fcntl.h>
+ 
+ static char *lookup_db(char *word, CONFIG *config);
+@@ -54,43 +55,24 @@ export void transcribe(CONFIG *config, LING_LIST *ling_list)
+   }
+ }
+ 
+-#ifdef FBSD_DATABASE
+-
+ static char *lookup_db(char *word, CONFIG *config)
+ {
+   DBT inKey, inVal;
+  
+   inKey.data = word;
+-  inKey.size = strlen(word)+1;
++  inKey.size = strlen(word);
+  
+   inVal.data = NULL;
+   inVal.size = 0;
+  
+  
+   if(config->db != NULL) {
+-    (config->db->get)((DB *)config->db,&inKey,&inVal,0);
++    (((DB *)(config->db))->get)((DB *)(config->db),&inKey,&inVal,0);
+     return(inVal.data);
+   } else 
+     return(NULL);
+ }
+ 
+-#else
+-
+-static char *lookup_db(char *word, CONFIG *config)
+-{
+-  datum Key;
+-
+-  Key.dptr = word;
+-  Key.dsize = strlen(word)+1;
+-
+-  if(config->db != NULL)
+-    return(dbm_fetch((DBM *)config->db,Key).dptr);
+-  else
+-    return(NULL);
+-}
+-
+-#endif
+-
+ static void ToLower(char *word)
+ {
+   while(*word) {

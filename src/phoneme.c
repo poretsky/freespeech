@@ -71,15 +71,13 @@ static int leftmatch(char *pattern, char *context)
     {
       /* First check for simple text or space */
       if (isalpha(*pat) || *pat == '\'' || *pat == ' ')
-        {
-          if (*pat != *text)
-            return FALSE;
-          else
-            {
-              text--;
-              continue;
-            }
-        }
+	if (*pat != *text)
+	  return FALSE;
+	else
+	  {
+	    text--;
+	    continue;
+	  }
 
       switch (*pat)
 	{
@@ -145,15 +143,13 @@ static int rightmatch(char *pattern, char *context)
     {
       /* First check for simple text or space */
       if (isalpha(*pat) || *pat == '\'' || *pat == ' ')
-        {
-          if (*pat != *text)
-            return FALSE;
-          else
-            {
-              text++;
-              continue;
-            }
-        }
+	if (*pat != *text)
+	  return FALSE;
+	else
+	  {
+	    text++;
+	    continue;
+	  }
 
       switch (*pat)
 	{

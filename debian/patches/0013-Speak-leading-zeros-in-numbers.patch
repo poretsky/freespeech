@@ -1,0 +1,21 @@
+From: "Igor B. Poretsky" <poretsky@mlbox.ru>
+Date: Tue, 14 Feb 2023 17:40:32 +0300
+Subject: Speak leading zeros in numbers
+
+---
+ src/interface.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/interface.c b/src/interface.c
+index 31e9095..ca91b9f 100644
+--- a/src/interface.c
++++ b/src/interface.c
+@@ -121,6 +121,8 @@ export void have_number()
+ 
+   for (new_char() ; isdigit(Char) ; new_char())
+     {
++      if (!value)
++        say_cardinal(value);
+       value = 10 * value + (Char-'0');
+       lastdigit = Char;
+     }

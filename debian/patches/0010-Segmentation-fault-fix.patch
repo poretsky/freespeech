@@ -1,0 +1,21 @@
+From: "Igor B. Poretsky" <poretsky@mlbox.ru>
+Date: Wed, 15 Feb 2023 14:43:48 +0300
+Subject: Segmentation fault fix
+
+---
+ src/syllab.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/syllab.c b/src/syllab.c
+index e59dc87..88239ec 100644
+--- a/src/syllab.c
++++ b/src/syllab.c
+@@ -161,7 +161,7 @@ export char *syllabify(char *string, CONFIG *config)
+   /* we start looking once we find a vowel  */
+   /* we stop looking if we find an existing syllable boundary  */
+ 
+-  if(b_cat(carrier[c_sz-1],config) == VOWEL) {
++  if((c_sz>0) && b_cat(carrier[c_sz-1],config) == VOWEL) {
+     look = 1;
+     /* don't need a marker  */
+   }

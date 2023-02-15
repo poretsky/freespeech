@@ -10,41 +10,51 @@
 #
 #
 ############################################################################
+
+# Installation paths
+prefix = /usr/local
+bindir = ${prefix}/bin
+datadir = ${prefix}/share/freespeech
+docdir = ${prefix}/share/doc/enlex-data
+
+# Installed database filename
+DBF = enlex.db
+
+# Installed utility name
+UTILITY = lexholder-en
+
 # Select the appropriate Makefile options for your system. then type make.
-############################################################################
-# Sun users
-# CC = gcc
-# CFLAGS = -O2 -s
-# LIBS = -lm
 ############################################################################
 # FreeBSD users
 # CC = gcc
-# CFLAGS = -O2 -DFBSD_DATABASE -s
+# CFLAGS = -O2 -DFBSD_DATABASE
 # LIBS = -lm
 ############################################################################
 # Linux users
 CC = gcc
-CFLAGS = -O2 -DBERKELEYDB -s
-LIBS = -lm -ldb-3
+CFLAGS = -g -Wall -O2
+LIBS = -ldb
 ############################################################################
 
 
-all: lexicon 
+all: lexicon
 
-lexicon: text710.edin dbm_prog
-	./dbm_prog -o lexicon -i text710.edin
+lexicon: text710.edin lexholder
+	./lexholder -qf $< $@
 
 #text710.edin: text710.dat read_ox_dict
 #	read_ox_dict text710.dat > text710.edin
 
-dbm_prog: dbm_prog.c
-	$(CC) $(CFLAGS) -o $@ $< $(LIBS)
+lexholder: lexholder.c
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -o $@ $< $(LIBS)
 
+.PHONY: install
+install: lexholder lexicon
+	install -d ${bindir} ${datadir} ${docdir}
+	install -m 0755 -p lexholder ${bindir}/${UTILITY}
+	install -m 0644 -p lexicon ${datadir}/${DBF}
+	install -m 0644 -p text710.doc ${docdir}
+
+.PHONY: clean
 clean:
-	rm -f dbm_prog *.o core gmon.out lexicon 
-
-distribution:
-	echo "This needs written."
-
-# dependencies
-
+	rm -f lexholder *.o lexicon

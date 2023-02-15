@@ -1,0 +1,245 @@
+From: "Igor B. Poretsky" <poretsky@mlbox.ru>
+Date: Wed, 15 Feb 2023 13:44:43 +0300
+Subject: C library regexp support
+
+---
+ src/Makefile      |  8 ++++----
+ src/phon_rules.c  | 56 +++++++++++++++++++++++++++++++++++++++++++++++--------
+ src/rule_engine.c | 32 +++++++++++++++----------------
+ src/rule_engine.h |  4 ++--
+ src/space.c       |  8 +-------
+ src/t2s.h         |  8 ++++----
+ 6 files changed, 75 insertions(+), 41 deletions(-)
+
+diff --git a/src/Makefile b/src/Makefile
+index 704b098..393de2e 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -45,9 +45,9 @@ OBJS = go.o t2s.o space.o tags.o grammar.o \
+ 	phon_rules.o edin2sampa.o
+ #coeffs.o excitation.o durations.o pitch.o audio.o ulaw.o \
+ 
+-RULE_SRC = rule_engine.c regerror.c regexp.c regsub.c read_rules.c
++RULE_SRC = rule_engine.c read_rules.c
+ 
+-RULE_OBJS = rule_engine.o regerror.o regexp.o regsub.o read_rules.o
++RULE_OBJS = rule_engine.o read_rules.o
+ 
+ 
+ NRL_SRC = interface.c english.c nrl_edin.c phoneme.c saynum.c spellwor.c
+@@ -63,7 +63,7 @@ MAIN_SRC = main.c
+ 
+ MAIN = main.o
+ 
+-HEADERS = regexp.h regmagic.h rule_engine.h t2s.h prototypes.h
++HEADERS = rule_engine.h t2s.h prototypes.h
+ 
+ all: freephone
+ 
+@@ -96,5 +96,5 @@ distribution:
+ $(OBJS) : t2s.h
+ $(TEST_OBJS) : t2s.h
+ $(MAIN) : t2s.h
+-$(RULE_OBJS) : regexp.h regmagic.h
++$(RULE_OBJS) :
+ rule-engine.c : rule_engine.h
+diff --git a/src/phon_rules.c b/src/phon_rules.c
+index 9f88d95..dab7f67 100644
+--- a/src/phon_rules.c
++++ b/src/phon_rules.c
+@@ -62,24 +62,64 @@ export void load_context_rules(char * filename)
+     */
+ }
+ 
+-/* replace string in situ  */
+-export void phon_rules_init()
++export void phon_rules_free()
+ {
+   int i;
+ 
+   for(i=0;i<nrules;i++) {
+-    alloetc[i].lc = regcomp(alloetc[i].left_context);
+-    alloetc[i].rc = regcomp(alloetc[i].right_context);
++    if (alloetc[i].lc) {
++      regfree(alloetc[i].lc);
++      free (alloetc[i].lc);
++      alloetc[i].lc = NULL;
++    }
++    if (alloetc[i].rc) {
++      regfree(alloetc[i].rc);
++      free(alloetc[i].rc);
++      alloetc[i].rc = NULL;
++    }
+   }
+ }
+ 
+-export void phon_rules_free()
++/* replace string in situ  */
++export void phon_rules_init()
+ {
+-  int i;
++  int i, err, msgsize;
++  char *msg;
+ 
+   for(i=0;i<nrules;i++) {
+-    free(alloetc[i].lc);
+-    free(alloetc[i].rc);
++    alloetc[i].lc = malloc(sizeof(regex_t));
++    if (!alloetc[i].lc) {
++      fprintf(stderr, "Memory allocation error\n");
++      phon_rules_free();
++      exit(EXIT_FAILURE);
++    }
++    err = regcomp(alloetc[i].lc, alloetc[i].left_context,
++		  REG_EXTENDED | REG_NEWLINE);
++    if (err) {
++      msgsize = regerror(err, alloetc[i].lc, NULL, 0);
++      msg = malloc(msgsize);
++      (void)regerror(err, alloetc[i].lc, msg, msgsize);
++      (void)fprintf(stderr, "regcomp: %s\n", msg);
++      phon_rules_free();
++      free(msg);
++      exit(EXIT_FAILURE);
++    }
++    alloetc[i].rc = malloc(sizeof(regex_t));
++    if (!alloetc[i].rc) {
++      fprintf(stderr, "Memory allocation error\n");
++      exit(EXIT_FAILURE);
++    }
++    err = regcomp(alloetc[i].rc, alloetc[i].right_context,
++		  REG_EXTENDED | REG_NEWLINE);
++    if (err) {
++      msgsize = regerror(err, alloetc[i].rc, NULL, 0);
++      msg = malloc(msgsize);
++      (void)regerror(err, alloetc[i].rc, msg, msgsize);
++      (void)fprintf(stderr, "regcomp: %s\n", msg);
++      phon_rules_free();
++      free(msg);
++      exit(EXIT_FAILURE);
++    }
+   }
+ }
+ 
+diff --git a/src/rule_engine.c b/src/rule_engine.c
+index 6bdc45b..939685e 100644
+--- a/src/rule_engine.c
++++ b/src/rule_engine.c
+@@ -22,7 +22,7 @@
+ export void rule_exec(int type,int nrules, RULE *rule, SENT *sent)
+ {
+   int i;
+-  int lmatch = 0, rmatch = 0;
++  int lmatch = REG_NOMATCH, rmatch = REG_NOMATCH;
+   char *input = buffer_text(&(sent->list));
+   BUFFER ib;
+   BUFFER prev;
+@@ -31,13 +31,13 @@ export void rule_exec(int type,int nrules, RULE *rule, SENT *sent)
+   buffer_init(&prev);
+   while (*input) {
+     for(i=0;i<nrules;i++) {
+-      lmatch = 0;
+-      rmatch = 0;
++      lmatch = REG_NOMATCH;
++      rmatch = REG_NOMATCH;
+       if(!strncmp(input,rule[i].target,strlen(rule[i].target))) {
+ 	/* candidate for rule match  */
+-	lmatch = regexec(rule[i].lc,buffer_text(&prev));
+-	rmatch = regexec(rule[i].rc,input+strlen(rule[i].target));
+-	if(lmatch && rmatch) {
++	lmatch = regexec(rule[i].lc,buffer_text(&prev),0,NULL,0);
++	rmatch = regexec(rule[i].rc,input+strlen(rule[i].target),0,NULL,0);
++	if(!(lmatch || rmatch)) {
+ 	  buffer_add_str(&ib, rule[i].output);
+ 	  input += strlen(rule[i].target);
+ 	  buffer_add_str(&prev, rule[i].target);
+@@ -45,16 +45,16 @@ export void rule_exec(int type,int nrules, RULE *rule, SENT *sent)
+ 	}
+       }
+     }
+-    if(lmatch && rmatch) {
+-      ;
+-    } else if (type|SAME) {
+-      buffer_add_char(&ib, *input);
+-      buffer_add_char(&prev, *input);
+-      input++;
+-    } else {
+-      buffer_free(&prev);
+-      buffer_free(&ib);
+-      return;
++    if(lmatch || rmatch) {
++      if (type|SAME) {
++	buffer_add_char(&ib, *input);
++	buffer_add_char(&prev, *input);
++	input++;
++      } else {
++	buffer_free(&prev);
++	buffer_free(&ib);
++	return;
++      }
+     }
+   }
+   buffer_clear(&(sent->list));
+diff --git a/src/rule_engine.h b/src/rule_engine.h
+index 805f610..54cce8f 100644
+--- a/src/rule_engine.h
++++ b/src/rule_engine.h
+@@ -1,10 +1,10 @@
+ 
+ typedef struct {
+ 	char *left_context;
+-	regexp *lc;
++	regex_t *lc;
+ 	char *target;
+ 	char *right_context;
+-	regexp *rc;
++	regex_t *rc;
+ 	char *output;
+ } RULE;
+ 
+diff --git a/src/space.c b/src/space.c
+index 70bfbfb..848d0a8 100644
+--- a/src/space.c
++++ b/src/space.c
+@@ -112,13 +112,7 @@ export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sen
+ 
+   /*	what follows is an example for use as a template  */
+   load_context_rules("context_rules");
+-  /* this goes with the rule engine code...
+-     for(i=0;i<nrules;i++) {
+-     rule[i].lc = regcomp(rule[i].left_context);
+-     rule[i].rc = regcomp(rule[i].right_context);
+-     }
+-     */
+- 
++
+   phon_rules_init();
+ 
+ 
+diff --git a/src/t2s.h b/src/t2s.h
+index ffe4c5b..70f570a 100644
+--- a/src/t2s.h
++++ b/src/t2s.h
+@@ -3,8 +3,8 @@
+ #include <string.h>
+ #include <stdlib.h>
+ #include <ctype.h>
+-#include "regexp.h"
+-#include "regmagic.h"
++#include <sys/types.h>
++#include <regex.h>
+ 
+ #define export
+ 
+@@ -172,10 +172,10 @@ typedef struct {
+ 
+ typedef struct {
+   char *left_context;
+-  regexp *lc;
++  regex_t *lc;
+   char *target;
+   char *right_context;
+-  regexp *rc;
++  regex_t *rc;
+   char *output;
+ } RULE;
+ 

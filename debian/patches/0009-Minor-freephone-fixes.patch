@@ -1,0 +1,125 @@
+From: "Igor B. Poretsky" <poretsky@mlbox.ru>
+Date: Wed, 15 Feb 2023 14:22:20 +0300
+Subject: Minor freephone fixes
+
+---
+ src/durations.c |  7 +------
+ src/interface.c |  2 +-
+ src/nrl_edin.c  |  2 +-
+ src/phoneme.c   | 32 ++++++++++++++++++--------------
+ src/t2s.h       |  1 +
+ 5 files changed, 22 insertions(+), 22 deletions(-)
+
+diff --git a/src/durations.c b/src/durations.c
+index b349072..d2bd48a 100644
+--- a/src/durations.c
++++ b/src/durations.c
+@@ -12,11 +12,6 @@ static int min(int a, int b)
+   return((a<b)?a:b);
+ }
+ 
+-static float fmax(float a, float b)
+-{
+-  return((a>b)?a:b);
+-}
+-
+ export void durations(CONFIG *config, SPN *ps, ACOUSTIC *as)
+ {
+   int durdist;
+@@ -43,7 +38,7 @@ export void durations(CONFIG *config, SPN *ps, ACOUSTIC *as)
+       durdist = min(i-ps->pb[j-1],ps->pb[j]-i);
+       interdist = ps->pb[j] - ps->pb[j-1];
+       proportion = (float)durdist/(float)interdist;
+-      multiplier_i = fmax(0.01,4.0*proportion*(ps->scale[j-1]-1.0)+1.0);
++      multiplier_i = fmaxf(0.01,4.0*proportion*(ps->scale[j-1]-1.0)+1.0);
+       as->duration[i] = config->fr_sz*multiplier_i;
+       ps->duration[j-1] += as->duration[i];
+     }
+diff --git a/src/interface.c b/src/interface.c
+index 0045be7..0b00997 100644
+--- a/src/interface.c
++++ b/src/interface.c
+@@ -216,7 +216,7 @@ export void have_letter()
+   for (new_char() ; isalpha(Char) || Char == '\'' ; new_char())
+     {
+       buff[count++] = makeupper(Char);
+-      if (count > MAX_LENGTH-2)
++      if (count >= MAX_LENGTH-2)
+ 	{
+ 	  buff[count++] = ' ';
+ 	  buff[count++] = '\0';
+diff --git a/src/nrl_edin.c b/src/nrl_edin.c
+index cb2b000..f8c2e22 100644
+--- a/src/nrl_edin.c
++++ b/src/nrl_edin.c
+@@ -74,7 +74,7 @@ export void nrl_edin_conv(char *str, char *str2)
+   
+   while(*str) {
+     i = 0;
+-    while(nrl_edin[i].keyword != "") {
++    while(nrl_edin[i].keyword[0]) {
+       if(!strncmp(str,nrl_edin[i].keyword,strlen(nrl_edin[i].keyword)))
+ 	break;
+       i++;
+diff --git a/src/phoneme.c b/src/phoneme.c
+index 35f0cc0..3d53f2d 100644
+--- a/src/phoneme.c
++++ b/src/phoneme.c
+@@ -71,13 +71,15 @@ static int leftmatch(char *pattern, char *context)
+     {
+       /* First check for simple text or space */
+       if (isalpha(*pat) || *pat == '\'' || *pat == ' ')
+-	if (*pat != *text)
+-	  return FALSE;
+-	else
+-	  {
+-	    text--;
+-	    continue;
+-	  }
++        {
++          if (*pat != *text)
++            return FALSE;
++          else
++            {
++              text--;
++              continue;
++            }
++        }
+ 
+       switch (*pat)
+ 	{
+@@ -143,13 +145,15 @@ static int rightmatch(char *pattern, char *context)
+     {
+       /* First check for simple text or space */
+       if (isalpha(*pat) || *pat == '\'' || *pat == ' ')
+-	if (*pat != *text)
+-	  return FALSE;
+-	else
+-	  {
+-	    text++;
+-	    continue;
+-	  }
++        {
++          if (*pat != *text)
++            return FALSE;
++          else
++            {
++              text++;
++              continue;
++            }
++        }
+ 
+       switch (*pat)
+ 	{
+diff --git a/src/t2s.h b/src/t2s.h
+index b64af0b..eec623e 100644
+--- a/src/t2s.h
++++ b/src/t2s.h
+@@ -2,6 +2,7 @@
+ #include <stdio.h>
+ #include <string.h>
+ #include <stdlib.h>
++#include <math.h>
+ #include <ctype.h>
+ #include <sys/types.h>
+ #include <regex.h>

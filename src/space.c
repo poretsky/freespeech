@@ -11,12 +11,13 @@
 
 #include <sys/types.h>
 #include <limits.h>
-/* FreeBSD, and Linux?  */
+
 #ifdef FBSD_DATABASE
 #include <db.h>
 #else
-#include <ndbm.h>
+#include <db_185.h>
 #endif
+
 #include <fcntl.h>
 
 int ft_endian_loc = 1; /* for deciding if we need to byte-swap  */
@@ -50,11 +51,7 @@ export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sen
   /* set up database if present  */
 
   if(strcmp("-",config->hash_file)) {
-#ifdef FBSD_DATABASE
     config->db = (void *)dbopen(config->hash_file,O_RDONLY, 0000644, DB_HASH, NULL);
-#else
-    config->db = (void *)dbm_open(config->hash_file,O_RDONLY, 0000644);
-#endif
     /* the (void *) is so config can remain ignorant about the database  */
     if(config->db==NULL) {
       (void)fprintf(stderr,"\nDictionary file \"%s\" not found.\n",config->hash_file);
@@ -125,12 +122,7 @@ void terminate(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent,
 {
 
   if(config->db != NULL)
-#ifdef FBSD_DATABASE
-    (void)(config->db->close)(config->db);
-#else
-  dbm_close(config->db);
-#endif
-
+    (void)(((DB *)(config->db))->close)((DB *)(config->db));
 
   output_close(config);
 

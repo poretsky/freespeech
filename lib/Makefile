@@ -14,35 +14,31 @@
 ############################################################################
 # Sun users
 # CC = gcc
-# CFLAGS = -g -Wall -pedantic
+# CFLAGS = -O2 -s
 # LIBS = -lm
 ############################################################################
 # FreeBSD users
 # CC = gcc
-# CFLAGS = -O2 -Wall -pedantic -DFBSD_DATABASE
+# CFLAGS = -O2 -DFBSD_DATABASE -s
 # LIBS = -lm
 ############################################################################
 # Linux users
 CC = gcc
-CFLAGS = -g -Wall -pedantic
-LIBS = -lm -lgdbm
+CFLAGS = -O2 -DBERKELEYDB -s
+LIBS = -lm -ldb-3
 ############################################################################
-
-OBJ = dbm_prog.c
 
 
 all: lexicon 
 
 lexicon: text710.edin dbm_prog
-	/bin/rm -i lexicon*
 	./dbm_prog -o lexicon -i text710.edin
-	touch lexicon
 
-text710.edin: text710.dat read_ox_dict
-	read_ox_dict text710.dat > text710.edin
+#text710.edin: text710.dat read_ox_dict
+#	read_ox_dict text710.dat > text710.edin
 
-dbm_prog: $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $(OBJ) $(LIBS)
+dbm_prog: dbm_prog.c
+	$(CC) $(CFLAGS) -o $@ $< $(LIBS)
 
 clean:
 	rm -f dbm_prog *.o core gmon.out lexicon 

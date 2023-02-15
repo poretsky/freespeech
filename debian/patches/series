@@ -1,0 +1,14 @@
+0001-Typo-fix.patch
+0002-Corrected-path-to-the-perl-interpreter.patch
+0003-C-library-regexp-support.patch
+0004-Berkeley-DB-instead-of-GDBM.patch
+0005-New-lexical-database-holding-utility.patch
+0006-Dictionary-enhancement.patch
+0007-Freephone-compilation.patch
+0008-Exclude-unused-code.patch
+0009-Minor-freephone-fixes.patch
+0010-Segmentation-fault-fix.patch
+0011-Memory-allocation-fix.patch
+0012-Numeric-values-pronunciation-fix.patch
+0013-Speak-leading-zeros-in-numbers.patch
+0014-General-Makefile.patch

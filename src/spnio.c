@@ -7,7 +7,6 @@
 
 #include "t2s.h"
 
-#ifdef FREEPHONE_OBSOLETE
 static void transmogrify(CONFIG *config, char *s, SPN *ps)
 {
   char *phon;
@@ -41,7 +40,6 @@ static void transmogrify(CONFIG *config, char *s, SPN *ps)
   if(!ps->t_sz)
     fprintf(stderr,"No frequency specified, using default\n");
 }
-#endif
 
 export void put_mbrola_data(CONFIG *config, SPN *ps)
 {
@@ -70,7 +68,6 @@ export void put_mbrola_data(CONFIG *config, SPN *ps)
   fflush(config->ofd);
 }
 
-#ifdef FREEPHONE_OBSOLETE
 export void put_spn_data(CONFIG *config, SPN *ps)
 {
   int i;
@@ -117,4 +114,4 @@ export void get_spn_data(CONFIG *config, SPN *ps)
   }
   /* perhaps we should close the file  ??  */
 }
-#endif
+

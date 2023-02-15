@@ -9,13 +9,12 @@
 
 #include <sys/types.h>
 #include <limits.h>
-
+/* FreeBSD, and Linux?  */
 #ifdef FBSD_DATABASE
 #include <db.h>
 #else
-#include <db_185.h>
+#include <ndbm.h>
 #endif
-
 #include <fcntl.h>
 
 static char *lookup_db(char *word, CONFIG *config);
@@ -55,23 +54,42 @@ export void transcribe(CONFIG *config, LING_LIST *ling_list)
   }
 }
 
+#ifdef FBSD_DATABASE
+
 static char *lookup_db(char *word, CONFIG *config)
 {
   DBT inKey, inVal;
  
   inKey.data = word;
-  inKey.size = strlen(word);
+  inKey.size = strlen(word)+1;
  
   inVal.data = NULL;
   inVal.size = 0;
  
  
   if(config->db != NULL) {
-    (((DB *)(config->db))->get)((DB *)(config->db),&inKey,&inVal,0);
+    (config->db->get)((DB *)config->db,&inKey,&inVal,0);
     return(inVal.data);
   } else 
     return(NULL);
 }
+
+#else
+
+static char *lookup_db(char *word, CONFIG *config)
+{
+  datum Key;
+
+  Key.dptr = word;
+  Key.dsize = strlen(word)+1;
+
+  if(config->db != NULL)
+    return(dbm_fetch((DBM *)config->db,Key).dptr);
+  else
+    return(NULL);
+}
+
+#endif
 
 static void ToLower(char *word)
 {

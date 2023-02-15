@@ -1,0 +1,572 @@
+From: "Igor B. Poretsky" <poretsky@mlbox.ru>
+Date: Wed, 15 Feb 2023 15:04:21 +0300
+Subject: Exclude unused code
+
+---
+ src/Makefile     |  7 ++++---
+ src/audio.c      |  5 +++++
+ src/go.c         |  5 ++++-
+ src/main.c       | 38 +++++++++++++++++++++++++++++++-------
+ src/prototypes.h | 25 +++++++++++++++++++++++++
+ src/space.c      | 16 ++++++++++++++++
+ src/spnio.c      |  5 ++++-
+ src/t2s.c        | 10 ++++++++++
+ src/t2s.h        | 16 ++++++++++++++++
+ 9 files changed, 115 insertions(+), 12 deletions(-)
+
+diff --git a/src/Makefile b/src/Makefile
+index 8edb133..efe0b0e 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -36,9 +36,10 @@ GROUP = root
+ OBJS = go.o t2s.o space.o tags.o grammar.o \
+ 	transcribe.o conv1.o conv2.o durpros.o prosody.o \
+ 	syllab.o utils.o buffer.o \
+-	fw.o broad_cats.o durs.o load_diphs.o spnio.o \
+-	durations.o pitch.o audio.o \
+-	phon_rules.o edin2sampa.o
++	fw.o broad_cats.o durs.o spnio.o \
++	audio.o phon_rules.o edin2sampa.o
++
++OBSOLETE_OBJS = load_diphs.o durations.o pitch.o
+ 
+ RULE_OBJS = rule_engine.o read_rules.o
+ 
+diff --git a/src/audio.c b/src/audio.c
+index 6278d79..1c8fd9e 100644
+--- a/src/audio.c
++++ b/src/audio.c
+@@ -8,6 +8,7 @@
+ #include "t2s.h"
+ 
+  
++#ifdef FREEPHONE_OBSOLETE
+ unsigned char hdr16k[] =  {
+   0x2e, 0x73, 0x6e, 0x64, 0x00, 0x00, 0x00, 0x20, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 0x03,
+   0x00, 0x00, 0x3e, 0x80, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+@@ -22,6 +23,7 @@ unsigned char hdr8k[] =  {
+   0x2e, 0x73, 0x6e, 0x64, 0x00, 0x00, 0x00, 0x20, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 0x01,
+   0x00, 0x00, 0x1f, 0x40, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+ };
++#endif
+ 
+ 
+ export void output_open(CONFIG *config)
+@@ -33,6 +35,8 @@ export void output_open(CONFIG *config)
+     (void)fprintf(stderr,"Cannot open output file: %s\n",config->output_file);
+     exit(2);
+   }
++
++#ifdef FREEPHONE_OBSOLETE
+   if(!strcmp(config->prog,"high_level")) {
+     return;
+   }	/* the formats son't matter  */
+@@ -47,6 +51,7 @@ export void output_open(CONFIG *config)
+   } else if(!strcmp(config->format,"soundblaster8")) {
+     ; /* nothing, as far as I know  */
+   }
++#endif
+ 
+ }
+ 
+diff --git a/src/go.c b/src/go.c
+index 5b18107..c6d6f30 100644
+--- a/src/go.c
++++ b/src/go.c
+@@ -21,6 +21,7 @@ static void zero_things(BUFFER *buffer, LING_LIST *ling_list)
+   }
+ }
+ 
++#ifdef FREEPHONE_OBSOLETE
+ export void go(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps, ACOUSTIC *as) 
+ {
+   int c, c1;
+@@ -81,6 +82,7 @@ export void go(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent,
+     }
+   }
+ }
++#endif
+ 
+ export void go3(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps) 
+ {
+@@ -144,8 +146,9 @@ export void go3(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent
+   }
+ }
+ 
++#ifdef FREEPHONE_OBSOLETE
+ export void go2(CONFIG *config, SPN *ps, ACOUSTIC *as) 
+ {
+   process_spn_file(config, ps, as);
+ }
+-	
++#endif
+diff --git a/src/main.c b/src/main.c
+index 21218da..387bed0 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -20,7 +20,9 @@ int main(int argc, char **argv)
+   SENT sent_struct;
+   SPROSOD_LIST spl_struct;
+   SPN ps_struct;
++#ifdef FREEPHONE_OBSOLETE
+   ACOUSTIC as_struct;
++#endif
+ 
+   CONFIG *config = &config_struct;
+   BUFFER *buffer = &buffer_struct;
+@@ -28,7 +30,9 @@ int main(int argc, char **argv)
+   SENT *sent = &sent_struct;
+   SPROSOD_LIST *spl = &spl_struct;
+   SPN *ps = &ps_struct;
++#ifdef FREEPHONE_OBSOLETE
+   ACOUSTIC *as = &as_struct;
++#endif
+ 
+   int c;
+   int errflg = 0;
+@@ -36,16 +40,20 @@ int main(int argc, char **argv)
+   extern char *optarg;
+   extern int optind;
+ 
++#ifdef FREEPHONE_OBSOLETE
+   strcpy(config->prog,argv[0]);
++#endif
+   config->input_file = "-";
+   config->output_file = "-";
+   config->hash_file = "-";
++#ifdef FREEPHONE_OBSOLETE
+   config->diphone_file = "-";
+   config->format = "sun8k";
+   strcpy(config->prog,"high_level");
+   config->type = _MBROLA_;
++#endif
+ 
+-  while((c = getopt(argc,argv,"i:o:h:ml")) != -1)
++  while((c = getopt(argc,argv,"i:o:h:")) != -1)
+     switch(c) {
+     case 'i':
+       config->input_file = optarg;
+@@ -53,12 +61,15 @@ int main(int argc, char **argv)
+     case 'o':
+       config->output_file = optarg;
+       break;
++#ifdef FREEPHONE_OBSOLETE
+     case 'd':
+       config->diphone_file = optarg;
+       break;
++#endif
+     case 'h':
+       config->hash_file = optarg;
+       break;
++#ifdef FREEPHONE_OBSOLETE
+     case 'f':
+       config->format = optarg;
+       break;
+@@ -76,29 +87,39 @@ int main(int argc, char **argv)
+     case 't':   /* ``silent Test flag''  */
+       strcpy(config->prog,"test_diphones");
+       break;
++#endif
+     default:
+       errflg++;
+     }
+   if((optind!=argc) || errflg /* || (argc==1) */) {
+     (void)fprintf(stderr, "usage: %s\n",argv[0]);
+     (void)fprintf(stderr,"\t-i  input text file or - for standard input (default)\n");
+-    (void)fprintf(stderr,"\t-o  output (probably audio) file or - for standard output (default)\n");
+-    /* (void)fprintf(stderr,"\t-d   diphone files (default)\n");
+-       (void)fprintf(stderr,"\t-f output format (sun8k - default, sun10k, soundblaster8, .spn)\n");  */
++    (void)fprintf(stderr,"\t-o  output file or - for standard output (default)\n");
++#ifdef FREEPHONE_OBSOLETE
++    (void)fprintf(stderr,"\t-d   diphone files (default)\n");
++    (void)fprintf(stderr,"\t-f output format (sun8k - default, sun10k, soundblaster8, .spn)\n");
++#endif
+     (void)fprintf(stderr,"\t-h  dictionary in hash format (no default)\n");
+-    /*(void)fprintf(stderr,"\t-l    linguistic (processing only)\n");*/
+-    /*(void)fprintf(stderr,"\t-m    linguistic (MBROLA only)\n");*/
+-    /* (void)fprintf(stderr,"\t-s   force use of synth prog only\n");  */
++#ifdef FREEPHONE_OBSOLETE
++    (void)fprintf(stderr,"\t-l    linguistic (processing only)\n");
++    (void)fprintf(stderr,"\t-m    linguistic (MBROLA only)\n");
++    (void)fprintf(stderr,"\t-s   force use of synth prog only\n");
++#endif
+ 
+     exit (2);
+   }
+ 
++#ifdef FREEPHONE_OBSOLETE
+   init(config, buffer, ling_list, sent, spl, ps, as);
+ 
+   if(!strcmp(config->prog,"low_level")) {
+     go2(config, ps, as);
+   } else if(!strcmp(config->prog,"high_level")) {
++#else
++  init(config, buffer, ling_list, sent, spl, ps);
++#endif
+     go3(config, buffer, ling_list, sent, spl, ps);
++#ifdef FREEPHONE_OBSOLETE
+   } else if(!strcmp(config->prog,"test_diphones")) {
+ #ifdef DEBUG
+     test_diphones(config, sent, spl, ps, as);
+@@ -109,6 +130,9 @@ int main(int argc, char **argv)
+   }
+ 
+   terminate(config, buffer, ling_list, sent, spl, ps, as);
++#else
++  terminate(config, buffer, ling_list, sent, spl, ps);
++#endif
+ 
+   return(0);
+ }
+diff --git a/src/prototypes.h b/src/prototypes.h
+index 58c977d..02c8de4 100644
+--- a/src/prototypes.h
++++ b/src/prototypes.h
+@@ -3,11 +3,17 @@ export void output_close(CONFIG *config);
+ export void conv1(CONFIG *config, LING_LIST *ling_list, SENT *sent);
+ export int vowel(char *ph) ;
+ export void conv2(CONFIG *config, SENT *sent, SPROSOD_LIST *spl);
++#ifdef FREEPHONE_OBSOLETE
+ export void durations(CONFIG *config, SPN *ps, ACOUSTIC *as);
++#endif
+ export void durpros(CONFIG *config, SPROSOD_LIST *spl);
++#ifdef FREEPHONE_OBSOLETE
+ export void go(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps, ACOUSTIC *as) ;
++#endif
+ export void go3(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps) ;
++#ifdef FREEPHONE_OBSOLETE
+ export void go2(CONFIG *config, SPN *ps, ACOUSTIC *as) ;
++#endif
+ export void grammar(LING_LIST *ling_list);
+ export void outstring(char *string);
+ export int makeupper(int character);
+@@ -20,9 +26,11 @@ export void have_dollars();
+ export void have_special();
+ export void xlate_string(char *is);
+ export void abbrev(char *buff);
++#ifdef FREEPHONE_OBSOLETE
+ export void phonstoframes(SPN *ps, ACOUSTIC *as);
+ export void unload_diphs(CONFIG *config) /* for easier changes later  */;
+ export void load_speech(CONFIG *config);
++#endif
+ export int main(int argc, char **argv);
+ export void nrl_edin_conv(char *str, char *str2);
+ export void load_context_rules(char * filename);
+@@ -30,7 +38,9 @@ export void phon_rules_init();
+ export void phon_rules_free();
+ export void phon_rules(SENT *sent);
+ export void xlate_word(char *word);
++#ifdef FREEPHONE_OBSOLETE
+ export void calc_pitch(CONFIG *config, SPN *ps, ACOUSTIC *as);
++#endif
+ export void prosody(SPROSOD_LIST *spl, SPN *ps);
+ export int read_rule_file(char *filename, RULE *rules);
+ export void process_rule(char *input,RULE *rule);
+@@ -41,8 +51,13 @@ export void replace_class(char *buffer, char *ptr, char *key, char *value);
+ export void rule_exec(int type,int nrules, RULE *rule, SENT *sent);
+ export void say_cardinal(long int value);
+ export void say_ordinal(long int value);
++#ifdef FREEPHONE_OBSOLETE
+ export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps, ACOUSTIC *as) ;
+ export void terminate(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps, ACOUSTIC *as);
++#else
++export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps) ;
++export void terminate(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps);
++#endif
+ 
+ export void  buffer_init(BUFFER *buffer);
+ export char *buffer_text(BUFFER *buffer);
+@@ -66,21 +81,31 @@ export void spl_free(SPROSOD_LIST *spl);
+ export void ps_malloc(int nphons, int ntargs, SPN *ps);
+ export void ps_realloc(int nphons, int ntargs, SPN *ps);
+ export void ps_free(SPN *ps);
++#ifdef FREEPHONE_OBSOLETE
+ export void as_malloc(int nframes, int npp, ACOUSTIC *as);
+ export void as_realloc(int nframes, int npp, ACOUSTIC *as);
+ export void as_free(ACOUSTIC *as);
++#endif
+ export void say_ascii(int character);
+ export void spell_word(char *word);
+ export void put_mbrola_data(CONFIG *config, SPN *ps);
++#ifdef FREEPHONE_OBSOLETE
+ export void put_spn_data(CONFIG *config, SPN *ps);
+ export void get_spn_data(CONFIG *config, SPN *ps);
++#endif
+ export char *syllabify(char *string, CONFIG *config) 	/* replace string in situ  */;
+ export char *stress(char *param) /* no stress allowed initially  */;
++#ifdef FREEPHONE_OBSOLETE
+ export void process_sentence(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps, ACOUSTIC *as);
++#endif
+ export void produce_spn_file(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps);
++#ifdef FREEPHONE_OBSOLETE
+ export void process_spn_file(CONFIG *config, SPN *ps, ACOUSTIC *as);
++#endif
+ export void high_level(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps);
++#ifdef FREEPHONE_OBSOLETE
+ export void low_level(CONFIG *config, SPN *ps, ACOUSTIC *as);
++#endif
+ export void tags(CONFIG *config,BUFFER *buffer, LING_LIST *ling_list);
+ export void transcribe(CONFIG *config, LING_LIST *ling_list);
+ export char **split(char *in) ;
+diff --git a/src/space.c b/src/space.c
+index 43a2cd6..91db501 100644
+--- a/src/space.c
++++ b/src/space.c
+@@ -20,6 +20,7 @@
+ 
+ #include <fcntl.h>
+ 
++#ifdef FREEPHONE_OBSOLETE
+ int ft_endian_loc = 1; /* for deciding if we need to byte-swap  */
+ 
+ ENTRY indx[NDIPHS];
+@@ -27,6 +28,9 @@ FRAME dico[NFRAMES];
+ int nindex;
+ 
+ export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps, ACOUSTIC *as) 
++#else
++export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps)
++#endif
+ {
+ 
+   /* check the various files are accessible  */
+@@ -42,9 +46,11 @@ export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sen
+ 
+ 
+ 
++#ifdef FREEPHONE_OBSOLETE
+   /* load the diphones including index  */
+ 
+   load_speech(config);
++#endif
+ 
+ 
+ 
+@@ -85,7 +91,9 @@ export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sen
+   /* now the synthesis stuff  */
+ 
+   ps_malloc(DEF_PHONS,DEF_TARGS,ps);
++#ifdef FREEPHONE_OBSOLETE
+   as_malloc(DEF_FRAMES,DEF_PM,as);       /* should perhaps use ps??  */
++#endif
+ 
+ 
+ 
+@@ -118,7 +126,11 @@ export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sen
+ 
+ }
+ 
++#ifdef FREEPHONE_OBSOLETE
+ void terminate(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps, ACOUSTIC *as)
++#else
++void terminate(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps)
++#endif
+ {
+ 
+   if(config->db != NULL)
+@@ -132,9 +144,11 @@ void terminate(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent,
+   spl_free(spl);
+ 
+   ps_free(ps);
++#ifdef FREEPHONE_OBSOLETE
+   as_free(as);
+ 
+   unload_diphs(config);
++#endif
+   phon_rules_free();
+   /* also need to free the various other structures  */
+ }
+@@ -285,6 +299,7 @@ export void ps_free(SPN *ps)
+   free(ps->diphs);
+ }
+ 
++#ifdef FREEPHONE_OBSOLETE
+ export void as_malloc(int nframes, int npp, ACOUSTIC *as)
+ {
+ 
+@@ -317,6 +332,7 @@ export void as_free(ACOUSTIC *as)
+   free(as->duration);
+   free(as->pitch);
+ }
++#endif
+ 
+ /*
+  * 'SENT' operations.
+diff --git a/src/spnio.c b/src/spnio.c
+index e8b593b..0ee52e8 100644
+--- a/src/spnio.c
++++ b/src/spnio.c
+@@ -7,6 +7,7 @@
+ 
+ #include "t2s.h"
+ 
++#ifdef FREEPHONE_OBSOLETE
+ static void transmogrify(CONFIG *config, char *s, SPN *ps)
+ {
+   char *phon;
+@@ -40,6 +41,7 @@ static void transmogrify(CONFIG *config, char *s, SPN *ps)
+   if(!ps->t_sz)
+     fprintf(stderr,"No frequency specified, using default\n");
+ }
++#endif
+ 
+ export void put_mbrola_data(CONFIG *config, SPN *ps)
+ {
+@@ -68,6 +70,7 @@ export void put_mbrola_data(CONFIG *config, SPN *ps)
+   fflush(config->ofd);
+ }
+ 
++#ifdef FREEPHONE_OBSOLETE
+ export void put_spn_data(CONFIG *config, SPN *ps)
+ {
+   int i;
+@@ -114,4 +117,4 @@ export void get_spn_data(CONFIG *config, SPN *ps)
+   }
+   /* perhaps we should close the file  ??  */
+ }
+-
++#endif
+diff --git a/src/t2s.c b/src/t2s.c
+index edf96f3..a80b27e 100644
+--- a/src/t2s.c
++++ b/src/t2s.c
+@@ -7,6 +7,7 @@
+ 
+ #include "t2s.h"
+ 
++#ifdef FREEPHONE_OBSOLETE
+ export void process_sentence(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps, ACOUSTIC *as)
+ {
+   high_level(config,buffer,ling_list,sent,spl,ps);
+@@ -15,20 +16,26 @@ export void process_sentence(CONFIG *config, BUFFER *buffer, LING_LIST *ling_lis
+ 
+   fflush(config->ofd);
+ }
++#endif
+ 
+ export void produce_spn_file(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps)
+ {
+   high_level(config,buffer,ling_list,sent,spl,ps);
+   
++#ifdef FREEPHONE_OBSOLETE
+   if(config->type == _SPN_) {
+     put_spn_data(config,ps);
+   } else if(config->type == _MBROLA_) {
++#endif
+     put_mbrola_data(config,ps);
++#ifdef FREEPHONE_OBSOLETE
+   }
++#endif
+   
+   fflush(config->ofd);
+ }
+ 
++#ifdef FREEPHONE_OBSOLETE
+ export void process_spn_file(CONFIG *config, SPN *ps, ACOUSTIC *as)
+ {
+   get_spn_data(config,ps);
+@@ -37,6 +44,7 @@ export void process_spn_file(CONFIG *config, SPN *ps, ACOUSTIC *as)
+ 
+   fflush(config->ofd);
+ }
++#endif
+ 
+ export void high_level(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps)
+ {
+@@ -55,6 +63,7 @@ export void high_level(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SEN
+   prosody(spl,ps);
+ }
+ 
++#ifdef FREEPHONE_OBSOLETE
+ export void low_level(CONFIG *config, SPN *ps, ACOUSTIC *as)
+ {
+   phonstoframes(ps,as);
+@@ -63,3 +72,4 @@ export void low_level(CONFIG *config, SPN *ps, ACOUSTIC *as)
+ 
+   calc_pitch(config,ps,as);      
+ }
++#endif
+diff --git a/src/t2s.h b/src/t2s.h
+index 70f570a..b64af0b 100644
+--- a/src/t2s.h
++++ b/src/t2s.h
+@@ -52,26 +52,36 @@
+ typedef struct {
+   char *input_file;
+   char *output_file;
++#ifdef FREEPHONE_OBSOLETE
+   char *diphone_file;
++#endif
+   char *hash_file;
++#ifdef FREEPHONE_OBSOLETE
+   char *format;
+   int type;	/* format by any other name  */
++#endif
+   FILE *ifd;
+   FILE *ofd;
++#ifdef FREEPHONE_OBSOLETE
+   FILE *xfd;
+   FILE *dfd;
++#endif
+   void *db;
+   int fw_num;
+   int broad_cats_num;
+   int dur0_num;
+   int edin2sampa0_num;
++#ifdef FREEPHONE_OBSOLETE
+   char prog[40];
++#endif
+   int sr;
+   int fr_sz;
++#ifdef FREEPHONE_OBSOLETE
+   int fr_data;
+   int ncoeffs;
+   int norm;		/* used for normalising output amplitude  */
+   int ft_endian_loc;	/* for telling byte order  */
++#endif
+ } CONFIG;
+ 
+ typedef struct {
+@@ -138,9 +148,11 @@ typedef struct {
+   int end;
+ } ENTRY;
+ 
++#ifdef FREEPHONE_OBSOLETE
+ typedef struct {
+   short *frame; 
+ } FRAME;
++#endif
+ 
+ typedef struct {
+   int p_sz;
+@@ -159,6 +171,7 @@ typedef struct {
+   char **diphs;
+ } SPN;
+ 
++#ifdef FREEPHONE_OBSOLETE
+ typedef struct {
+   int f_sz;
+   int p_sz;
+@@ -168,6 +181,7 @@ typedef struct {
+   short *duration; /* since variants may be required  */
+   short *pitch;
+ } ACOUSTIC;
++#endif
+ 
+ 
+ typedef struct {
+@@ -190,6 +204,7 @@ extern PKEY edin2sampa0[];
+ 
+ /* now definitions of global data  */
+ 
++#ifdef FREEPHONE_OBSOLETE
+ extern ENTRY indx[NDIPHS]; 
+ extern FRAME dico[NFRAMES];
+ extern int nindex;
+@@ -205,5 +220,6 @@ extern int ft_endian_loc;
+ #define SWAPINT(x) (((x) & 0xff) << 24 | ((x) & 0xff00) << 8 | \
+                     ((x) & 0xff0000) >> 8 | ((x) & 0xff000000) >> 24)
+ #define SWAPSHORT(x) (((x) & 0xff) << 8 | ((x) & 0xff00) >> 8)
++#endif
+ 
+ #include "prototypes.h"

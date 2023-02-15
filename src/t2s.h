@@ -3,8 +3,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <sys/types.h>
-#include <regex.h>
+#include "regexp.h"
+#include "regmagic.h"
 
 #define export
 
@@ -52,36 +52,26 @@
 typedef struct {
   char *input_file;
   char *output_file;
-#ifdef FREEPHONE_OBSOLETE
   char *diphone_file;
-#endif
   char *hash_file;
-#ifdef FREEPHONE_OBSOLETE
   char *format;
   int type;	/* format by any other name  */
-#endif
   FILE *ifd;
   FILE *ofd;
-#ifdef FREEPHONE_OBSOLETE
   FILE *xfd;
   FILE *dfd;
-#endif
   void *db;
   int fw_num;
   int broad_cats_num;
   int dur0_num;
   int edin2sampa0_num;
-#ifdef FREEPHONE_OBSOLETE
   char prog[40];
-#endif
   int sr;
   int fr_sz;
-#ifdef FREEPHONE_OBSOLETE
   int fr_data;
   int ncoeffs;
   int norm;		/* used for normalising output amplitude  */
   int ft_endian_loc;	/* for telling byte order  */
-#endif
 } CONFIG;
 
 typedef struct {
@@ -148,11 +138,9 @@ typedef struct {
   int end;
 } ENTRY;
 
-#ifdef FREEPHONE_OBSOLETE
 typedef struct {
   short *frame; 
 } FRAME;
-#endif
 
 typedef struct {
   int p_sz;
@@ -171,7 +159,6 @@ typedef struct {
   char **diphs;
 } SPN;
 
-#ifdef FREEPHONE_OBSOLETE
 typedef struct {
   int f_sz;
   int p_sz;
@@ -181,15 +168,14 @@ typedef struct {
   short *duration; /* since variants may be required  */
   short *pitch;
 } ACOUSTIC;
-#endif
 
 
 typedef struct {
   char *left_context;
-  regex_t *lc;
+  regexp *lc;
   char *target;
   char *right_context;
-  regex_t *rc;
+  regexp *rc;
   char *output;
 } RULE;
 
@@ -204,7 +190,6 @@ extern PKEY edin2sampa0[];
 
 /* now definitions of global data  */
 
-#ifdef FREEPHONE_OBSOLETE
 extern ENTRY indx[NDIPHS]; 
 extern FRAME dico[NFRAMES];
 extern int nindex;
@@ -220,6 +205,5 @@ extern int ft_endian_loc;
 #define SWAPINT(x) (((x) & 0xff) << 24 | ((x) & 0xff00) << 8 | \
                     ((x) & 0xff0000) >> 8 | ((x) & 0xff000000) >> 24)
 #define SWAPSHORT(x) (((x) & 0xff) << 8 | ((x) & 0xff00) >> 8)
-#endif
 
 #include "prototypes.h"

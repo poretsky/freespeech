@@ -10,90 +10,91 @@
 #
 #
 ############################################################################
-
-# Installation paths
-prefix = /usr/local
-bindir = ${prefix}/bin
-
 # Select the appropriate Makefile options for your system. then type make.
+############################################################################
+# Sun users
+# CC = gcc
+# CFLAGS = -g -Wall -pedantic
+# LIBS = -lm
 ############################################################################
 # FreeBSD users
 # CC = gcc
-# CFLAGS = -O2 -DFBSD_DATABASE
-# LFLAGS = -s
+# CFLAGS = -O2 -Wall -pedantic
 # LIBS = -lm
-# GROUP =wheel
 ############################################################################
 # Linux users
 CC = gcc
-CFLAGS = -Wall -O2
-LFLAGS = -s
-LIBS = -ldb
-GROUP = root
+CFLAGS = -g -Wall -pedantic
+LIBS = -lm -lgdbm
 ############################################################################
 
+
+SRC = go.c t2s.c space.c tags.c grammar.c \
+	transcribe.c conv1.c conv2.c durpros.c prosody.c \
+	syllab.c utils.c buffer.c \
+	fw.c broad_cats.c durs.c load_diphs.c spnio.c \
+	durations.c pitch.c audio.c \
+	phon_rules.c edin2sampa.c
+#coeffs.c excitation.c durations.c pitch.c audio.c ulaw.c \
 
 OBJS = go.o t2s.o space.o tags.o grammar.o \
 	transcribe.o conv1.o conv2.o durpros.o prosody.o \
 	syllab.o utils.o buffer.o \
-	fw.o broad_cats.o durs.o spnio.o \
-	audio.o phon_rules.o edin2sampa.o
+	fw.o broad_cats.o durs.o load_diphs.o spnio.o \
+	durations.o pitch.o audio.o \
+	phon_rules.o edin2sampa.o
+#coeffs.o excitation.o durations.o pitch.o audio.o ulaw.o \
 
-OBSOLETE_OBJS = load_diphs.o durations.o pitch.o
+RULE_SRC = rule_engine.c regerror.c regexp.c regsub.c read_rules.c
 
-RULE_OBJS = rule_engine.o read_rules.o
+RULE_OBJS = rule_engine.o regerror.o regexp.o regsub.o read_rules.o
+
+
+NRL_SRC = interface.c english.c nrl_edin.c phoneme.c saynum.c spellwor.c
 
 NRL_OBJS = interface.o english.o nrl_edin.o phoneme.o saynum.o spellwor.o
 
+
+TEST_SRC = test_diphones.c
+
+TEST_OBJS = test_diphones.o
+
+MAIN_SRC = main.c
+
 MAIN = main.o
+
+HEADERS = regexp.h regmagic.h rule_engine.h t2s.h prototypes.h
 
 all: freephone
 
 freephone: $(OBJS) $(NRL_OBJS) $(RULE_OBJS) $(MAIN)
-	$(CC) $(LFLAGS) -o $@ $^ $(LIBS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(NRL_OBJS) $(RULE_OBJS) $(MAIN) $(LIBS)
 
-.PHONY: install
-install: freephone
-	install -d ${bindir}
-	install -g ${GROUP} -o root -m 0755 -p $^ ${bindir}
+# /home/awb/src/malloc/libmalloc.a
 
-.PHONY: clean
 clean:
-	rm -f freephone *.o
+	rm -f freephone lpc_synth *.o core gmon.out
 
-%.o:%.c
-	$(CC) -c ${CFLAGS} -o $@ $<
+distribution:
+	/bin/rm -r ../distribution
+	mkdir ../distribution
+	mkdir ../distribution/src
+	mkdir ../distribution/lib
+	cp -r ../dist_doc ../distribution/doc
+	cp ../dictionaries/Makefile ../distribution/lib
+	cp ../dictionaries/dbm_prog.c ../distribution/lib
+	cp ../dictionaries/read_ox_dict ../distribution/lib
+	cp ../dictionaries/text710.* ../distribution/lib
+	# cp ../diphs_donovan/donovan.idx ../distribution/lib
+	# cp ../diphs_donovan/donovan.dat ../distribution/lib
+	cp $(SRC) $(RULE_SRC) $(NRL_SRC) $(MAIN_SRC) $(HEADERS) Makefile ../distribution/src
+	# cp context_rules ../distribution/src
+	cp ../ACKNOWLEDGEMENTS ../README ../INSTALLATION ../Copying ../distribution
 
 # dependencies
-audio.o: audio.c t2s.h prototypes.h
-broad_cats.o: broad_cats.c t2s.h prototypes.h
-buffer.o: buffer.c t2s.h prototypes.h
-conv1.o: conv1.c t2s.h prototypes.h
-conv2.o: conv2.c t2s.h prototypes.h
-durations.o: durations.c t2s.h prototypes.h
-durpros.o: durpros.c t2s.h prototypes.h
-durs.o: durs.c t2s.h prototypes.h
-edin2sampa.o: edin2sampa.c t2s.h prototypes.h
-english.o: english.c t2s.h prototypes.h
-fw.o: fw.c t2s.h prototypes.h
-go.o: go.c t2s.h prototypes.h
-grammar.o: grammar.c t2s.h prototypes.h
-interface.o: interface.c t2s.h prototypes.h
-load_diphs.o: load_diphs.c t2s.h prototypes.h
-main.o: main.c t2s.h prototypes.h
-nrl_edin.o: nrl_edin.c t2s.h prototypes.h
-phoneme.o: phoneme.c t2s.h prototypes.h
-phon_rules.o: phon_rules.c t2s.h prototypes.h
-pitch.o: pitch.c t2s.h prototypes.h
-prosody.o: prosody.c t2s.h prototypes.h
-read_rules.o: read_rules.c t2s.h prototypes.h
-rule_engine.o: rule_engine.c t2s.h prototypes.h
-saynum.o: saynum.c t2s.h prototypes.h
-space.o: space.c t2s.h prototypes.h
-spellwor.o: spellwor.c t2s.h prototypes.h
-spnio.o: spnio.c t2s.h prototypes.h
-syllab.o: syllab.c t2s.h prototypes.h
-t2s.o: t2s.c t2s.h prototypes.h
-tags.o: tags.c t2s.h prototypes.h
-transcribe.o: transcribe.c t2s.h prototypes.h
-utils.o: utils.c t2s.h prototypes.h
+
+$(OBJS) : t2s.h
+$(TEST_OBJS) : t2s.h
+$(MAIN) : t2s.h
+$(RULE_OBJS) : regexp.h regmagic.h
+rule-engine.c : rule_engine.h

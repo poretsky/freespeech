@@ -216,7 +216,7 @@ export void have_letter()
   for (new_char() ; isalpha(Char) || Char == '\'' ; new_char())
     {
       buff[count++] = makeupper(Char);
-      if (count > MAX_LENGTH-2)
+      if (count >= MAX_LENGTH-2)
 	{
 	  buff[count++] = ' ';
 	  buff[count++] = '\0';

@@ -1,0 +1,18 @@
+From: "Igor B. Poretsky" <poretsky@mlbox.ru>
+Date: Wed, 15 Feb 2023 14:10:14 +0300
+Subject: Corrected path to the perl interpreter
+
+---
+ lib/read_ox_dict | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/read_ox_dict b/lib/read_ox_dict
+index d3bee3e..7dd7885 100755
+--- a/lib/read_ox_dict
++++ b/lib/read_ox_dict
+@@ -1,4 +1,4 @@
+-#!/usr/local/bin/perl
++#!/usr/bin/perl
+ 
+ # Copyright (c) 1995 Alistair Conkie. All rights reserved.
+ # This program is free software; you can redistribute it and/or

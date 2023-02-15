@@ -1,0 +1,21 @@
+From: "Igor B. Poretsky" <poretsky@mlbox.ru>
+Date: Wed, 15 Feb 2023 14:23:20 +0300
+Subject: Typo fix
+
+---
+ INSTALLATION | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/INSTALLATION b/INSTALLATION
+index 18a1ebf..3513214 100644
+--- a/INSTALLATION
++++ b/INSTALLATION
+@@ -24,7 +24,7 @@ is about 4 megabytes.
+ What is needed: 
+ 
+ * An ANSI-C compiler
+-* A pronunciation dictionary. We tested with one called the Compuer
++* A pronunciation dictionary. We tested with one called the Computer
+   Usable Version of the Oxford Advanced Learner's Dictionary
+   (CUVOALD). Because of the copyright restrictions it is not
+   contained in this package.  It is available for ftp from

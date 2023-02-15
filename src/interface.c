@@ -113,7 +113,6 @@ export char *nrl_rules(char *in)
 export void have_number()
 {
   long int value;
-  long int tens;
   int lastdigit;
 
   value = Char - '0';
@@ -121,26 +120,12 @@ export void have_number()
 
   for (new_char() ; isdigit(Char) ; new_char())
     {
-      if (!value)
-        say_cardinal(value);
       value = 10 * value + (Char-'0');
       lastdigit = Char;
     }
 
   /* Recognize ordinals based on last digit of number */
-  tens = (value / 10) % 10;
-  if (tens == 1)
-    {
-      if (makeupper(Char) == 'T' && makeupper(Char1) == 'H' &&
-          !isalpha(Char2) && !isdigit(Char2))
-        {
-          say_ordinal(value);
-          new_char();	/* Used Char */
-          new_char();	/* Used Char1 */
-          return;
-        }
-    }
-  else switch (lastdigit)
+  switch (lastdigit)
     {
     case '1':	/* ST */
       if (makeupper(Char) == 'S' && makeupper(Char1) == 'T' &&
@@ -231,7 +216,7 @@ export void have_letter()
   for (new_char() ; isalpha(Char) || Char == '\'' ; new_char())
     {
       buff[count++] = makeupper(Char);
-      if (count >= MAX_LENGTH-2)
+      if (count > MAX_LENGTH-2)
 	{
 	  buff[count++] = ' ';
 	  buff[count++] = '\0';

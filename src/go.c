@@ -21,7 +21,6 @@ static void zero_things(BUFFER *buffer, LING_LIST *ling_list)
   }
 }
 
-#ifdef FREEPHONE_OBSOLETE
 export void go(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps, ACOUSTIC *as) 
 {
   int c, c1;
@@ -82,7 +81,6 @@ export void go(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent,
     }
   }
 }
-#endif
 
 export void go3(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps) 
 {
@@ -146,9 +144,8 @@ export void go3(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent
   }
 }
 
-#ifdef FREEPHONE_OBSOLETE
 export void go2(CONFIG *config, SPN *ps, ACOUSTIC *as) 
 {
   process_spn_file(config, ps, as);
 }
-#endif
+	

@@ -11,16 +11,14 @@
 
 #include <sys/types.h>
 #include <limits.h>
-
+/* FreeBSD, and Linux?  */
 #ifdef FBSD_DATABASE
 #include <db.h>
 #else
-#include <db_185.h>
+#include <ndbm.h>
 #endif
-
 #include <fcntl.h>
 
-#ifdef FREEPHONE_OBSOLETE
 int ft_endian_loc = 1; /* for deciding if we need to byte-swap  */
 
 ENTRY indx[NDIPHS];
@@ -28,9 +26,6 @@ FRAME dico[NFRAMES];
 int nindex;
 
 export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps, ACOUSTIC *as) 
-#else
-export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps)
-#endif
 {
 
   /* check the various files are accessible  */
@@ -46,18 +41,20 @@ export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sen
 
 
 
-#ifdef FREEPHONE_OBSOLETE
   /* load the diphones including index  */
 
   load_speech(config);
-#endif
 
 
 
   /* set up database if present  */
 
   if(strcmp("-",config->hash_file)) {
+#ifdef FBSD_DATABASE
     config->db = (void *)dbopen(config->hash_file,O_RDONLY, 0000644, DB_HASH, NULL);
+#else
+    config->db = (void *)dbm_open(config->hash_file,O_RDONLY, 0000644);
+#endif
     /* the (void *) is so config can remain ignorant about the database  */
     if(config->db==NULL) {
       (void)fprintf(stderr,"\nDictionary file \"%s\" not found.\n",config->hash_file);
@@ -91,9 +88,7 @@ export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sen
   /* now the synthesis stuff  */
 
   ps_malloc(DEF_PHONS,DEF_TARGS,ps);
-#ifdef FREEPHONE_OBSOLETE
   as_malloc(DEF_FRAMES,DEF_PM,as);       /* should perhaps use ps??  */
-#endif
 
 
 
@@ -117,7 +112,13 @@ export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sen
 
   /*	what follows is an example for use as a template  */
   load_context_rules("context_rules");
-
+  /* this goes with the rule engine code...
+     for(i=0;i<nrules;i++) {
+     rule[i].lc = regcomp(rule[i].left_context);
+     rule[i].rc = regcomp(rule[i].right_context);
+     }
+     */
+ 
   phon_rules_init();
 
 
@@ -126,15 +127,16 @@ export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sen
 
 }
 
-#ifdef FREEPHONE_OBSOLETE
 void terminate(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps, ACOUSTIC *as)
-#else
-void terminate(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent, SPROSOD_LIST *spl, SPN *ps)
-#endif
 {
 
   if(config->db != NULL)
-    (void)(((DB *)(config->db))->close)((DB *)(config->db));
+#ifdef FBSD_DATABASE
+    (void)(config->db->close)(config->db);
+#else
+  dbm_close(config->db);
+#endif
+
 
   output_close(config);
 
@@ -144,11 +146,9 @@ void terminate(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent,
   spl_free(spl);
 
   ps_free(ps);
-#ifdef FREEPHONE_OBSOLETE
   as_free(as);
 
   unload_diphs(config);
-#endif
   phon_rules_free();
   /* also need to free the various other structures  */
 }
@@ -242,8 +242,8 @@ export void ps_malloc(int nphons, int ntargs, SPN *ps)
   ps->duration = (int *) malloc(sizeof(int)*(nphons+1));
   ps->pb = (int *) malloc(sizeof(int)*(nphons+1));
   ps->scale = (float *) malloc(sizeof(float)*(nphons+1));
-  ps->phons = (char **) malloc(sizeof(char *)*(nphons+1));
-  ps->diphs = (char **) malloc(sizeof(char *)*(nphons+1));
+  ps->phons = (char **) malloc(sizeof(int)*(nphons+1));
+  ps->diphs = (char **) malloc(sizeof(int)*(nphons+1));
 
   for(i=0;i<nphons;i++) {
     ps->phons[i] = (char *)malloc(sizeof(PHON_SZ));
@@ -268,8 +268,8 @@ export void ps_realloc(int nphons, int ntargs, SPN *ps)
   ps->duration = (int *) realloc(ps->duration,sizeof(int)*(nphons+1));
   ps->pb = (int *) realloc(ps->pb,sizeof(int)*(nphons+1));
   ps->scale = (float *) realloc(ps->scale,sizeof(float)*(nphons+1));
-  ps->phons = (char **) realloc(ps->phons,sizeof(char *)*(nphons+1));
-  ps->diphs = (char **) realloc(ps->diphs,sizeof(char *)*(nphons+1));
+  ps->phons = (char **) realloc(ps->phons,sizeof(int)*(nphons+1));
+  ps->diphs = (char **) realloc(ps->diphs,sizeof(int)*(nphons+1));
 
   for(i=rem_p;i<nphons;i++) {
     ps->phons[i] = (char *)malloc(sizeof(PHON_SZ));
@@ -299,7 +299,6 @@ export void ps_free(SPN *ps)
   free(ps->diphs);
 }
 
-#ifdef FREEPHONE_OBSOLETE
 export void as_malloc(int nframes, int npp, ACOUSTIC *as)
 {
 
@@ -332,7 +331,6 @@ export void as_free(ACOUSTIC *as)
   free(as->duration);
   free(as->pitch);
 }
-#endif
 
 /*
  * 'SENT' operations.

@@ -9,6 +9,7 @@
 
 #include <sys/types.h>
 #include <limits.h>
+#include <string.h>
 
 #ifdef FBSD_DATABASE
 #include <db.h>
@@ -46,7 +47,8 @@ export void transcribe(CONFIG *config, LING_LIST *ling_list)
 	tr = nrl_rules(word);
 	tr = strdup(tr);
 	tr = syllabify(tr,config);
-	tr = stress(tr);
+	if (!strchr(tr, '*'))
+          tr = stress(tr);
 	ling_list->text[i]->transcription = tr;
       }
       free(word);

@@ -1,3 +1,11 @@
+freespeech (1.0m-18jammy1) jammy; urgency=medium
+
+  * Speak leading zeros in numbers.
+  * Ordinals speaking fix.
+  * Switch to dpkg-source 3.0 format.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Fri, 17 Feb 2023 04:26:52 +0300
+
 freespeech (1.0m-17jammy1) jammy; urgency=medium
 
   * Release for Ubuntu Jammy.

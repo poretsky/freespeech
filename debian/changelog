@@ -1,3 +1,9 @@
+freespeech (1.0m-19stretch1) stretch; urgency=medium
+
+  * Dictionary corrections.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Thu, 19 Oct 2023 18:42:13 +0300
+
 freespeech (1.0m-18stretch1) stretch; urgency=medium
 
   * Speak leading zeros in numbers.

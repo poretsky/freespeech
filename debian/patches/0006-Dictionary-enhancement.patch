@@ -3,11 +3,11 @@ Date: Wed, 15 Feb 2023 14:11:48 +0300
 Subject: Dictionary enhancement
 
 ---
- lib/text710.edin | 312 +++++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 301 insertions(+), 11 deletions(-)
+ lib/text710.edin | 331 ++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 314 insertions(+), 17 deletions(-)
 
 diff --git a/lib/text710.edin b/lib/text710.edin
-index 221571b..f2824f4 100644
+index 221571b..5677500 100644
 --- a/lib/text710.edin
 +++ b/lib/text710.edin
 @@ -1009,7 +1009,6 @@ Dijon d * ee zh o ng
@@ -135,7 +135,16 @@ index 221571b..f2824f4 100644
  browses b r * ou z i z
  browsing b r * ou z i ng
  bruin b r * uu i n
-@@ -11221,6 +11234,8 @@ byroad b * ie r oa d
+@@ -11131,6 +11144,8 @@ busts b * u s t s
+ busy b * i z i
+ busybodies b * i z i b o d i z
+ busybody b * i z i b o d i
++busybox b * i z i b o k s
++busyboxes b * i z i b o k s i z
+ busying b * i z i i ng
+ but b * u t
+ butane b y * uu t ai n
+@@ -11221,6 +11236,8 @@ byroad b * ie r oa d
  byroads b * ie r oa d z
  bystander b * ie s t aa n d a r
  bystanders b * ie s t aa n d a z
@@ -144,7 +153,7 @@ index 221571b..f2824f4 100644
  byway b * ie w ai
  byways b * ie w ai z
  byword b * ie w er d
-@@ -11749,6 +11764,8 @@ captained k * aa p t i n d
+@@ -11749,6 +11766,8 @@ captained k * aa p t i n d
  captaining k * aa p t i n i ng
  captains k * aa p t i n z
  caption k * aa p sh n
@@ -153,7 +162,7 @@ index 221571b..f2824f4 100644
  captions k * aa p sh n z
  captious k * aa p sh a s
  captiously k * aa p sh a s l i
-@@ -12384,6 +12401,10 @@ centenary s e n . t * ee n a r i
+@@ -12384,6 +12403,10 @@ centenary s e n . t * ee n a r i
  centennial s e n . t * e n eer l
  centennially s e n . t * e n eer l i
  centennials s e n . t * e n eer l z
@@ -164,7 +173,7 @@ index 221571b..f2824f4 100644
  centi- s * e n t i -
  centigrade s * e n t i g r ai d
  centime s * o n t ee m
-@@ -13490,6 +13511,8 @@ classifiable k l * aa s i f ie a b l
+@@ -13490,6 +13513,8 @@ classifiable k l * aa s i f ie a b l
  classification k l ~ aa s i f i . k * ai sh n
  classifications k l ~ aa s i f i . k * ai sh n z
  classified k l * aa s i f ie d
@@ -173,7 +182,7 @@ index 221571b..f2824f4 100644
  classifies k l * aa s i f ie z
  classify k l * aa s i f ie
  classifying k l * aa s i f ie i ng
-@@ -14297,7 +14320,9 @@ colonnaded k ~ o l a . n * ai d i d
+@@ -14297,7 +14322,9 @@ colonnaded k ~ o l a . n * ai d i d
  colonnades k ~ o l a . n * ai d z
  colons k * oa l a n z
  colony k * o l a n i
@@ -183,7 +192,7 @@ index 221571b..f2824f4 100644
  colossal k a . l * o s l
  colossi k a . l * o s ie
  colossus k a . l * o s a s
-@@ -14498,6 +14523,8 @@ commits k a . m * i t s
+@@ -14498,6 +14525,8 @@ commits k a . m * i t s
  committed k a . m * i t i d
  committee k a . m * i t i
  committees k a . m * i t i z
@@ -192,7 +201,7 @@ index 221571b..f2824f4 100644
  committing k a . m * i t i ng
  commode k a . m * oa d
  commodes k a . m * oa d z
-@@ -14673,6 +14700,7 @@ completeness k a m . p l * ee t n a s
+@@ -14673,6 +14702,7 @@ completeness k a m . p l * ee t n a s
  completes k a m . p l * ee t s
  completing k a m . p l * ee t i ng
  completion k a m . p l * ee sh n
@@ -200,7 +209,7 @@ index 221571b..f2824f4 100644
  complex k * o m p l e k s
  complexes k * o m p l e k s i z
  complexion k a m . p l * e k sh n
-@@ -14680,6 +14708,7 @@ complexions k a m . p l * e k sh n z
+@@ -14680,6 +14710,7 @@ complexions k a m . p l * e k sh n z
  complexities k a m . p l * e k s i t i z
  complexity k a m . p l * e k s i t i
  compliance k a m . p l * ie a n s
@@ -208,7 +217,7 @@ index 221571b..f2824f4 100644
  compliant k a m . p l * ie a n t
  complicate k * o m p l i k ai t
  complicated k * o m p l i k ai t i d
-@@ -14719,6 +14748,7 @@ composers k a m . p * oa z a z
+@@ -14719,6 +14750,7 @@ composers k a m . p * oa z a z
  composes k a m . p * oa z i z
  composing k a m . p * oa z i ng
  composite k * o m p a z i t
@@ -216,7 +225,7 @@ index 221571b..f2824f4 100644
  composition k ~ o m p a . z * i sh n
  compositions k ~ o m p a . z * i sh n z
  compositor k a m . p * o z i t a r
-@@ -14908,6 +14938,7 @@ concur k a n . k * er r
+@@ -14908,6 +14940,7 @@ concur k a n . k * er r
  concurred k a n . k * er d
  concurrence k a n . k * u r a n s
  concurrences k a n . k * u r a n s i z
@@ -224,7 +233,7 @@ index 221571b..f2824f4 100644
  concurrent k a n . k * u r a n t
  concurrently k a n . k * u r a n t l i
  concurring k a n . k * er r i ng
-@@ -15904,6 +15935,8 @@ copecks k * oa p e k s
+@@ -15904,6 +15937,8 @@ copecks k * oa p e k s
  coped k * oa p t
  copes k * oa p s
  copied k * o p i d
@@ -233,7 +242,7 @@ index 221571b..f2824f4 100644
  copies k * o p i z
  coping k * oa p i ng
  coping-stone k * oa p i ng - s t oa n
-@@ -17472,8 +17505,13 @@ custom-built k ~ u s t a m - b * i l t
+@@ -17472,8 +17507,13 @@ custom-built k ~ u s t a m - b * i l t
  custom-made k ~ u s t a m - m * ai d
  customarily k * u s t a m a r a l i
  customary k * u s t a m a r i
@@ -247,7 +256,7 @@ index 221571b..f2824f4 100644
  customs k * u s t a m z
  cut k * u t
  cut-out k * u t - ou t
-@@ -17786,7 +17824,11 @@ dastard d * aa s t a d
+@@ -17786,7 +17826,11 @@ dastard d * aa s t a d
  dastardly d * aa s t a d l i
  dastards d * aa s t a d z
  data d * ai t a
@@ -259,7 +268,7 @@ index 221571b..f2824f4 100644
  date d * ai t
  dated d * ai t i d
  dateless d * ai t l a s
-@@ -18177,6 +18219,12 @@ decolonize d ~ ee . k * o l a n ie z
+@@ -18177,6 +18221,12 @@ decolonize d ~ ee . k * o l a n ie z
  decolonized d ~ ee . k * o l a n ie z d
  decolonizes d ~ ee . k * o l a n ie z i z
  decolonizing d ~ ee . k * o l a n ie z i ng
@@ -272,7 +281,7 @@ index 221571b..f2824f4 100644
  decompose d ~ ee k a m . p * oa z
  decomposed d ~ ee k a m . p * oa z d
  decomposes d ~ ee k a m . p * oa z i z
-@@ -18562,6 +18610,8 @@ delimitating d ee . l * i m i t ai t i ng
+@@ -18562,6 +18612,8 @@ delimitating d ee . l * i m i t ai t i ng
  delimitation d ee . l ~ i m i . t * ai sh n
  delimitations d ee . l ~ i m i . t * ai sh n z
  delimited d ee . l * i m i t i d
@@ -281,7 +290,7 @@ index 221571b..f2824f4 100644
  delimiting d ee . l * i m i t i ng
  delimits d ee . l * i m i t s
  delineate d i . l * i n i ai t
-@@ -19044,6 +19094,8 @@ descent d i . s * e n t
+@@ -19044,6 +19096,8 @@ descent d i . s * e n t
  descents d i . s * e n t s
  describe d i . s k r * ie b
  described d i . s k r * ie b d
@@ -290,7 +299,7 @@ index 221571b..f2824f4 100644
  describes d i . s k r * ie b z
  describing d i . s k r * ie b i ng
  descried d i . s k r * ie d
-@@ -19432,6 +19484,8 @@ dialectician d ~ ie a l e k . t * i sh n
+@@ -19432,6 +19486,8 @@ dialectician d ~ ie a l e k . t * i sh n
  dialecticians d ~ ie a l e k . t * i sh n z
  dialectics d ~ ie a . l * e k t i k s
  dialects d * ie a l e k t s
@@ -299,7 +308,7 @@ index 221571b..f2824f4 100644
  dialled d * ie a l d
  dialling d * ie a l i ng
  dialogue d * ie a l o g
-@@ -20123,6 +20177,10 @@ disestablished d ~ i s i . s t * aa b l i sh t
+@@ -20123,6 +20179,10 @@ disestablished d ~ i s i . s t * aa b l i sh t
  disestablishes d ~ i s i . s t * aa b l i sh i z
  disestablishing d ~ i s i . s t * aa b l i sh i ng
  disestablishment d ~ i s i . s t * aa b l i sh m a n t
@@ -310,7 +319,7 @@ index 221571b..f2824f4 100644
  disfavour d ~ i s . f * ai v a r
  disfavoured d ~ i s . f * ai v a d
  disfavouring d ~ i s . f * ai v a r i ng
-@@ -21755,6 +21813,9 @@ dupes d y * uu p s
+@@ -21755,6 +21815,9 @@ dupes d y * uu p s
  duping d y * uu p i ng
  dupl d y * uu p l i k a t
  duplex d y * uu p l e k s
@@ -320,7 +329,7 @@ index 221571b..f2824f4 100644
  duplicate d y * uu p l i k a t
  duplicate d y * uu p l i k ai t
  duplicated d y * uu p l i k ai t i d
-@@ -22551,6 +22612,8 @@ emboldens i m . b * oa l d a n z
+@@ -22551,6 +22614,8 @@ emboldens i m . b * oa l d a n z
  embonpoint ~ o m b o n . p w * ar ng
  emboss i m . b * o s
  embossed i m . b * o s t
@@ -329,7 +338,7 @@ index 221571b..f2824f4 100644
  embosses i m . b * o s i z
  embossing i m . b * o s i ng
  embrace i m . b r * ai s
-@@ -22889,6 +22952,7 @@ enforce i n . f * aw s
+@@ -22889,6 +22954,7 @@ enforce i n . f * aw s
  enforceable i n . f * aw s a b l
  enforced i n . f * aw s t
  enforcement i n . f * aw s m a n t
@@ -337,7 +346,7 @@ index 221571b..f2824f4 100644
  enforces i n . f * aw s i z
  enforcing i n . f * aw s i ng
  enfranchise i n . f r * aa n ch ie z
-@@ -24200,8 +24264,6 @@ exporting i k . s p * aw t i ng
+@@ -24200,8 +24266,6 @@ exporting i k . s p * aw t i ng
  exports * e k s p aw t s
  exports i k . s p * aw t s
  expos * e k s p oa z
@@ -346,7 +355,7 @@ index 221571b..f2824f4 100644
  expose i k . s p * oa z
  exposed i k . s p * oa z d
  exposes i k . s p * oa z i z
-@@ -24486,6 +24548,7 @@ face-powders f * ai s - p ou d a z
+@@ -24486,6 +24550,7 @@ face-powders f * ai s - p ou d a z
  face-saver f * ai s - s ai v a r
  face-savers f * ai s - s ai v a z
  face-saving f * ai s - s ai v i ng
@@ -354,7 +363,7 @@ index 221571b..f2824f4 100644
  faced f * ai s t
  faceless f * ai s l a s
  facer f * ai s a r
-@@ -24517,7 +24580,7 @@ faction f * aa k sh n
+@@ -24517,7 +24582,7 @@ faction f * aa k sh n
  factions f * aa k sh n z
  factious f * aa k sh a s
  factitious f aa k . t * i sh a s
@@ -363,7 +372,7 @@ index 221571b..f2824f4 100644
  factories f * aa k t a r i z
  factorize f * aa k t a r ie z
  factorized f * aa k t a r ie z d
-@@ -24868,6 +24931,15 @@ faulty f * aw l t i
+@@ -24868,6 +24933,15 @@ faulty f * aw l t i
  faun f * aw n
  fauna f * aw n a
  fauns f * aw n z
@@ -379,7 +388,7 @@ index 221571b..f2824f4 100644
  favour f * ai v a r
  favourable f * ai v a r a b l
  favourably f * ai v a r a b l i
-@@ -25252,7 +25324,11 @@ filches f * i l ch i z
+@@ -25252,7 +25326,11 @@ filches f * i l ch i z
  filching f * i l ch i ng
  file f * ie l
  filed f * ie l d
@@ -391,7 +400,7 @@ index 221571b..f2824f4 100644
  filial f * i l eer l
  filibuster f * i l i b u s t a r
  filibustered f * i l i b u s t a d
-@@ -25438,6 +25514,8 @@ firedog f * ie a d o g
+@@ -25438,6 +25516,8 @@ firedog f * ie a d o g
  firedogs f * ie a d o g z
  fireflies f * ie a f l ie z
  firefly f * ie a f l ie
@@ -400,7 +409,7 @@ index 221571b..f2824f4 100644
  fireguard f * ie a g ar d
  fireguards f * ie a g ar d z
  firelight f * ie a l ie t
-@@ -25745,6 +25823,8 @@ flaunting f l * aw n t i ng
+@@ -25745,6 +25825,8 @@ flaunting f l * aw n t i ng
  flaunts f l * aw n t s
  flautist f l * aw t i s t
  flautists f l * aw t i s t s
@@ -409,7 +418,7 @@ index 221571b..f2824f4 100644
  flavour f l * ai v a r
  flavoured f l * ai v a d
  flavouring f l * ai v a r i ng
-@@ -26214,6 +26294,9 @@ fondling f * o n d l i ng
+@@ -26214,6 +26296,9 @@ fondling f * o n d l i ng
  fondly f * o n d l i
  fondness f * o n d n a s
  font f * o n t
@@ -419,7 +428,7 @@ index 221571b..f2824f4 100644
  fonts f * o n t s
  food f * uu d
  foodless f * uu d l a s
-@@ -27265,6 +27348,7 @@ fuming f y * uu m i ng
+@@ -27265,6 +27350,7 @@ fuming f y * uu m i ng
  fun f * u n
  function f * u ng k sh n
  functional f * u ng k sh a n l
@@ -427,7 +436,7 @@ index 221571b..f2824f4 100644
  functionalism f * u ng k sh a n a l i z a m
  functionalist f * u ng k sh n a l i s t
  functionalists f * u ng k sh n a l i s t s
-@@ -28111,6 +28195,8 @@ gifted g * i f t i d
+@@ -28111,6 +28197,8 @@ gifted g * i f t i d
  gifting g * i f t i ng
  gifts g * i f t s
  gig g * i g
@@ -436,7 +445,7 @@ index 221571b..f2824f4 100644
  gigantic j ie . g * aa n t i k
  giggle g * i g l
  giggled g * i g l d
-@@ -29688,6 +29774,7 @@ half-volleys h ar f - v * o l i z
+@@ -29688,6 +29776,7 @@ half-volleys h ar f - v * o l i z
  half-yearly h ar f - y * er l i
  halfback h * ar f b aa k
  halfbacks h * ar f b aa k s
@@ -444,7 +453,7 @@ index 221571b..f2824f4 100644
  halfpennies h * ai p n i z
  halfpenny h * ai p n i
  halfpennyworth h * ai p n i w er th
-@@ -30695,6 +30782,7 @@ hieroglyphic h ~ ie a r a . g l * i f i k
+@@ -30695,6 +30784,7 @@ hieroglyphic h ~ ie a r a . g l * i f i k
  hieroglyphics h ~ ie a r a . g l * i f i k s
  hieroglyphs h * ie a r a g l i f s
  hies h * ie z
@@ -452,7 +461,16 @@ index 221571b..f2824f4 100644
  higgledy-piggledy h ~ i g l d i - p * i g l d i
  high h * ie
  high-class h * ie - k l ar s
-@@ -31866,6 +31954,8 @@ identifiable ie . d ~ e n t i . f * ie a b l
+@@ -31024,6 +31114,8 @@ homely h * oa m l i
+ homeopath h * oa m eer p aa th
+ homeopathic h ~ oa m eer . p * aa th i k
+ homeopaths h * oa m ee oa p aa th s
++homepage h ~ oa m . p * ai j
++homepages h ~ oa m . p * ai j i z
+ homes h * oa m z
+ homesick h * oa m s i k
+ homesickness h * oa m s i k n a s
+@@ -31866,6 +31958,8 @@ identifiable ie . d ~ e n t i . f * ie a b l
  identifiably ie . d ~ e n t i . f * ie a b l i
  identification ie . d ~ e n t i f i . k * ai sh n
  identified ie . d * e n t i f ie d
@@ -461,7 +479,7 @@ index 221571b..f2824f4 100644
  identifies ie . d * e n t i f ie z
  identify ie . d * e n t i f ie
  identifying ie . d * e n t i f ie i ng
-@@ -33154,6 +33244,8 @@ infirmaries i n . f * er m a r i z
+@@ -33154,6 +33248,8 @@ infirmaries i n . f * er m a r i z
  infirmary i n . f * er m a r i
  infirmities i n . f * er m i t i z
  infirmity i n . f * er m i t i
@@ -470,7 +488,7 @@ index 221571b..f2824f4 100644
  inflame i n . f l * ai m
  inflamed i n . f l * ai m d
  inflames i n . f l * ai m z
-@@ -33386,6 +33478,7 @@ inlays * i n l ai z
+@@ -33386,6 +33482,7 @@ inlays * i n l ai z
  inlays ~ i n . l * ai z
  inlet * i n l e t
  inlets * i n l e t s
@@ -478,7 +496,7 @@ index 221571b..f2824f4 100644
  inmate * i n m ai t
  inmates * i n m ai t s
  inmost * i n m oa s t
-@@ -33591,6 +33684,8 @@ install i n . s t * aw l
+@@ -33591,6 +33688,8 @@ install i n . s t * aw l
  installation ~ i n s t a . l * ai sh n
  installations ~ i n s t a . l * ai sh n z
  installed i n . s t * aw l d
@@ -487,7 +505,7 @@ index 221571b..f2824f4 100644
  installing i n . s t * aw l i ng
  installs i n . s t * aw l z
  instalment i n . s t * aw l m a n t
-@@ -33711,6 +33806,7 @@ integer * i n t i j a r
+@@ -33711,6 +33810,7 @@ integer * i n t i j a r
  integers * i n t i j a z
  integral * i n t i g r a l
  integrally * i n t i g r a l i
@@ -495,7 +513,7 @@ index 221571b..f2824f4 100644
  integrate * i n t i g r ai t
  integrated * i n t i g r ai t i d
  integrates * i n t i g r ai t s
-@@ -35065,6 +35161,9 @@ juxtaposed j ~ u k s t a . p * oa z d
+@@ -35065,6 +35165,9 @@ juxtaposed j ~ u k s t a . p * oa z d
  juxtaposes j ~ u k s t a . p * oa z i z
  juxtaposing j ~ u k s t a . p * oa z i ng
  juxtaposition j ~ u k s t a p a . z * i sh n
@@ -505,7 +523,7 @@ index 221571b..f2824f4 100644
  k k * ai
  kummel k * oo m a l
  k's k * ai z
-@@ -35214,6 +35313,8 @@ kiln k * i l n
+@@ -35214,6 +35317,8 @@ kiln k * i l n
  kilns k * i l n z
  kilo k * ee l oa
  kilo- k * i l a -
@@ -514,7 +532,7 @@ index 221571b..f2824f4 100644
  kilocycle k * i l a s ie k l
  kilocycles k * i l a s ie k l z
  kilogram k * i l a g r aa m
-@@ -35438,6 +35539,8 @@ knowing n * oa i ng
+@@ -35438,6 +35543,8 @@ knowing n * oa i ng
  knowingly n * oa i ng l i
  knowledge n * o l i j
  knowledgeable n * o l i j a b l
@@ -523,7 +541,7 @@ index 221571b..f2824f4 100644
  known n * oa n
  knows n * oa z
  knuckle n * u k l
-@@ -35493,6 +35596,8 @@ laager l * ar g a r
+@@ -35493,6 +35600,8 @@ laager l * ar g a r
  laagers l * ar g a z
  lab l * aa b
  label l * ai b l
@@ -532,7 +550,28 @@ index 221571b..f2824f4 100644
  labelled l * ai b l d
  labelling l * ai b a l i ng
  labels l * ai b l z
-@@ -36532,6 +36637,8 @@ lifeboat l * ie f b oa t
+@@ -36026,7 +36135,6 @@ leach l * ee ch
+ leached l * ee ch t
+ leaches l * ee ch i z
+ leaching l * ee ch i ng
+-lead l * e d
+ lead l * ee d
+ lead-in l * ee d - i n
+ lead-ins l * ee d - i n z
+@@ -36037,12 +36145,10 @@ leader l * ee d a r
+ leaderless l * ee d a l a s
+ leaders l * ee d a z
+ leadership l * ee d a sh i p
+-leading l * e d i ng
+ leading l * ee d i ng
+ leading-rein l * ee d i ng - r ai n
+ leading-reins l * ee d i ng - r ai n z
+ leading-strings l * ee d i ng - s t r i ng z
+-leads l * e d z
+ leads l * ee d z
+ leaf l * ee f
+ leaf-bud l * ee f - b u d
+@@ -36532,6 +36638,8 @@ lifeboat l * ie f b oa t
  lifeboats l * ie f b oa t s
  lifebuoy l * ie f b oi
  lifebuoys l * ie f b oi z
@@ -541,7 +580,7 @@ index 221571b..f2824f4 100644
  lifeguard l * ie f g ar d
  lifeguards l * ie f g ar d z
  lifeless l * ie f l a s
-@@ -36542,6 +36649,10 @@ lifelines l * ie f l ie n z
+@@ -36542,6 +36650,10 @@ lifelines l * ie f l ie n z
  lifelong l * ie f l o ng
  lifer l * ie f a r
  lifers l * ie f a z
@@ -552,7 +591,7 @@ index 221571b..f2824f4 100644
  lifetime l * ie f t ie m
  lifetimes l * ie f t ie m z
  lift l * i f t
-@@ -36748,6 +36859,8 @@ linkages l * i ng k i j i z
+@@ -36748,6 +36860,8 @@ linkages l * i ng k i j i z
  linkboy l * i n k b oi
  linkboys l * i n k b oi z
  linked l * i ng k t
@@ -561,7 +600,7 @@ index 221571b..f2824f4 100644
  linking l * i ng k i ng
  linkman l * i ng k m aa n
  linkmen l * i ng k m e n
-@@ -36857,6 +36970,7 @@ literate l * i t a r a t
+@@ -36857,6 +36971,7 @@ literate l * i t a r a t
  literates l * i t a r a t s
  literati l ~ i t a . r * ar t i
  literature l * i t r a ch a r
@@ -569,7 +608,7 @@ index 221571b..f2824f4 100644
  lithe l * ie dh
  lithograph l * i th a g r ar f
  lithographed l * i th a g r ar f t
-@@ -37829,6 +37943,8 @@ mainstream m * ai n s t r ee m
+@@ -37829,6 +37944,8 @@ mainstream m * ai n s t r ee m
  maintain m ai n . t * ai n
  maintainable m ai n . t * ai n a b l
  maintained m ai n . t * ai n d
@@ -578,7 +617,7 @@ index 221571b..f2824f4 100644
  maintaining m ai n . t * ai n i ng
  maintains m ai n . t * ai n z
  maintenance m * ai n t a n a n s
-@@ -37857,6 +37973,8 @@ make-up m * ai k - u p
+@@ -37857,6 +37974,8 @@ make-up m * ai k - u p
  make-ups m * ai k - u p s
  maker m * ai k a r
  makers m * ai k a z
@@ -587,7 +626,7 @@ index 221571b..f2824f4 100644
  makes m * ai k s
  makeshift m * ai k sh i f t
  makeshifts m * ai k sh i f t s
-@@ -38494,6 +38612,7 @@ mathematician m ~ aa th a m a . t * i sh n
+@@ -38494,6 +38613,7 @@ mathematician m ~ aa th a m a . t * i sh n
  mathematicians m ~ aa th a m a . t * i sh n z
  mathematics m ~ aa th a . m * aa t i k s
  maths m * aa th s
@@ -595,7 +634,7 @@ index 221571b..f2824f4 100644
  matinee m * aa t i n ai
  matinees m * aa t i n ai z
  mating m * ai t i ng
-@@ -38667,6 +38786,8 @@ measured m * e zh a d
+@@ -38667,6 +38787,8 @@ measured m * e zh a d
  measureless m * e zh a l a s
  measurement m * e zh a m a n t
  measurements m * e zh a m a n t s
@@ -604,7 +643,7 @@ index 221571b..f2824f4 100644
  measures m * e zh a z
  measuring m * e zh a r i ng
  meat m * ee t
-@@ -38780,6 +38901,8 @@ meeting-place m * ee t i ng - p l ai s
+@@ -38780,6 +38902,8 @@ meeting-place m * ee t i ng - p l ai s
  meeting-places m * ee t i ng - p l ai s i z
  meetings m * ee t i ng z
  meets m * ee t s
@@ -613,7 +652,7 @@ index 221571b..f2824f4 100644
  megacycle m * e g a s ie k l
  megacycles m * e g a s ie k l z
  megadeath m * e g a d e th
-@@ -39010,6 +39133,7 @@ mess-up m * e s - u p
+@@ -39010,6 +39134,7 @@ mess-up m * e s - u p
  mess-ups m * e s - u p s
  message m * e s i j
  messages m * e s i j i z
@@ -621,7 +660,7 @@ index 221571b..f2824f4 100644
  messed m * e s t
  messenger m * e s i n j a r
  messengers m * e s i n j a z
-@@ -39165,6 +39289,8 @@ microscopic m ~ ie k r a . s k * o p i k
+@@ -39165,6 +39290,8 @@ microscopic m ~ ie k r a . s k * o p i k
  microscopical m ~ ie k r a . s k * o p i k l
  microscopically m ~ ie k r a . s k * o p i k l i
  microscopy m ie . k r * o s k a p i
@@ -630,7 +669,7 @@ index 221571b..f2824f4 100644
  microwave m * ie k r oa w ai v
  microwaves m * ie k r oa w ai v z
  mid m * i d
-@@ -39353,6 +39479,8 @@ millionth m * i l eer n th
+@@ -39353,6 +39480,8 @@ millionth m * i l eer n th
  millionths m * i l eer n th s
  millipede m * i l i p ee d
  millipedes m * i l i p ee d z
@@ -639,7 +678,7 @@ index 221571b..f2824f4 100644
  millpond m * i l p o n d
  millponds m * i l p o n d z
  millrace m * i l r ai s
-@@ -40662,6 +40790,7 @@ mullions m * u l eer n z
+@@ -40662,6 +40791,7 @@ mullions m * u l eer n z
  mulls m * u l z
  multi- m * u l t i -
  multi-lingual m ~ u l t i - l * i ng g w a l
@@ -647,7 +686,7 @@ index 221571b..f2824f4 100644
  multifarious m ~ u l t i . f * air r eer s
  multifariously m ~ u l t i . f * air r eer s l i
  multiform m * u l t i f aw m
-@@ -40676,6 +40805,7 @@ multiplied m * u l t i p l ie d
+@@ -40676,6 +40806,7 @@ multiplied m * u l t i p l ie d
  multiplies m * u l t i p l ie z
  multiply m * u l t i p l ie
  multiplying m * u l t i p l ie i ng
@@ -655,7 +694,7 @@ index 221571b..f2824f4 100644
  multitude m * u l t i t y uu d
  multitudes m * u l t i t y uu d z
  multitudinous m ~ uu l t i . t y * uu d i n a s
-@@ -40976,12 +41106,16 @@ nameplates n * ai m p l ai t s
+@@ -40976,12 +41107,16 @@ nameplates n * ai m p l ai t s
  names n * ai m z
  namesake n * ai m s ai k
  namesakes n * ai m s ai k s
@@ -672,7 +711,7 @@ index 221571b..f2824f4 100644
  nap n * aa p
  napalm n * ai p ar m
  nape n * ai p
-@@ -41065,6 +41199,7 @@ nationals n * aa sh n a l z
+@@ -41065,6 +41200,7 @@ nationals n * aa sh n a l z
  nations n * ai sh n z
  nationwide n * ai sh n w ie d
  native n * ai t i v
@@ -680,7 +719,7 @@ index 221571b..f2824f4 100644
  natives n * ai t i v z
  nativities n a . t * i v i t i z
  nativity n a . t * i v i t i
-@@ -41516,6 +41651,7 @@ nights n * ie t s
+@@ -41516,6 +41652,7 @@ nights n * ie t s
  nightshade n * ie ch ai d
  nightshirt n * ie ch er t
  nightshirts n * ie ch er t s
@@ -688,7 +727,7 @@ index 221571b..f2824f4 100644
  nightwork n * ie t w er k
  nihilism n * ie i l i z a m
  nihilist n * ie i l i s t
-@@ -41689,6 +41825,7 @@ none n * u n
+@@ -41689,6 +41826,7 @@ none n * u n
  nonentities n o . n * e n t i t i z
  nonentity n o . n * e n t i t i
  nonesuch n * u n s u ch
@@ -696,7 +735,7 @@ index 221571b..f2824f4 100644
  nonevent n * o n i v e n t
  nonevents n * o n i v e n t s
  nonfiction n o n . f * i k sh n
-@@ -41846,6 +41983,8 @@ notifiable n * oa t i f ie a b l
+@@ -41846,6 +41984,8 @@ notifiable n * oa t i f ie a b l
  notification n ~ oa t i f i . k * ai sh n
  notifications n ~ oa t i f i . k * ai sh n z
  notified n * oa t i f ie d
@@ -705,7 +744,7 @@ index 221571b..f2824f4 100644
  notifies n * oa t i f ie z
  notify n * oa t i f ie
  notifying n * oa t i f ie i ng
-@@ -42388,6 +42527,7 @@ officiously a . f * i sh a s l i
+@@ -42388,6 +42528,7 @@ officiously a . f * i sh a s l i
  officiousness a . f * i sh a s n a s
  offing * o f i ng
  offish * o f i sh
@@ -713,7 +752,7 @@ index 221571b..f2824f4 100644
  offprint * o f p r i n t
  offprints * o f p r i n t s
  offset * o f s e t
-@@ -42538,6 +42678,7 @@ oneself w u n . s * e l f
+@@ -42538,6 +42679,7 @@ oneself w u n . s * e l f
  ongoing * o n g oa i ng
  onion * u n eer n
  onions * u n eer n z
@@ -721,7 +760,7 @@ index 221571b..f2824f4 100644
  onlooker * o n l oo k a r
  onlookers * o n l oo k a z
  only * oa n l i
-@@ -42549,6 +42690,7 @@ onsets * o n s e t s
+@@ -42549,6 +42691,7 @@ onsets * o n s e t s
  onshore * o n sh aw r
  onslaught * o n s l aw t
  onslaughts * o n s l aw t s
@@ -729,7 +768,7 @@ index 221571b..f2824f4 100644
  onto * o n t a
  ontologies o n . t * o l a j i z
  ontology o n . t * o l a j i
-@@ -42654,6 +42796,7 @@ opposed a . p * oa z d
+@@ -42654,6 +42797,7 @@ opposed a . p * oa z d
  opposes a . p * oa z i z
  opposing a . p * oa z i ng
  opposite * o p a z i t
@@ -737,7 +776,7 @@ index 221571b..f2824f4 100644
  opposites * o p a z i t s
  opposition ~ o p a . z * i sh n
  oppress a . p r * e s
-@@ -42696,6 +42839,7 @@ opting * o p t i ng
+@@ -42696,6 +42840,7 @@ opting * o p t i ng
  option * o p sh n
  optional * o p sh n a l
  optionally * o p sh n a l i
@@ -745,7 +784,7 @@ index 221571b..f2824f4 100644
  options * o p sh n z
  opts * o p t s
  opulence * o p y oo l a n s
-@@ -43135,6 +43279,7 @@ outposts * ou t p oa s t s
+@@ -43135,6 +43280,7 @@ outposts * ou t p oa s t s
  outpouring * ou t p aw r i ng
  outpourings * ou t p aw r i ng z
  output * ou t p oo t
@@ -753,7 +792,7 @@ index 221571b..f2824f4 100644
  outre * uu t r ai
  outrage * ou t r ai j
  outraged * ou t r ai j d
-@@ -43481,6 +43626,10 @@ overleaps ~ oa v a . l * ee p s
+@@ -43481,6 +43627,10 @@ overleaps ~ oa v a . l * ee p s
  overleapt ~ oa v a . l * e p t
  overlie ~ oa v a . l * ie
  overlies ~ oa v a . l * ie z
@@ -764,7 +803,7 @@ index 221571b..f2824f4 100644
  overload ~ oa v a . l * oa d
  overloaded ~ oa v a . l * oa d i d
  overloading ~ oa v a . l * oa d i ng
-@@ -44360,6 +44509,8 @@ parrying p * aa r i i ng
+@@ -44360,6 +44510,8 @@ parrying p * aa r i i ng
  pars p * ar z
  parse p * ar z
  parsed p * ar z d
@@ -773,7 +812,7 @@ index 221571b..f2824f4 100644
  parses p * ar z i z
  parsimonious p ~ ar s i . m * oa n eer s
  parsimony p * ar s i m a n i
-@@ -46222,6 +46373,8 @@ pivotal p * i v a t a l
+@@ -46222,6 +46374,8 @@ pivotal p * i v a t a l
  pivoted p * i v a t i d
  pivoting p * i v a t i ng
  pivots p * i v a t s
@@ -782,7 +821,7 @@ index 221571b..f2824f4 100644
  pixie p * i k s i
  pixies p * i k s i z
  pixilated p * i k s i l ai t i d
-@@ -46246,6 +46399,8 @@ place-names p l * ai s - n ai m z
+@@ -46246,6 +46400,8 @@ place-names p l * ai s - n ai m z
  placebo p l a . s * ee b oa
  placebos p l a . s * ee b oa z
  placed p l * ai s t
@@ -791,7 +830,7 @@ index 221571b..f2824f4 100644
  placeman p l * ai s m a n
  placemen p l * ai s m a n
  placement p l * ai s m a n t
-@@ -47087,6 +47242,7 @@ porringers p * o r i n j a z
+@@ -47087,6 +47243,7 @@ porringers p * o r i n j a z
  port p * aw t
  portability p ~ aw t a . b * i l i t i
  portable p * aw t a b l
@@ -799,7 +838,7 @@ index 221571b..f2824f4 100644
  portage p * aw t i j
  portages p * aw t i j i z
  portal p * aw t l
-@@ -47227,6 +47383,8 @@ posterity p o . s t * e r i t i
+@@ -47227,6 +47384,8 @@ posterity p o . s t * e r i t i
  postern p * o s t a n
  posterns p * o s t a n z
  posters p * oa s t a z
@@ -808,7 +847,7 @@ index 221571b..f2824f4 100644
  postgraduate p ~ oa s t . g r * aa j oor t
  postgraduates p ~ oa s t . g r * aa j oor t s
  posthumous p * o s t y oo m a s
-@@ -47544,6 +47702,8 @@ precautions p r i . k * aw sh n z
+@@ -47544,6 +47703,8 @@ precautions p r i . k * aw sh n z
  precede p r i . s * ee d
  preceded p r i . s * ee d i d
  precedence p r * e s i d a n s
@@ -817,7 +856,7 @@ index 221571b..f2824f4 100644
  precedent p r * e s i d a n t
  precedented p r * e s i d a n t i d
  precedents p r * e s i d a n t s
-@@ -47603,6 +47763,12 @@ preconcerted p r ~ ee k a n . s * er t i d
+@@ -47603,6 +47764,12 @@ preconcerted p r ~ ee k a n . s * er t i d
  precondition p r ~ ee k a n . d * i sh n
  preconditioned p r ~ ee k a n . d * i sh n d
  preconditions p r ~ ee k a n . d * i sh n z
@@ -830,7 +869,7 @@ index 221571b..f2824f4 100644
  precursor p r ~ ee . k * er s a r
  precursors p r ~ ee . k * er s a z
  precursory p r ~ ee . k * er s a r i
-@@ -47615,6 +47781,11 @@ predeceases p r ~ ee d i . s * ee s i z
+@@ -47615,6 +47782,11 @@ predeceases p r ~ ee d i . s * ee s i z
  predeceasing p r ~ ee d i . s * ee s i ng
  predecessor p r * ee d i s e s a r
  predecessors p r * ee d i s e s a z
@@ -842,7 +881,7 @@ index 221571b..f2824f4 100644
  predestinate p r ~ ee . d * e s t i n ai t
  predestinated p r ~ ee . d * e s t i n ai t i d
  predestinates p r ~ ee . d * e s t i n ai t s
-@@ -47862,6 +48033,8 @@ presentably p r i . z * e n t a b l i
+@@ -47862,6 +48034,8 @@ presentably p r i . z * e n t a b l i
  presentation p r ~ e z n . t * ai sh n
  presentations p r ~ e z n . t * ai sh n z
  presented p r i . z * e n t i d
@@ -851,7 +890,7 @@ index 221571b..f2824f4 100644
  presentiment p r i . z * e n t i m a n t
  presentiments p r i . z * e n t i m a n t s
  presenting p r i . z * e n t i ng
-@@ -49773,8 +49946,6 @@ rechauffe r ai . sh * oa f ai
+@@ -49773,8 +49947,6 @@ rechauffe r ai . sh * oa f ai
  rechauffes r ai . sh * oa f ai z
  regime r ai . zh * ee m
  regimes r ai . zh * ee m z
@@ -860,7 +899,7 @@ index 221571b..f2824f4 100644
  rabbi r * aa b ie
  rabbinical r a . b * i n i k l
  rabbis r * aa b ie z
-@@ -50177,6 +50348,12 @@ rasped r * ar s p t
+@@ -50177,6 +50349,12 @@ rasped r * ar s p t
  rasping r * ar s p i ng
  raspingly r * ar s p i ng l i
  rasps r * ar s p s
@@ -873,7 +912,7 @@ index 221571b..f2824f4 100644
  rat r * aa t
  rat-a-tat-tat r ~ aa t - a - t ~ aa t - t * aa t
  rat-a-tat-tats r ~ aa t - a - t ~ aa t - t * aa t s
-@@ -50394,6 +50571,7 @@ readjusting r ~ ee a . j * u s t i ng
+@@ -50394,6 +50572,7 @@ readjusting r ~ ee a . j * u s t i ng
  readjustment r ~ ee a . j * u s t m a n t
  readjustments r ~ ee a . j * u s t m a n t s
  readjusts r ~ ee a . j * u s t s
@@ -881,7 +920,7 @@ index 221571b..f2824f4 100644
  readmission r ~ ee a d . m * i sh n
  readmissions r ~ ee a d . m * i sh n z
  readmit r ~ ee a d . m * i t
-@@ -50433,6 +50611,7 @@ realm r * e l m
+@@ -50433,6 +50612,7 @@ realm r * e l m
  realms r * e l m z
  reals r ai * ar l z
  realties r * eer l t i z
@@ -889,7 +928,7 @@ index 221571b..f2824f4 100644
  realty r * eer l t i
  ream r * ee m
  reams r * ee m z
-@@ -50556,7 +50735,6 @@ rebuttal r i . b * u t a l
+@@ -50556,7 +50736,6 @@ rebuttal r i . b * u t a l
  rebuttals r i . b * u t a l z
  rebutted r i . b * u t i d
  rebutting r i . b * u t i ng
@@ -897,7 +936,7 @@ index 221571b..f2824f4 100644
  recalcitrance r i . k * aa l s i t r a n s
  recalcitrancy r i . k * aa l s i t r a n s i
  recalcitrant r i . k * aa l s i t r a n t
-@@ -50636,6 +50814,11 @@ recessional r i . s * e sh a n l
+@@ -50636,6 +50815,11 @@ recessional r i . s * e sh a n l
  recessionals r i . s * e sh a n l z
  recessions r i . s * e sh n z
  recessive r i . s * e s i v
@@ -909,7 +948,7 @@ index 221571b..f2824f4 100644
  recherche r a . sh * air sh ai
  recidivism r i . s * i d i v i z a m
  recidivist r i . s * i d i v i s t
-@@ -50719,6 +50902,10 @@ recompense r * e k a m p e n s
+@@ -50719,6 +50903,10 @@ recompense r * e k a m p e n s
  recompensed r * e k a m p e n s t
  recompenses r * e k a m p e n s i z
  recompensing r * e k a m p e n s i ng
@@ -920,7 +959,7 @@ index 221571b..f2824f4 100644
  reconcilable r ~ e k a n . s * ie l a b l
  reconcile r * e k a n s ie l
  reconciled r * e k a n s ie l d
-@@ -50731,6 +50918,12 @@ recondition r ~ ee k a n . d * i sh n
+@@ -50731,6 +50919,12 @@ recondition r ~ ee k a n . d * i sh n
  reconditioned r ~ ee k a n . d * i sh n d
  reconditioning r ~ ee k a n . d * i sh n i ng
  reconditions r ~ ee k a n . d * i sh n z
@@ -933,7 +972,7 @@ index 221571b..f2824f4 100644
  reconnaissance r i . k * o n i s a n s
  reconnaissances r i . k * o n i s a n s i z
  reconnoitre r ~ e k a . n * oi t a r
-@@ -50914,6 +51107,15 @@ redhead r * e d h e d
+@@ -50914,6 +51108,15 @@ redhead r * e d h e d
  redheads r * e d h e d z
  redid r ~ ee . d * i d
  rediffusion r ~ ee d i . f y * uu zh n
@@ -949,7 +988,7 @@ index 221571b..f2824f4 100644
  rediscover r ~ ee d i . s k * u v a r
  rediscovered r ~ ee d i . s k * u v a d
  rediscoveries r ~ ee d i . s k * u v a r i z
-@@ -51003,6 +51205,8 @@ reface r ~ ee . f * ai s
+@@ -51003,6 +51206,8 @@ reface r ~ ee . f * ai s
  refaced r ~ ee . f * ai s t
  refaces r ~ ee . f * ai s i z
  refacing r ~ ee . f * ai s i ng
@@ -958,7 +997,7 @@ index 221571b..f2824f4 100644
  refashion r ee . f * aa sh n
  refashioned r ee . f * aa sh n d
  refashioning r ee . f * aa sh a n i ng
-@@ -51018,7 +51222,9 @@ refereed r ~ e f a . r * ee d
+@@ -51018,7 +51223,9 @@ refereed r ~ e f a . r * ee d
  refereeing r ~ e f a . r * ee i ng
  referees r ~ e f a . r * ee z
  reference r * e f r a n s
@@ -968,7 +1007,7 @@ index 221571b..f2824f4 100644
  referenda r ~ e f a . r * e n d a
  referendum r ~ e f a . r * e n d a m
  referendums r ~ e f a . r * e n d a m z
-@@ -51618,6 +51824,8 @@ renascent r i . n * aa s n t
+@@ -51618,6 +51825,8 @@ renascent r i . n * aa s n t
  rend r * e n d
  render r * e n d a r
  rendered r * e n d a d
@@ -977,7 +1016,7 @@ index 221571b..f2824f4 100644
  rendering r * e n d a r i ng
  renderings r * e n d a r i ng z
  renders r * e n d a z
-@@ -51684,6 +51892,11 @@ reopen r ee * oa p a n
+@@ -51684,6 +51893,11 @@ reopen r ee * oa p a n
  reopened r ee * oa p a n d
  reopening r ee * oa p a n i ng
  reopens r ee * oa p a n z
@@ -989,7 +1028,7 @@ index 221571b..f2824f4 100644
  reorganization r ee ~ aw g a n ie . z * ai sh n
  reorganizations r ee ~ aw g a n ie . z * ai sh n z
  reorganize r ee * aw g a n ie z
-@@ -51995,6 +52208,8 @@ reseeded r ee . s * ee d i d
+@@ -51995,6 +52209,8 @@ reseeded r ee . s * ee d i d
  reseeding r ee . s * ee d i ng
  reseeds r ee . s * ee d z
  resell r ee . s * e l
@@ -998,7 +1037,7 @@ index 221571b..f2824f4 100644
  reselling r ee . s * e l i ng
  resells r ee . s * e l z
  resemblance r i . z * e m b l a n s
-@@ -52429,6 +52644,10 @@ returnable r i . t * er n a b l
+@@ -52429,6 +52645,10 @@ returnable r i . t * er n a b l
  returned r i . t * er n d
  returning r i . t * er n i ng
  returns r i . t * er n z
@@ -1009,15 +1048,27 @@ index 221571b..f2824f4 100644
  reunification r ee . y ~ uu n i f i . k * ai sh n
  reunion r ~ ee . y * uu n eer n
  reunions r ~ ee . y * uu n eer n z
-@@ -53571,6 +53790,7 @@ running-boards r * u n i ng - b aw d z
+@@ -52436,6 +52656,10 @@ reunite r ~ ee y uu . n * ie t
+ reunited r ~ ee y uu . n * ie t i d
+ reunites r ~ ee y uu . n * ie t s
+ reuniting r ~ ee y uu . n * ie t i ng
++reuse r ~ ee . y * uu z
++reused r ~ ee . y * uu z d
++reuses r ~ ee . y * uu z i z
++reusing r ~ ee . y * uu z i ng
+ rev r * e v
+ revaluation r ~ ee v aa l y uu * ai sh n
+ revaluations r ~ ee v aa l y uu * ai sh n z
+@@ -53571,6 +53795,8 @@ running-boards r * u n i ng - b aw d z
  runny r * u n i
  runs r * u n z
  runt r * u n t
 +runtime r ~ u n . t * ie m
++runtimes r ~ u n . t * ie m z
  runts r * u n t s
  runway r * u n w ai
  runways r * u n w ai z
-@@ -54381,6 +54601,8 @@ sceptres s * e p t a z
+@@ -54381,6 +54607,8 @@ sceptres s * e p t a z
  schedule sh * e d y uu l
  scheduled sh * e d y uu l d
  schedules sh * e d y uu l z
@@ -1026,7 +1077,7 @@ index 221571b..f2824f4 100644
  scheduling sh * e d y uu l i ng
  schema s k * ee m a
  schemas s k * ee m a z
-@@ -54658,6 +54880,9 @@ screeds s k r * ee d z
+@@ -54658,6 +54886,9 @@ screeds s k r * ee d z
  screen s k r * ee n
  screened s k r * ee n d
  screening s k r * ee n i ng
@@ -1036,7 +1087,7 @@ index 221571b..f2824f4 100644
  screens s k r * ee n z
  screes s k r * ee z
  screw s k r * uu
-@@ -54902,6 +55127,7 @@ seamier s * ee m eer r
+@@ -54902,6 +55133,7 @@ seamier s * ee m eer r
  seamiest s * ee m i i s t
  seaming s * ee m i ng
  seamless s * ee m l a s
@@ -1044,7 +1095,7 @@ index 221571b..f2824f4 100644
  seams s * ee m z
  seamstress s * ee m s t r i s
  seamstresses s * ee m s t r i s i z
-@@ -55385,6 +55611,8 @@ sensitize s * e n s i t ie z
+@@ -55385,6 +55617,8 @@ sensitize s * e n s i t ie z
  sensitized s * e n s i t ie z d
  sensitizes s * e n s i t ie z i z
  sensitizing s * e n s i t ie z i ng
@@ -1053,7 +1104,7 @@ index 221571b..f2824f4 100644
  sensory s * e n s a r i
  sensual s * e n sh oor l
  sensualism s * e n sh oor l i z a m
-@@ -57055,6 +57283,7 @@ skylight s k * ie l ie t
+@@ -57055,6 +57289,7 @@ skylight s k * ie l ie t
  skylights s k * ie l ie t s
  skyline s k * ie l ie n
  skylines s k * ie l ie n z
@@ -1061,7 +1112,7 @@ index 221571b..f2824f4 100644
  skyrocket s k * ie r o k i t
  skyrocketed s k * ie r o k i t i d
  skyrocketing s k * ie r o k i t i ng
-@@ -58595,6 +58824,8 @@ specifications s p ~ e s i f i . k * ai sh n z
+@@ -58595,6 +58830,8 @@ specifications s p ~ e s i f i . k * ai sh n z
  specificity s p ~ e s i . f * i s i t i
  specifics s p a . s * i f i k s
  specified s p * e s i f ie d
@@ -1070,7 +1121,7 @@ index 221571b..f2824f4 100644
  specifies s p * e s i f ie z
  specify s p * e s i f ie
  specifying s p * e s i f ie i ng
-@@ -58959,6 +59190,8 @@ spookiest s p * uu k i i s t
+@@ -58959,6 +59196,8 @@ spookiest s p * uu k i i s t
  spooks s p * uu k s
  spooky s p * uu k i
  spool s p * uu l
@@ -1079,7 +1130,7 @@ index 221571b..f2824f4 100644
  spools s p * uu l z
  spoon s p * uu n
  spooned s p * uu n d
-@@ -60422,6 +60655,7 @@ structurally s t r * u k ch a r a l i
+@@ -60422,6 +60661,7 @@ structurally s t r * u k ch a r a l i
  structure s t r * u k ch a r
  structured s t r * u k ch a d
  structures s t r * u k ch a z
@@ -1087,7 +1138,7 @@ index 221571b..f2824f4 100644
  strudel s t r * uu d l
  strudels s t r * uu d l z
  struggle s t r * u g l
-@@ -60628,6 +60862,9 @@ subediting s u b * e d i t i ng
+@@ -60628,6 +60868,9 @@ subediting s u b * e d i t i ng
  subeditor s u b * e d i t a r
  subeditors s u b * e d i t a z
  subedits s u b * e d i t s
@@ -1097,7 +1148,7 @@ index 221571b..f2824f4 100644
  subfusc s * u b f u s k
  subgroup s * u b g r uu p
  subgroups s * u b g r uu p s
-@@ -60716,6 +60953,7 @@ subpoena s a . p * ee n a
+@@ -60716,6 +60959,7 @@ subpoena s a . p * ee n a
  subpoenaed s a . p * ee n a d
  subpoenaing s a . p * ee n a r i ng
  subpoenas s a . p * ee n a z
@@ -1105,7 +1156,7 @@ index 221571b..f2824f4 100644
  subs s * u b z
  subscribe s a b . s k r * ie b
  subscribed s a b . s k r * ie b d
-@@ -60729,6 +60967,8 @@ subscriptions s a b . s k r * i p sh n z
+@@ -60729,6 +60973,8 @@ subscriptions s a b . s k r * i p sh n z
  subscripts s * u b s k r i p t s
  subsection s * u b s e k sh n
  subsections s * u b s e k sh n z
@@ -1114,7 +1165,7 @@ index 221571b..f2824f4 100644
  subsequent s * u b s i k w a n t
  subsequently s * u b s i k w a n t l i
  subserve s a b . s * er v
-@@ -61850,6 +62090,8 @@ syntheses s * i n th a s ee z
+@@ -61850,6 +62096,8 @@ syntheses s * i n th a s ee z
  synthesis s * i n th a s i s
  synthesize s * i n th a s ie z
  synthesized s * i n th a s ie z d
@@ -1123,7 +1174,19 @@ index 221571b..f2824f4 100644
  synthesizes s * i n th a s ie z i z
  synthesizing s * i n th a s ie z i ng
  synthetic s i n . th * e t i k
-@@ -62749,6 +62991,8 @@ tepid t * e p i d
+@@ -62016,7 +62264,11 @@ take-off t * ai k - o f
+ take-offs t * ai k - o f s
+ take-up t * ai k - u p
+ takeaway t * ai k a w ai
++takedown t * ai k d ou n
++takedowns t * ai k d ou n z
+ taken t * ai k a n
++takeout t * ai k ou t
++takeouts t * ai k ou t s
+ takeover t * ai k oa v a r
+ takeovers t * ai k oa v a z
+ taker t * ai k a r
+@@ -62749,6 +63001,8 @@ tepid t * e p i d
  tepidity t e . p * i d i t i
  tepidly t * e p i d l i
  tepidness t * e p i d n a s
@@ -1132,7 +1195,7 @@ index 221571b..f2824f4 100644
  tercentenaries t ~ er s e n . t * ee n a r i z
  tercentenary t ~ er s e n . t * ee n a r i
  tercentennial t ~ er s e n . t * e n eer l
-@@ -62772,6 +63016,8 @@ terminates t * er m i n ai t s
+@@ -62772,6 +63026,8 @@ terminates t * er m i n ai t s
  terminating t * er m i n ai t i ng
  termination t ~ er m i . n * ai sh n
  terminations t ~ er m i . n * ai sh n z
@@ -1141,7 +1204,7 @@ index 221571b..f2824f4 100644
  terming t * er m i ng
  terminological t ~ er m i n a . l * o j i k l
  terminologies t ~ er m i . n * o l a j i z
-@@ -63493,10 +63739,16 @@ timekeeping t * ie m k ee p i ng
+@@ -63493,10 +63749,16 @@ timekeeping t * ie m k ee p i ng
  timeless t * ie m l a s
  timelier t * ie m l eer r
  timeliest t * ie m l i i s t
@@ -1158,7 +1221,7 @@ index 221571b..f2824f4 100644
  times t * ie m z
  timesaving t * ie m s ai v i ng
  timeserver t * ie m s er v a r
-@@ -64055,6 +64307,8 @@ touching t * u ch i ng
+@@ -64055,6 +64317,8 @@ touching t * u ch i ng
  touchingly t * u ch i ng l i
  touchline t * u ch l ie n
  touchlines t * u ch l ie n z
@@ -1167,7 +1230,7 @@ index 221571b..f2824f4 100644
  touchstone t * u ch + s t oa n
  touchstones t * u ch + s t oa n z
  touchy t * u ch i
-@@ -64345,6 +64599,8 @@ transcends t r aa n . s * e n d z
+@@ -64345,6 +64609,8 @@ transcends t r aa n . s * e n d z
  transcontinental t r ~ aa n z k o n t i . n * e n t l
  transcribe t r aa n . s k r * ie b
  transcribed t r aa n . s k r * ie b d
@@ -1176,7 +1239,7 @@ index 221571b..f2824f4 100644
  transcribes t r aa n . s k r * ie b z
  transcribing t r aa n . s k r * ie b i ng
  transcript t r * aa n s k r i p t
-@@ -65374,11 +65630,17 @@ typecasts t * ie p k ar s t s
+@@ -65374,11 +65640,17 @@ typecasts t * ie p k ar s t s
  typed t * ie p t
  typeface t * ie p f ai s
  typefaces t * ie p f ai s i z
@@ -1194,7 +1257,7 @@ index 221571b..f2824f4 100644
  typewriter t * ie p r ie t a r
  typewriters t * ie p r ie t a z
  typewritten t * ie p r i t n
-@@ -65514,6 +65776,8 @@ unalloyed ~ u n a . l * oi d
+@@ -65514,6 +65786,8 @@ unalloyed ~ u n a . l * oi d
  unalterable u n * o l t a r a b l
  unalterably u n * aw l t a r a b l i
  unaltered u n * aw l t a d
@@ -1203,7 +1266,7 @@ index 221571b..f2824f4 100644
  unambiguous ~ u n aa m . b * i g y oor s
  unambiguously ~ u n aa m . b * i g y oor s l i
  unamended ~ u n a . m * e n d i d
-@@ -65649,6 +65913,8 @@ unchaining u n . ch * ai n i ng
+@@ -65649,6 +65923,8 @@ unchaining u n . ch * ai n i ng
  unchains u n . ch * ai n z
  unchallengeable u n . ch * aa l a n j a b l
  unchallenged u n . ch * aa l a n j d
@@ -1212,7 +1275,7 @@ index 221571b..f2824f4 100644
  unchanged u n . ch * ai n j d
  unchanging u n . ch * ai n j i ng
  uncharacteristic ~ u n k aa r a k t a . r * i s t i k
-@@ -65680,6 +65946,7 @@ uncommon u n . k * o m a n
+@@ -65680,6 +65956,7 @@ uncommon u n . k * o m a n
  uncommonly u n . k * o m a n l i
  uncommunicative ~ u n k a . m y * uu n i k a t i v
  uncompetitive ~ u n k a m . p * e t a t i v
@@ -1220,7 +1283,7 @@ index 221571b..f2824f4 100644
  uncomplaining ~ u n k a m . p l * ai n i ng
  uncomplainingly ~ u n k a m . p l * ai n i ng l i
  uncompleted ~ u n k a m . p l * ee t i d
-@@ -65770,8 +66037,11 @@ undeclared ~ u n d i . k l * air d
+@@ -65770,8 +66047,11 @@ undeclared ~ u n d i . k l * air d
  undefeated ~ u n d i . f * ee t i d
  undefended ~ u n d i . f * e n d i d
  undeferential ~ u n d e f a . r * e n sh l
@@ -1232,7 +1295,7 @@ index 221571b..f2824f4 100644
  undemanding ~ u n d i . m * ar n d i ng
  undemocratic ~ u n d e m a . k r * aa t i k
  undemocratically ~ u n d e m a . k r * aa t i k l i
-@@ -66255,6 +66525,7 @@ unhurriedly u n . h * u r i d l i
+@@ -66255,6 +66535,7 @@ unhurriedly u n . h * u r i d l i
  unhurt u n . h * er t
  unhygienic ~ u n h ie . j * ee n i k
  unhygienically ~ u n h ie . j * ee n i k l i
@@ -1240,7 +1303,7 @@ index 221571b..f2824f4 100644
  unicorn y * uu n i k aw n
  unicorns y * uu n i k aw n z
  unidentifiable ~ u n ie . d ~ e n t i . f * ie a b l
-@@ -66296,6 +66567,14 @@ uninjured u n * i n j a d
+@@ -66296,6 +66577,14 @@ uninjured u n * i n j a d
  uninspired ~ u n i n . s p * ie a d
  uninspiring ~ u n i n . s p * ie a r i ng
  uninsured ~ u n i n . sh * oor d
@@ -1255,7 +1318,7 @@ index 221571b..f2824f4 100644
  unintelligent ~ u n i n . t * e l i j a n t
  unintelligently ~ u n i n . t * e l i j a n t l i
  unintelligible ~ u n i n . t * e l i j a b l
-@@ -66716,6 +66995,8 @@ unsportingly u n . s p * aw t i ng l i
+@@ -66716,6 +67005,8 @@ unsportingly u n . s p * aw t i ng l i
  unsportsmanlike u n . s p * aw t s m a n l ie k
  unspotted u n . s p * o t i d
  unstable u n . s t * ai b l
@@ -1264,7 +1327,7 @@ index 221571b..f2824f4 100644
  unstartling u n . s t * ar t l i ng
  unstated u n . s t * ai t i d
  unstatesmanlike u n . s t * ai t s m a n l ie k
-@@ -66728,6 +67009,10 @@ unstructured u n . s t r * u k ch a d
+@@ -66728,6 +67019,10 @@ unstructured u n . s t r * u k ch a d
  unstrung ~ u n . s t r * u ng
  unstuck ~ u n . s t * u k
  unstudied ~ u n . s t * u d i d
@@ -1275,7 +1338,7 @@ index 221571b..f2824f4 100644
  unsubtle u n . s * u t l
  unsuccessful ~ u n s a k . s * e s f a l
  unsuccessfully ~ u n s a k . s * e s f a l i
-@@ -66969,6 +67254,7 @@ upsurges * u p s er j i z
+@@ -66969,6 +67264,7 @@ upsurges * u p s er j i z
  uptake * u p t ai k
  uptakes * u p t ai k s
  uptight ~ u p . t * ie t
@@ -1283,7 +1346,25 @@ index 221571b..f2824f4 100644
  uptown ~ u p . t * ou n
  upturn * u p t er n
  upturned * u p t er n d
-@@ -69117,6 +69403,8 @@ whitening w * ie t n i ng
+@@ -67010,9 +67306,7 @@ us * u z
+ usable y * uu z a b l
+ usage y * uu s i j
+ usages y * uu s i j i z
+-use y * uu s
+ use y * uu z
+-used y * uu s t
+ used y * uu z d
+ useful y * uu s f a l
+ usefully y * uu s f a l i
+@@ -67022,7 +67316,6 @@ uselessly y * uu s l a s l i
+ uselessness y * uu s l a s n a s
+ user y * uu z a r
+ users y * uu z a z
+-uses y * uu s i z
+ uses y * uu z i z
+ usher * u sh a r
+ ushered * u sh a d
+@@ -69117,6 +69410,8 @@ whitening w * ie t n i ng
  whitens w * ie t n z
  whiter w * ie t a r
  whites w * ie t s
@@ -1292,7 +1373,7 @@ index 221571b..f2824f4 100644
  whitest w * ie t i s t
  whitethorn w * ie t th aw n
  whitethorns w * ie t th aw n z
-@@ -69229,6 +69517,7 @@ wielded w * ee l d i d
+@@ -69229,6 +69524,7 @@ wielded w * ee l d i d
  wielding w * ee l d i ng
  wields w * ee l d z
  wife w * ie f
@@ -1300,7 +1381,7 @@ index 221571b..f2824f4 100644
  wifelier w * ie f l eer r
  wifeliest w * ie f l i i s t
  wifelike w * ie f l ie k
-@@ -70165,6 +70454,7 @@ zero z * eer r oa
+@@ -70165,6 +70461,7 @@ zero z * eer r oa
  zeroed z * eer r oa d
  zeroing z * eer r oa i ng
  zeros z * eer r oa z

@@ -3,10 +3,11 @@ Date: Wed, 15 Feb 2023 15:13:34 +0300
 Subject: Numeric values pronunciation fix
 
 ---
- src/interface.c | 15 +++++++++++++-
- src/nrl_edin.c  |  3 +++
- src/saynum.c    | 64 ++++++++++++++++++++++++++++-----------------------------
- 3 files changed, 49 insertions(+), 33 deletions(-)
+ src/interface.c  | 15 ++++++++++++-
+ src/nrl_edin.c   |  3 +++
+ src/saynum.c     | 64 ++++++++++++++++++++++++++++----------------------------
+ src/transcribe.c |  4 +++-
+ 4 files changed, 52 insertions(+), 34 deletions(-)
 
 diff --git a/src/interface.c b/src/interface.c
 index 0b00997..31e9095 100644
@@ -226,3 +227,25 @@ index 15c71e0..680840f 100644
      }
  
    if (value >= 20)
+diff --git a/src/transcribe.c b/src/transcribe.c
+index f1e985b..438dd2e 100644
+--- a/src/transcribe.c
++++ b/src/transcribe.c
+@@ -9,6 +9,7 @@
+ 
+ #include <sys/types.h>
+ #include <limits.h>
++#include <string.h>
+ 
+ #ifdef FBSD_DATABASE
+ #include <db.h>
+@@ -46,7 +47,8 @@ export void transcribe(CONFIG *config, LING_LIST *ling_list)
+ 	tr = nrl_rules(word);
+ 	tr = strdup(tr);
+ 	tr = syllabify(tr,config);
+-	tr = stress(tr);
++	if (!strchr(tr, '*'))
++          tr = stress(tr);
+ 	ling_list->text[i]->transcription = tr;
+       }
+       free(word);

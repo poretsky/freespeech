@@ -1,3 +1,9 @@
+freespeech (1.0m-20bionic1) bionic; urgency=medium
+
+  * Ordinals pronunciation fix.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Wed, 01 Nov 2023 18:26:42 +0300
+
 freespeech (1.0m-19bionic1) bionic; urgency=medium
 
   * Dictionary corrections.

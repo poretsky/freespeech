@@ -1,3 +1,9 @@
+freespeech (1.0m-21) unstable; urgency=medium
+
+  * Debian package update. (Closes: #1055900)
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Tue, 14 Nov 2023 01:22:00 +0300
+
 freespeech (1.0m-20) unstable; urgency=medium
 
   * Ordinals pronunciation fix.

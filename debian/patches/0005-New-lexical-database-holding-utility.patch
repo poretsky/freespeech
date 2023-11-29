@@ -3,16 +3,16 @@ Date: Wed, 15 Feb 2023 14:25:38 +0300
 Subject: New lexical database holding utility
 
 ---
- lib/Makefile    |  52 ++++++++------
+ lib/Makefile    |  50 +++++++------
  lib/lexholder.c | 215 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 247 insertions(+), 20 deletions(-)
+ 2 files changed, 245 insertions(+), 20 deletions(-)
  create mode 100644 lib/lexholder.c
 
 diff --git a/lib/Makefile b/lib/Makefile
-index f8bdd75..db97f46 100644
+index f8bdd75..4817dc3 100644
 --- a/lib/Makefile
 +++ b/lib/Makefile
-@@ -10,41 +10,53 @@
+@@ -10,41 +10,51 @@
  #
  #
  ############################################################################
@@ -40,15 +40,13 @@ index f8bdd75..db97f46 100644
  # CC = gcc
 -# CFLAGS = -O2 -DFBSD_DATABASE -s
 +# CFLAGS = -O2 -DFBSD_DATABASE
-+# LFLAGS = -s
  # LIBS = -lm
  ############################################################################
  # Linux users
  CC = gcc
 -CFLAGS = -O2 -DBERKELEYDB -s
 -LIBS = -lm -ldb-3
-+CFLAGS = -Wall -O2
-+LFLAGS = -s
++CFLAGS = -g -Wall -O2
 +LIBS = -ldb
  ############################################################################
  
@@ -70,7 +68,7 @@ index f8bdd75..db97f46 100644
 -clean:
 -	rm -f dbm_prog *.o core gmon.out lexicon 
 +lexholder: lexholder.c
-+	$(CC) $(CPPFLAGS) $(CFLAGS) $(LFLAGS) $(LDFLAGS) -o $@ $< $(LIBS)
++	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -o $@ $< $(LIBS)
  
 -distribution:
 -	echo "This needs written."

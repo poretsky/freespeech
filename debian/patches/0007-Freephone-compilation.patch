@@ -7,7 +7,7 @@ Subject: Freephone compilation
  1 file changed, 50 insertions(+), 54 deletions(-)
 
 diff --git a/src/Makefile b/src/Makefile
-index 56188f6..5aafc59 100644
+index 56188f6..798fa8c 100644
 --- a/src/Makefile
 +++ b/src/Makefile
 @@ -10,91 +10,87 @@
@@ -82,7 +82,7 @@ index 56188f6..5aafc59 100644
  
  freephone: $(OBJS) $(NRL_OBJS) $(RULE_OBJS) $(MAIN)
 -	$(CC) $(CFLAGS) -o $@ $(OBJS) $(NRL_OBJS) $(RULE_OBJS) $(MAIN) $(LIBS)
-+	$(CC) $(LFLAGS) -o $@ $^ $(LIBS)
++	$(CC) $(LFLAGS) $(LDFLAGS) -o $@ $^ $(LIBS)
  
 -# /home/awb/src/malloc/libmalloc.a
 +.PHONY: install
@@ -111,7 +111,7 @@ index 56188f6..5aafc59 100644
 -	# cp context_rules ../distribution/src
 -	cp ../ACKNOWLEDGEMENTS ../README ../INSTALLATION ../Copying ../distribution
 +%.o:%.c
-+	$(CC) -c ${CFLAGS} -o $@ $<
++	$(CC) -c ${CPPFLAGS} ${CFLAGS} -o $@ $<
  
  # dependencies
 -

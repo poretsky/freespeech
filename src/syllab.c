@@ -146,7 +146,6 @@ export char *syllabify(char *string, CONFIG *config)
 
 
   carrier = split(string);
-  free(string);
 
   while(carrier[i]!= NULL) {
     marker[i++] = 0;
@@ -155,6 +154,7 @@ export char *syllabify(char *string, CONFIG *config)
       break;
     }
   }
+  free(string);
   c_sz = i;
 
   /* to produce a list of candidate pts for breaks  */

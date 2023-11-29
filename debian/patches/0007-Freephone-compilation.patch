@@ -3,14 +3,14 @@ Date: Wed, 15 Feb 2023 14:30:59 +0300
 Subject: Freephone compilation
 
 ---
- src/Makefile | 104 ++++++++++++++++++++++++++++-------------------------------
- 1 file changed, 50 insertions(+), 54 deletions(-)
+ src/Makefile | 102 ++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 48 insertions(+), 54 deletions(-)
 
 diff --git a/src/Makefile b/src/Makefile
-index 56188f6..798fa8c 100644
+index 56188f6..1ce715e 100644
 --- a/src/Makefile
 +++ b/src/Makefile
-@@ -10,91 +10,87 @@
+@@ -10,91 +10,85 @@
  #
  #
  ############################################################################
@@ -30,14 +30,12 @@ index 56188f6..798fa8c 100644
  # CC = gcc
 -# CFLAGS = -O2 -DFBSD_DATABASE -s
 +# CFLAGS = -O2 -DFBSD_DATABASE
-+# LFLAGS = -s
  # LIBS = -lm
  ############################################################################
  # Linux users
  CC = gcc
 -CFLAGS = -O2 -DBERKELEYDB -pedantic -Wall -s
-+CFLAGS = -Wall -O2
-+LFLAGS = -s
++CFLAGS = -g -Wall -O2
  LIBS = -lm -ldb
  ############################################################################
  
@@ -82,7 +80,7 @@ index 56188f6..798fa8c 100644
  
  freephone: $(OBJS) $(NRL_OBJS) $(RULE_OBJS) $(MAIN)
 -	$(CC) $(CFLAGS) -o $@ $(OBJS) $(NRL_OBJS) $(RULE_OBJS) $(MAIN) $(LIBS)
-+	$(CC) $(LFLAGS) $(LDFLAGS) -o $@ $^ $(LIBS)
++	$(CC) $(LDFLAGS) -o $@ $^ $(LIBS)
  
 -# /home/awb/src/malloc/libmalloc.a
 +.PHONY: install

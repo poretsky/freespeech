@@ -15,10 +15,10 @@ Subject: Exclude unused code
  9 files changed, 115 insertions(+), 12 deletions(-)
 
 diff --git a/src/Makefile b/src/Makefile
-index 798fa8c..a780e01 100644
+index 1ce715e..ec72389 100644
 --- a/src/Makefile
 +++ b/src/Makefile
-@@ -34,9 +34,10 @@ LIBS = -lm -ldb
+@@ -32,9 +32,10 @@ LIBS = -lm -ldb
  OBJS = go.o t2s.o space.o tags.o grammar.o \
  	transcribe.o conv1.o conv2.o durpros.o prosody.o \
  	syllab.o utils.o buffer.o \

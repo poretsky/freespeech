@@ -1,0 +1,28 @@
+From: "Igor B. Poretsky" <poretsky@mlbox.ru>
+Date: Wed, 29 Nov 2023 12:55:57 +0300
+Subject: Freed memory pointer usage fix
+
+---
+ src/syllab.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/syllab.c b/src/syllab.c
+index 88239ec..c04c31d 100644
+--- a/src/syllab.c
++++ b/src/syllab.c
+@@ -146,7 +146,6 @@ export char *syllabify(char *string, CONFIG *config)
+ 
+ 
+   carrier = split(string);
+-  free(string);
+ 
+   while(carrier[i]!= NULL) {
+     marker[i++] = 0;
+@@ -155,6 +154,7 @@ export char *syllabify(char *string, CONFIG *config)
+       break;
+     }
+   }
++  free(string);
+   c_sz = i;
+ 
+   /* to produce a list of candidate pts for breaks  */

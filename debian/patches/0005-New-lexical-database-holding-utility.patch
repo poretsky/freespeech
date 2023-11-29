@@ -9,7 +9,7 @@ Subject: New lexical database holding utility
  create mode 100644 lib/lexholder.c
 
 diff --git a/lib/Makefile b/lib/Makefile
-index f8bdd75..7d9f4e9 100644
+index f8bdd75..db97f46 100644
 --- a/lib/Makefile
 +++ b/lib/Makefile
 @@ -10,41 +10,53 @@
@@ -70,7 +70,7 @@ index f8bdd75..7d9f4e9 100644
 -clean:
 -	rm -f dbm_prog *.o core gmon.out lexicon 
 +lexholder: lexholder.c
-+	$(CC) $(CFLAGS) $(LFLAGS) -o $@ $< $(LIBS)
++	$(CC) $(CPPFLAGS) $(CFLAGS) $(LFLAGS) $(LDFLAGS) -o $@ $< $(LIBS)
  
 -distribution:
 -	echo "This needs written."

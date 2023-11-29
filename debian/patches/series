@@ -12,3 +12,4 @@
 0012-Numeric-values-pronunciation-fix.patch
 0013-Speak-leading-zeros-in-numbers.patch
 0014-General-Makefile.patch
+0015-Freed-memory-pointer-usage-fix.patch

@@ -1,0 +1,17 @@
+---
+ src/Makefile |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -23,8 +23,8 @@ bindir = ${prefix}/bin
+ # LIBS = -lm
+ ############################################################################
+ # Linux users
+-CC = gcc
+-CFLAGS = -g -Wall -O2
++CC ?= gcc
++CFLAGS ?= -g -Wall -O2
+ LIBS = -lm -ldb
+ ############################################################################
+ 

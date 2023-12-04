@@ -1,6 +1,7 @@
 ---
+ lib/Makefile |    2 +-
  src/Makefile |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
 --- a/src/Makefile
 +++ b/src/Makefile
@@ -13,5 +14,16 @@
 +CC ?= gcc
 +CFLAGS ?= -g -Wall -O2
  LIBS = -lm -ldb
+ ############################################################################
+ 
+--- a/lib/Makefile
++++ b/lib/Makefile
+@@ -32,7 +32,7 @@ UTILITY = lexholder-en
+ ############################################################################
+ # Linux users
+ CC = gcc
+-CFLAGS = -g -Wall -O2
++CFLAGS ?= -g -Wall -O2
+ LIBS = -ldb
  ############################################################################
  

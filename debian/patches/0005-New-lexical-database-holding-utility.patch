@@ -3,16 +3,16 @@ Date: Wed, 15 Feb 2023 14:25:38 +0300
 Subject: New lexical database holding utility
 
 ---
- lib/Makefile    |  54 ++++++++------
+ lib/Makefile    |  52 ++++++++------
  lib/lexholder.c | 215 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 249 insertions(+), 20 deletions(-)
+ 2 files changed, 247 insertions(+), 20 deletions(-)
  create mode 100644 lib/lexholder.c
 
 diff --git a/lib/Makefile b/lib/Makefile
-index f8bdd75..960742b 100644
+index f8bdd75..b8963fd 100644
 --- a/lib/Makefile
 +++ b/lib/Makefile
-@@ -10,41 +10,55 @@
+@@ -10,41 +10,53 @@
  #
  #
  ############################################################################
@@ -42,7 +42,6 @@ index f8bdd75..960742b 100644
 +# CFLAGS = -O2 -DFBSD_DATABASE
 +# LFLAGS = -s
  # LIBS = -lm
-+# GROUP = wheel
  ############################################################################
  # Linux users
  CC = gcc
@@ -51,7 +50,6 @@ index f8bdd75..960742b 100644
 +CFLAGS = -Wall -O2
 +LFLAGS = -s
 +LIBS = -ldb
-+GROUP = root
  ############################################################################
  
  
@@ -81,9 +79,9 @@ index f8bdd75..960742b 100644
 +.PHONY: install
 +install: lexholder lexicon
 +	install -d ${bindir} ${datadir} ${docdir}
-+	install -g ${GROUP} -o root -m 0755 -p lexholder ${bindir}/${UTILITY}
-+	install -g ${GROUP} -o root -m 0644 -p lexicon ${datadir}/${DBF}
-+	install -g ${GROUP} -o root -m 0644 -p text710.doc ${docdir}
++	install -m 0755 -p lexholder ${bindir}/${UTILITY}
++	install -m 0644 -p lexicon ${datadir}/${DBF}
++	install -m 0644 -p text710.doc ${docdir}
  
 +.PHONY: clean
 +clean:

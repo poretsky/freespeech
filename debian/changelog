@@ -1,3 +1,19 @@
+freespeech (1.0m-21bionic1) bionic; urgency=medium
+
+  * Homepage added.
+  * DEP5 compliant debian/copyright file.
+  * Take in account that upstream source has gone.
+  * FSF address update.
+  * Typo fix in manpage.
+  * Get rid of root requirement.
+  * Switch to dh sequencer.
+  * Debhelper compatibility level update.
+  * Install dictionary description.
+  * Hardening fix.
+  * Dwz warnings fix.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Fri, 05 Jan 2024 19:07:23 +0300
+
 freespeech (1.0m-20bionic1) bionic; urgency=medium
 
   * Ordinals pronunciation fix.

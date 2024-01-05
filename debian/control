@@ -5,6 +5,7 @@ Maintainer: Igor B. Poretsky <poretsky@mlbox.ru>
 Build-Depends: cdbs, debhelper (>= 10), libdb-dev
 Standards-Version: 4.1.4
 Homepage: https://github.com/poretsky/freespeech
+Rules-Requires-Root: no
 
 Package: freephone
 Architecture: any

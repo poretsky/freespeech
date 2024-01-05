@@ -3,14 +3,14 @@ Date: Wed, 15 Feb 2023 14:30:59 +0300
 Subject: Freephone compilation
 
 ---
- src/Makefile | 106 +++++++++++++++++++++++++++++------------------------------
- 1 file changed, 52 insertions(+), 54 deletions(-)
+ src/Makefile | 104 ++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 50 insertions(+), 54 deletions(-)
 
 diff --git a/src/Makefile b/src/Makefile
-index 56188f6..8edb133 100644
+index 56188f6..5aafc59 100644
 --- a/src/Makefile
 +++ b/src/Makefile
-@@ -10,91 +10,89 @@
+@@ -10,91 +10,87 @@
  #
  #
  ############################################################################
@@ -32,7 +32,6 @@ index 56188f6..8edb133 100644
 +# CFLAGS = -O2 -DFBSD_DATABASE
 +# LFLAGS = -s
  # LIBS = -lm
-+# GROUP =wheel
  ############################################################################
  # Linux users
  CC = gcc
@@ -40,7 +39,6 @@ index 56188f6..8edb133 100644
 +CFLAGS = -Wall -O2
 +LFLAGS = -s
  LIBS = -lm -ldb
-+GROUP = root
  ############################################################################
  
  
@@ -90,7 +88,7 @@ index 56188f6..8edb133 100644
 +.PHONY: install
 +install: freephone
 +	install -d ${bindir}
-+	install -g ${GROUP} -o root -m 0755 -p $^ ${bindir}
++	install -m 0755 -p $^ ${bindir}
  
 +.PHONY: clean
  clean:

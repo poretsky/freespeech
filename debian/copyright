@@ -5,7 +5,7 @@ Source: http://tcts.fpms.ac.be/synthesis/mbrola/tts/English/fs.a10m.tar.gz
 
 Files: *
 Copyright: 1995 Stephen Isard, Alistair Conkie
-License: GPL-1
+License: GPL-1+
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 1, or (at your option)
@@ -23,6 +23,24 @@ License: GPL-1
  On Debian systems, the complete text of the GNU General
  Public License version 1 can be found in the file
  `/usr/share/common-licenses/GPL-1'.
+
+Files: src/regexp.c
+       src/regsub.c
+Copyright: 1986 by University of Toronto
+License: Spencer-86
+ Permission is granted to anyone to use this software for any
+ purpose on any computer system, and to redistribute it freely,
+ subject to the following restrictions:
+ .
+ 1. The author is not responsible for the consequences of use of
+ this software, no matter how awful, even if they arise
+ from defects in it.
+ .
+ 2. The origin of this software must not be misrepresented, either
+ by explicit claim or by omission.
+ .
+ 3. Altered versions must be plainly marked as such, and must not
+ be misrepresented as being the original software.
 
 Files: debian/*
 Copyright: 2010-2024 Igor B. Poretsky <poretsky@mlbox.ru>

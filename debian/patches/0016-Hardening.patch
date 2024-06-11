@@ -1,3 +1,7 @@
+From: "Samuel Thibault" <samuel.thibault@ens-lyon.org>
+Date: Mon, 4 Dec 2023 23:33:02 +0100
+Subject: Hardening
+
 ---
  lib/Makefile |    2 +-
  src/Makefile |    4 ++--

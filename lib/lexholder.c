@@ -5,12 +5,12 @@
 
 /*
  * Copyright (C) 2010 Igor B. Poretsky <poretsky@mlbox.ru>
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -27,8 +27,10 @@
 
 #ifdef FBSD_DATABASE
 #include <db.h>
-#else
+#elif defined(BERKELEYDB)
 #include <db_185.h>
+#else
+#include <gdbm-ndbm.h>
 #endif
 
 #include <fcntl.h>
@@ -70,11 +72,20 @@ static const char *usage =
 int main(int argc, char *argv[])
 {
   FILE *fp = NULL;
-  DB *db;
+  void *db;
+#if defined(FBSD_DATABASE) || defined(BERKELEYDB)
   DBT key, value;
+#else
+  datum key, value;
+#endif
   char line[256];
   char *f = NULL, *d = NULL, *s = NULL;
-  int i, n, q = 0, ret = NO_DB_FILE, mode = R_NOOVERWRITE;
+  int i, n, q = 0, ret = NO_DB_FILE;
+#if defined(FBSD_DATABASE) || defined(BERKELEYDB)
+  int mode = R_NOOVERWRITE;
+#else
+  int mode = DBM_INSERT;
+#endif
 
   /* Parse command line */
   if(argc==1)
@@ -102,7 +113,11 @@ int main(int argc, char *argv[])
         else s = line;
         break;
       case 'r':
+#if defined(FBSD_DATABASE) || defined(BERKELEYDB)
         mode = 0;
+#else
+        mode = DBM_REPLACE;
+#endif
         break;
       case 'q':
         q = 1;
@@ -143,7 +158,11 @@ int main(int argc, char *argv[])
     }
 
   /* Open the database in appropriate mode */
+#if defined(FBSD_DATABASE) || defined(BERKELEYDB)
   db = dbopen(argv[optind], s ? O_RDONLY : (O_RDWR | O_CREAT), 0644, DB_HASH, NULL);
+#else
+  db = dbm_open(argv[optind], s ? O_RDONLY : (O_RDWR | O_CREAT), 0644);
+#endif
   if (!db)
     {
       (void)fprintf(stderr, "Cannot open the database %s\n", argv[optind]);
@@ -153,36 +172,69 @@ int main(int argc, char *argv[])
   ret = EXIT_SUCCESS;
   if (s == line) /* List database content */
     {
-      for (n = 0; !db->seq(db, &key, &value, R_NEXT); n++)
+#if defined(FBSD_DATABASE) || defined(BERKELEYDB)
+      for (n = 0; !((DB*)db)->seq(db, &key, &value, R_NEXT); n++)
+#else
+      for (n = 0, key = dbm_firstkey(db); key.dptr; key = dbm_nextkey(db), n++)
+#endif
         {
+#if defined(FBSD_DATABASE) || defined(BERKELEYDB)
           (void)strncpy(line, key.data, key.size);
           (void)fprintf(fp, "%s %s\n", line, (char *)value.data);
+#else
+          value = dbm_fetch(db, key);
+          (void)strncpy(line, key.dptr, key.dsize);
+          (void)fprintf(fp, "%s %s\n", line, (char *)value.dptr);
+#endif
         }
       (void)fprintf(stderr, "%i records extracted.\n", n);
     }
   else if (s) /* Lookup database for specified word */
     {
+#if defined(FBSD_DATABASE) || defined(BERKELEYDB)
       key.data = s;
       key.size = strlen(s);
-      if (db->get(db, &key, &value, 0))
+      if (((DB*)db)->get(db, &key, &value, 0))
         ret = EXIT_FAILURE;
       else (void)fprintf(fp, "%s\n", (char *)value.data);
+#else
+      key.dptr = s;
+      key.dsize = strlen(s)+1;
+      value = dbm_fetch(db, key);
+      if (!value.dptr)
+        ret = EXIT_FAILURE;
+      else (void)fprintf(fp, "%s\n", (char *)value.dptr);
+#endif
     }
   else if (d) /* Delete record for specified word */
     {
+#if defined(FBSD_DATABASE) || defined(BERKELEYDB)
       key.data = d;
       key.size = strlen(d);
-      ret = db->del(db, &key, 0) ? EXIT_FAILURE : EXIT_SUCCESS;
+      ret = ((DB*)db)->del(db, &key, 0) ? EXIT_FAILURE : EXIT_SUCCESS;
+#else
+      key.dptr = d;
+      key.dsize = strlen(d)+1;
+      dbm_delete(db, key);
+#endif
     }
   else /* Fill the database */
     {
       for (i = 0, n = 1; fgets(line, 256, fp); n++)
         {
+#if defined(FBSD_DATABASE) || defined(BERKELEYDB)
           key.data = strtok(line," ");
           key.size = strlen(key.data);
           value.data = strtok(NULL,"\n");
           value.size = strlen(value.data) + 1;
-          ret = db->put(db, &key, &value, mode);
+          ret = ((DB*)db)->put(db, &key, &value, mode);
+#else
+          key.dptr = strtok(line," ");
+          key.dsize = strlen(key.dptr)+1;
+          value.dptr = strtok(NULL,"\n");
+          value.dsize = strlen(value.dptr) + 1;
+	  ret = dbm_store(db, key, value, mode);
+#endif
           if (ret < 0)
             break;
           else if (ret)
@@ -209,7 +261,11 @@ int main(int argc, char *argv[])
     }
 
   /* All done */
-  (void)db->close(db);
+#if defined(FBSD_DATABASE) || defined(BERKELEYDB)
+  (void)((DB*)db)->close(db);
+#else
+  dbm_close(db);
+#endif
   (void)fclose(fp);
   return ret;
 }

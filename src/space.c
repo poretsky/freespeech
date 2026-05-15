@@ -14,8 +14,10 @@
 
 #ifdef FBSD_DATABASE
 #include <db.h>
-#else
+#elif defined(BERKELEYDB)
 #include <db_185.h>
+#else
+#include <gdbm-ndbm.h>
 #endif
 
 #include <fcntl.h>
@@ -57,7 +59,11 @@ export void init(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sen
   /* set up database if present  */
 
   if(strcmp("-",config->hash_file)) {
+#if defined(FBSD_DATABASE) || defined(BERKELEYDB)
     config->db = (void *)dbopen(config->hash_file,O_RDONLY, 0000644, DB_HASH, NULL);
+#else
+    config->db = (void *)dbm_open(config->hash_file,O_RDONLY, 0000644);
+#endif
     /* the (void *) is so config can remain ignorant about the database  */
     if(config->db==NULL) {
       (void)fprintf(stderr,"\nDictionary file \"%s\" not found.\n",config->hash_file);
@@ -134,7 +140,12 @@ void terminate(CONFIG *config, BUFFER *buffer, LING_LIST *ling_list, SENT *sent,
 {
 
   if(config->db != NULL)
+#if defined(FBSD_DATABASE) || defined(BERKELEYDB)
     (void)(((DB *)(config->db))->close)((DB *)(config->db));
+#else
+  dbm_close(config->db);
+#endif
+
 
   output_close(config);
 

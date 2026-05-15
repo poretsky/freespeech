@@ -25,7 +25,7 @@ bindir = ${prefix}/bin
 # Linux users
 CC ?= gcc
 CFLAGS ?= -g -Wall -O2
-LIBS = -lm -ldb
+LIBS = -lm -lgdbm_compat
 ############################################################################
 
 

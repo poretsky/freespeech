@@ -31,16 +31,16 @@ UTILITY = lexholder-en
 # LIBS = -lm
 ############################################################################
 # Linux users
-CC = gcc
+CC ?= gcc
 CFLAGS ?= -g -Wall -O2
-LIBS = -ldb
+LIBS = -lgdbm_compat
 ############################################################################
 
 
 all: lexicon
 
 lexicon: text710.edin lexholder
-	./lexholder -qf $< $@
+	./lexholder -qf $< $@ && touch $@
 
 #text710.edin: text710.dat read_ox_dict
 #	read_ox_dict text710.dat > text710.edin
@@ -52,9 +52,10 @@ lexholder: lexholder.c
 install: lexholder lexicon
 	install -d ${bindir} ${datadir} ${docdir}
 	install -m 0755 -p lexholder ${bindir}/${UTILITY}
-	install -m 0644 -p lexicon ${datadir}/${DBF}
+	install -m 0644 -p lexicon.dir ${datadir}/enlex.dir
+	install -m 0644 -p lexicon.pag ${datadir}/enlex.pag
 	install -m 0644 -p text710.doc ${docdir}
 
 .PHONY: clean
 clean:
-	rm -f lexholder *.o lexicon
+	rm -f lexholder *.o lexicon*

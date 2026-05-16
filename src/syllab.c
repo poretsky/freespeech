@@ -146,7 +146,6 @@ export char *syllabify(char *string, CONFIG *config)
 
 
   carrier = split(string);
-  free(string);
 
   while(carrier[i]!= NULL) {
     marker[i++] = 0;
@@ -155,13 +154,14 @@ export char *syllabify(char *string, CONFIG *config)
       break;
     }
   }
+  free(string);
   c_sz = i;
 
   /* to produce a list of candidate pts for breaks  */
   /* we start looking once we find a vowel  */
   /* we stop looking if we find an existing syllable boundary  */
 
-  if(b_cat(carrier[c_sz-1],config) == VOWEL) {
+  if((c_sz>0) && b_cat(carrier[c_sz-1],config) == VOWEL) {
     look = 1;
     /* don't need a marker  */
   }

@@ -9,12 +9,16 @@
 
 #include <sys/types.h>
 #include <limits.h>
-/* FreeBSD, and Linux?  */
+#include <string.h>
+
 #ifdef FBSD_DATABASE
 #include <db.h>
+#elif defined(BERKELEYDB)
+#include <db_185.h>
 #else
-#include <ndbm.h>
+#include <gdbm-ndbm.h>
 #endif
+
 #include <fcntl.h>
 
 static char *lookup_db(char *word, CONFIG *config);
@@ -45,7 +49,8 @@ export void transcribe(CONFIG *config, LING_LIST *ling_list)
 	tr = nrl_rules(word);
 	tr = strdup(tr);
 	tr = syllabify(tr,config);
-	tr = stress(tr);
+	if (!strchr(tr, '*'))
+          tr = stress(tr);
 	ling_list->text[i]->transcription = tr;
       }
       free(word);
@@ -54,21 +59,21 @@ export void transcribe(CONFIG *config, LING_LIST *ling_list)
   }
 }
 
-#ifdef FBSD_DATABASE
+#if defined(FBSD_DATABASE) || defined(BERKELEYDB)
 
 static char *lookup_db(char *word, CONFIG *config)
 {
   DBT inKey, inVal;
  
   inKey.data = word;
-  inKey.size = strlen(word)+1;
+  inKey.size = strlen(word);
  
   inVal.data = NULL;
   inVal.size = 0;
  
  
   if(config->db != NULL) {
-    (config->db->get)((DB *)config->db,&inKey,&inVal,0);
+    (((DB *)(config->db))->get)((DB *)(config->db),&inKey,&inVal,0);
     return(inVal.data);
   } else 
     return(NULL);

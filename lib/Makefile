@@ -16,6 +16,7 @@ prefix = /usr/local
 bindir = ${prefix}/bin
 datadir = ${prefix}/share/freespeech
 docdir = ${prefix}/share/doc/enlex-data
+mandir = ${prefix}/share/man/man1
 
 # Installed database filename
 DBF = enlex.db
@@ -50,11 +51,12 @@ lexholder: lexholder.c
 
 .PHONY: install
 install: lexholder lexicon
-	install -d ${bindir} ${datadir} ${docdir}
+	install -d ${bindir} ${datadir} ${docdir} ${mandir}
 	install -m 0755 -p lexholder ${bindir}/${UTILITY}
 	install -m 0644 -p lexicon.dir ${datadir}/enlex.dir
 	install -m 0644 -p lexicon.pag ${datadir}/enlex.pag
 	install -m 0644 -p text710.doc ${docdir}
+	install -m 0644 -p lexholder.1 ${mandir}/lexholder-en.1
 
 .PHONY: clean
 clean:

@@ -14,6 +14,7 @@
 # Installation paths
 prefix = /usr/local
 bindir = ${prefix}/bin
+mandir = ${prefix}/share/man/man1
 
 # Select the appropriate Makefile options for your system. then type make.
 ############################################################################
@@ -50,8 +51,9 @@ freephone: $(OBJS) $(NRL_OBJS) $(RULE_OBJS) $(MAIN)
 
 .PHONY: install
 install: freephone
-	install -d ${bindir}
+	install -d ${bindir} ${mandir}
 	install -m 0755 -p $^ ${bindir}
+	install -m 0644 -p freephone.1 ${mandir}
 
 .PHONY: clean
 clean:

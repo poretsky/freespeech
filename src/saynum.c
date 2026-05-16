@@ -14,34 +14,34 @@
 
 static char *Cardinals[] = 
 {
-  "zIHrOW ",	"wAHn ",	"tUW ",		"THrIY ",
-  "fAOr ",	"fAYv ",	"sIHks ",	"sEHvAXn ",
-  "EYt ",		"nAYn ",		
-  "tEHn ",	"IYlEHvAXn ",	"twEHlv ",	"THERtIYn ",
-  "fAOtIYn ",	"fIHftIYn ", 	"sIHkstIYn ",	"sEHvEHntIYn ",
-  "EYtIYn ",	"nAYntIYn "
+  "z*IArOW ",	"w*AHn ",	"t*UW ",		"THr*IY ",
+  "f*AOr ",	"f*AYv ",	"s*IHks ",	"s*EHvn ",
+  "*EYt ",		"n*AYn ",		
+  "t*EHn ",	"IY.l*EHvAXn ",	"tw*EHlv ",	"TH~ER.t*IYn ",
+  "f~AO.t*IYn ",	"f~IHf.t*IYn ", 	"sIHk.st*IYn ",	"s~EHvn.t*IYn ",
+  "~EY.t*IYn ",	"n~AYn.t*IYn "
 } ;
 
 static char *Twenties[] = 
 {
-  "twEHntIY ",	"THERtIY ",	"fAOtIY ",	"fIHftIY ",
-  "sIHkstIY ",	"sEHvEHntIY ",	"EYtIY ",	"nAYntIY "
+  "tw*EHntIY ",	"TH*ERtIY ",	"f*AOtIY ",	"f*IHftIY ",
+  "s*IHkstIY ",	"s*EHvntIY ",	"*EYtIY ",	"n*AYntIY "
 } ;
 
 static char *Ordinals[] = 
 {
-  "zIHrOWEHTH ",	"fERst ",	"sEHkAHnd ",	"THERd ",
-  "fAOTH ",	"fIHfTH ",	"sIHksTH ",	"sEHvEHnTH ",
-  "EYtTH ",	"nAYnTH ",		
-  "tEHnTH ",	"IYlEHvEHnTH ",	"twEHlvTH ",	"THERtIYnTH ",
-  "fAOtIYnTH ",	"fIHftIYnTH ", 	"sIHkstIYnTH ",	"sEHvEHntIYnTH ",
-  "EYtIYnTH ",	"nAYntIYnTH "
+  "z*IArOWTH ",	"f*ERst ",	"s*EHkAXnd ",	"TH*ERd ",
+  "f*AOTH ",	"f*IHfTH ",	"s*IHksTH ",	"s*EHvnTH ",
+  "*EYtTH ",	"n*AYnTH ",		
+  "t*EHnTH ",	"IY.l*EHvnTH ",	"tw*EHlvTH ",	"TH~ER.t*IYnTH ",
+  "f~AO.t*IYnTH ",	"f~IHf.t*IYnTH ", 	"sIHk.st*IYnTH ",	"s~EHvn.t*IYnTH ",
+  "~EY.t*IYnTH ",	"n~AYn.t*IYnTH "
 } ;
 
 static char *Ord_twenties[] = 
 {
-  "twEHntIYEHTH ","THERtIYEHTH ",	"fAOtIYEHTH ",	"fIHftIYEHTH ",
-  "sIHkstIYEHTH ","sEHvEHntIYEHTH ","EYtIYEHTH ",	"nAYntIYEHTH "
+  "tw*EHntIATH ","TH*ERtIATH ",	"f*AOtIATH ",	"f*IHftIATH ",
+  "s*IHkstIATH ","s*EHvntIATH ","*EYtIATH ",	"n*AYntIATH "
 } ;
 
 
@@ -53,11 +53,11 @@ export void say_cardinal(long int value)
 {
   if (value < 0)
     {
-      outstring("mAYnAHs ");
+      outstring("m*AYnAXs ");
       value = (-value);
       if (value < 0)	/* Overflow!  -32768 */
 	{
-	  outstring("IHnfIHnIHtIY ");
+	  outstring("IHn.f*IHnIHtIH ");
 	  return;
 	}
     }
@@ -65,7 +65,7 @@ export void say_cardinal(long int value)
   if (value >= 1000000000L)	/* Billions */
     {
       say_cardinal(value/1000000000L);
-      outstring("bIHlIYAXn ");
+      outstring("b*IHlIAn ");
       value = value % 1000000000;
       if (value == 0)
 	return;		/* Even billion */
@@ -76,7 +76,7 @@ export void say_cardinal(long int value)
   if (value >= 1000000L)	/* Millions */
     {
       say_cardinal(value/1000000L);
-      outstring("mIHlIYAXn ");
+      outstring("m*IHlIAn ");
       value = value % 1000000L;
       if (value == 0)
 	return;		/* Even million */
@@ -85,11 +85,11 @@ export void say_cardinal(long int value)
     }
 
   /* Thousands 1000..1099 2000..99999 */
-  /* 1100 to 1999 is eleven-hunderd to ninteen-hunderd */
+  /* 1100 to 1999 is eleven-hundred to nineteen-hundred */
   if ((value >= 1000L && value <= 1099L) || value >= 2000L)
     {
       say_cardinal(value/1000L);
-      outstring("THAWzAEnd ");
+      outstring("TH*AWznd ");
       value = value % 1000L;
       if (value == 0)
 	return;		/* Even thousand */
@@ -100,7 +100,7 @@ export void say_cardinal(long int value)
   if (value >= 100L)
     {
       outstring(Cardinals[value/100]);
-      outstring("HHAHndrEHd ");
+      outstring("HH*AHndrAXd ");
       value = value % 100;
       if (value == 0)
 	return;		/* Even hundred */
@@ -132,7 +132,7 @@ export void say_ordinal(long int value)
       value = (-value);
       if (value < 0)	/* Overflow!  -32768 */
 	{
-	  outstring("IHnfIHnIHtIY ");
+	  outstring("IHn.f*IHnIHtIH ");
 	  return;
 	}
     }
@@ -143,10 +143,10 @@ export void say_ordinal(long int value)
       value = value % 1000000000;
       if (value == 0)
 	{
-	  outstring("bIHlIYAXnTH ");
+	  outstring("b*IHlIAnTH ");
 	  return;		/* Even billion */
 	}
-      outstring("bIHlIYAXn ");
+      outstring("b*IHlIAn ");
       if (value < 100)	/* as in THREE BILLION AND FIVE */
 	outstring("AEnd ");
     }
@@ -157,10 +157,10 @@ export void say_ordinal(long int value)
       value = value % 1000000L;
       if (value == 0)
 	{
-	  outstring("mIHlIYAXnTH ");
+	  outstring("m*IHlIAnTH ");
 	  return;		/* Even million */
 	}
-      outstring("mIHlIYAXn ");
+      outstring("m*IHlIAn ");
       if (value < 100)	/* as in THREE MILLION AND FIVE */
 	outstring("AEnd ");
     }
@@ -173,10 +173,10 @@ export void say_ordinal(long int value)
       value = value % 1000L;
       if (value == 0)
 	{
-	  outstring("THAWzAEndTH ");
+	  outstring("TH*AWzndTH ");
 	  return;		/* Even thousand */
 	}
-      outstring("THAWzAEnd ");
+      outstring("TH*AWznd ");
       if (value < 100)	/* as in THREE THOUSAND AND FIVE */
 	outstring("AEnd ");
     }
@@ -187,10 +187,10 @@ export void say_ordinal(long int value)
       value = value % 100;
       if (value == 0)
 	{
-	  outstring("HHAHndrEHdTH ");
+	  outstring("HH*AHndrAXdTH ");
 	  return;		/* Even hundred */
 	}
-      outstring("HHAHndrEHd ");
+      outstring("HH*AHndrAXd ");
     }
 
   if (value >= 20)

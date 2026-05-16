@@ -40,19 +40,19 @@ export void conv1(CONFIG *config, LING_LIST *ling_list, SENT *sent)
 	sil_fill(j++,"L-H]",0.7,50,sent);
 	buffer_add_str(slist," ##");
       } else if(ling_list->text[i]->word[0] == ':') {
-	sil_fill(j++,"L-H]",0.7,750,sent);
+	sil_fill(j++,"L-H]",0.7,50,sent);
 	buffer_add_str(slist," ##");
       } else if(ling_list->text[i]->word[0] == ';') {
-	sil_fill(j++,"L-L]",0.7,750,sent);
+	sil_fill(j++,"L-L]",0.7,50,sent);
 	buffer_add_str(slist," ##");
       } else if(ling_list->text[i]->word[0] == '.') {
-	sil_fill(j++,"L-L]",1.0,1200,sent);
+	sil_fill(j++,"L-L]",1.0,50,sent);
 	buffer_add_str(slist," ##");
       } else if(ling_list->text[i]->word[0] == '!') {
-	sil_fill(j++,"L-L]",1.0,1200,sent);
+	sil_fill(j++,"L-L]",1.0,50,sent);
 	buffer_add_str(slist," ##");
       } else if(ling_list->text[i]->word[0] == '?') {
-	sil_fill(j++,"L-H]",1.0,1200,sent);
+	sil_fill(j++,"L-H]",1.0,50,sent);
 	buffer_add_str(slist," ##");
       } else {
 	sil_fill(j++,"L-H]",0.7,200,sent);
@@ -88,7 +88,7 @@ export void conv1(CONFIG *config, LING_LIST *ling_list, SENT *sent)
     }
   }
   if(buffer_last_char(slist) != '#') {
-    sil_fill(j++,"",0.0,1200,sent);
+    sil_fill(j++,"",0.0,50,sent);
     buffer_add_str(slist," ##");
   }
   sent->sil_sz = j;

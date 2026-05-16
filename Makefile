@@ -1,4 +1,4 @@
-# General Makefile for Debian packaging system.
+# General Makefile
 
 DESTDIR =
 

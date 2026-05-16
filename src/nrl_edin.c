@@ -15,8 +15,11 @@
 */
 #include "t2s.h"
 
-static char *nrl_edin[][2] = {
+static PKEY nrl_edin[] = {
   {	" ", "| ",},
+  {	"*", "* ",},
+  {	"~", "~ ",},
+  {	".", ". ",},
   {	"IY", "ee ",},
   {	"EY", "ai ",},
   {	"AE", "aa ",},
@@ -62,7 +65,7 @@ static char *nrl_edin[][2] = {
   {	"w", "w ",},
   {	"r", "r ",},
   {	"JH", "j ",},			/* problem  */
-  {	"","",},
+  {	"",""}
 };
 
 
@@ -74,12 +77,12 @@ export void nrl_edin_conv(char *str, char *str2)
   
   while(*str) {
     i = 0;
-    while(nrl_edin[i][0] != '\0') {
-      if(!strncmp(str,nrl_edin[i][0],strlen(nrl_edin[i][0])))
+    while(nrl_edin[i].keyword[0]) {
+      if(!strncmp(str,nrl_edin[i].keyword,strlen(nrl_edin[i].keyword)))
 	break;
       i++;
     }
-    strcat(str2,nrl_edin[i][1]);
-    str += strlen(nrl_edin[i][0]);
+    strcat(str2,nrl_edin[i].keyvalue);
+    str += strlen(nrl_edin[i].keyword);
   }
 }

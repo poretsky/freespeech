@@ -1,0 +1,11 @@
+freephone for Debian
+--------------------
+
+This package contains Freephone phonetizer for Mbrola speech
+synthesizer along with the simple lexical database holding utility
+lexholder-en. The lexical database itself is provided
+as a separate package enlex-data.
+
+See freephone and lexholder-ru man pages for more details.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Mon, 07 Mar 2022 04:12:07 +0300

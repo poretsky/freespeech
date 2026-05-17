@@ -1,0 +1,24 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all
+
+%:
+	dh $@
+
+ifneq ($(DEB_HOST_ARCH),$(DEB_BUILD_ARCH))
+override_dh_auto_build-arch:
+	dh_auto_build -- -C src
+	dh_auto_build -- lexholder -C lib
+
+override_dh_auto_build-indep: lib/lexicon
+	: # Dummy command to force the target to always be run
+
+override_dh_auto_install-arch: lib/lexicon
+	dh_auto_install -a
+
+lib/lexicon:
+	test -e lib/lexholder && mv lib/lexholder lib/lexholder.saved || true
+	$(MAKE) CC=gcc CPPFLAGS= CFLAGS= LDFLAGS= LIBS="-lgdbm_compat" -C lib
+	rm -f lib/lexholder
+	test -e lib/lexholder.saved && mv -f lib/lexholder.saved lib/lexholder || true
+endif

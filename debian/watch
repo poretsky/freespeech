@@ -1,0 +1,4 @@
+version=4
+opts="repack,compression=xz" \
+https://github.com/poretsky/freespeech/tags \
+(?:.*?/)?v?(\d[\d.]*)\.tar\.gz

@@ -29,8 +29,10 @@ case "$1" in
         ;;
 esac
 
-cd /usr/share/freespeech
+cd /usr/lib/freespeech
 rm -f enlex.dir enlex.pag
+cd ..
+rmdir --ignore-fail-on-non-empty freespeech
 
 
 # dh_installdeb will replace this with shell code automatically

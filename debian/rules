@@ -5,6 +5,10 @@ export DEB_BUILD_MAINT_OPTIONS=hardening=+all
 %:
 	dh $@
 
+override_dh_auto_install: lib/lexicon
+	dh_auto_install
+	cd $(CURDIR)/debian/tmp/usr/share/freespeech && rm -f * && cp $(CURDIR)/lib/text710.edin . && gzip text710.edin
+
 ifneq ($(DEB_HOST_ARCH),$(DEB_BUILD_ARCH))
 override_dh_auto_build-arch:
 	dh_auto_build -- -C src
@@ -13,12 +17,15 @@ override_dh_auto_build-arch:
 override_dh_auto_build-indep: lib/lexicon
 	: # Dummy command to force the target to always be run
 
-override_dh_auto_install-arch: lib/lexicon
-	dh_auto_install -a
-
 lib/lexicon:
 	test -e lib/lexholder && mv lib/lexholder lib/lexholder.saved || true
 	$(MAKE) CC=gcc CPPFLAGS= CFLAGS= LDFLAGS= LIBS="-lgdbm_compat" -C lib
 	rm -f lib/lexholder
 	test -e lib/lexholder.saved && mv -f lib/lexholder.saved lib/lexholder || true
+
+else
+
+lib/lexicon:
+	dh_auto_build -- lexicon -C lib
+
 endif

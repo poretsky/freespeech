@@ -31,7 +31,7 @@ esac
 mkdir -p /usr/lib/freespeech
 cd /usr/lib/freespeech
 rm -f enlex.dir enlex.pag
-lexholder-en -qf /usr/share/freespeech/text710.edin enlex
+zcat /usr/share/freespeech/text710.edin.gz | lexholder-en -q enlex
 
 
 # dh_installdeb will replace this with shell code automatically

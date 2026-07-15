@@ -1,3 +1,10 @@
+freespeech (2.0.0-0noble2) noble; urgency=medium
+
+  * Keep architecture dependent files in /usr/lib subtree.
+  * Compressed data.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Wed, 15 Jul 2026 16:47:53 +0300
+
 freespeech (2.0.0-0noble1) noble; urgency=medium
 
   * Initial release for Ubuntu Noble.

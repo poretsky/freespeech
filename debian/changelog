@@ -1,3 +1,12 @@
+freespeech (2.0.0-0focal1) focal; urgency=medium
+
+  * New upstream release.
+  * Migration from Berkeley DB to GDBM.
+  * Keep architecture dependent files in /usr/lib subtree.
+  * Compressed data.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Wed, 04 Nov 2026 21:02:57 +0300
+
 freespeech (1.0m-21focal1) focal; urgency=medium
 
   * Homepage added.

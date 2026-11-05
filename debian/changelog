@@ -1,3 +1,9 @@
+freespeech (2.0.0-0focal2) focal; urgency=medium
+
+  * Dependency fix.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Thu, 05 Nov 2026 10:10:37 +0300
+
 freespeech (2.0.0-0focal1) focal; urgency=medium
 
   * New upstream release.

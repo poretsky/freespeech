@@ -22,8 +22,7 @@ Description: English Text-To-Phoneme converter
 
 Package: enlex-data
 Architecture: all
-Depends: ${misc:Depends}
-Recommends: freephone
+Depends: freephone, ${misc:Depends}
 Conflicts: enlex
 Replaces: enlex
 Description: English pronunciation dictionary

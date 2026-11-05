@@ -1,3 +1,9 @@
+freespeech (2.0.0-0xenial2) xenial; urgency=medium
+
+  * Dependency fix.
+
+ -- Igor B. Poretsky <poretsky@mlbox.ru>  Thu, 05 Nov 2026 10:10:37 +0300
+
 freespeech (2.0.0-0xenial1) xenial; urgency=medium
 
   * New upstream release.
